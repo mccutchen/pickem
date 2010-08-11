@@ -1,0 +1,37 @@
+Assumptions: NFL pick 'em pool. One wrong pick and you're out. Play until
+there's one person left, the winner.
+
+It should work something like this:
+
+ * You arrive at the site, want to start a pool for you and your friends.
+   Sign in, start a Pool, set the rules, invite players. You are the manager
+   of that pool.
+
+ * When a player joins a pool, they're creating an Entry into that pool.  That
+   entry will last until they pick incorrectly.  The Entry will be marked paid
+   or unpaid by the manager.
+
+ * Making picks: We show the players every game left on the schedule, broken
+   down into Slates (ie, a slate of NFL games is one week's games).  The
+   player can pick as far into the future as they want.
+
+ * When a user picks wrong, they will be notified and given a chance to create
+   another Entry into the Pool (depending on the pool's rules). They'll still
+   be able to watch what happens in the pool, regardless.
+
+ * If, god forbid, the Pool is still active at the end of the season, the
+   consequences are undefined.  It'll be up to the Manager to sort it out
+   offline, by asking for score guesses for the final game or carrying the
+   Pool into the next season or something.
+
+
+Per-pool options:
+
+ * Picking straight up or gainst the spread
+
+ * Can you buy back in?
+
+ * Deadline for making picks? A hard deadline (e.g. Thursdays at noon) or can
+   you make a pick as long as there are any games left that haven't started
+   (ie, you can pick from any of the current slate of games that have not yet
+   kicked off)?
