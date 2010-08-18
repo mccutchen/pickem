@@ -74,9 +74,6 @@ class Pool(db.Model):
     # Is there a hard deadline for picking games?
     hard_deadline = db.BooleanProperty(default=False)
 
-    # What players are participating in this pool?  A list of account keys.
-    players = db.ListProperty(db.Key)
-
     @property
     def entries(self):
         return db.Query(Entry).ancestor(self).filter('active =', True)
@@ -107,6 +104,7 @@ class Entry(db.Model):
 
 class Pick(db.Model):
     """A single user's pick for a specific game."""
+	slate = db.ReferenceProperty(Slate)
     game = db.ReferenceProperty(Game)
     team = db.ReferenceProperty(Team)
     correct = db.BooleanProperty()
