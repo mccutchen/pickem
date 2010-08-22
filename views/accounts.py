@@ -2,8 +2,12 @@ import logging
 from cgi import parse_qs
 from urllib import urlencode
 
+from google.appengine.api import urlfetch
 from django.utils import simplejson as json
+
 from lib.webapp import RequestHandler
+
+import settings
 
 
 class Login(RequestHandler):

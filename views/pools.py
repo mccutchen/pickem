@@ -5,7 +5,6 @@ from lib.webapp import RequestHandler
 class Index(RequestHandler):
 
     def get(self):
-        return self.render('templates/index.html')
         return self.render('index.html')
 
 
