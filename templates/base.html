@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %} / Pickem</title>
+        <link rel="stylesheet" href="/static/css/pickem.css">
+        {% block head %}{% endblock %}
+    </head>
+    <body id="{% block bodyid %}{% endblock %}" class="{% block bodyclass %}{% endblock %}">
+        <div id="header">
+            <h1>Pickem Pickem</h1>
+        </div>
+        <div id="content">
+            {% block content %}
+                
+            {% endblock %}
+        </div>
+    </body>
+</html>
