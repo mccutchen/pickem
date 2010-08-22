@@ -1,4 +1,4 @@
 settings/local.py
-settings/secret.py
+settings/secrets.py
 *.pyc
 #*
