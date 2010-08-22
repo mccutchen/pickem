@@ -22,4 +22,11 @@
         <h4><a href="{{ url('entry', entry.parent.key().id(), entry.key().id()) }}">#{{ entry.key().id() }} in {{ entry.parent.name }}</a></h4>
         <p>{{ entry.active }}</p>
     {% endfor %}
+    
+    <h3>New Pool</h3>
+    <p>Create a new pool.</p>
+    <form action="{{ url('pools') }}" method="post">
+        {{ form.as_p()|safe }}
+        <input type="submit" value="Create Pool">
+    </form>
 {% endblock %}
