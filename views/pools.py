@@ -35,6 +35,7 @@ class PoolsHandler(SecureRequestHandler):
         if form.is_valid():
             form.cleaned_data['manager'] = self.account
             pool = form.save()
+            pool.add_entry(self.account)
             return self.redirect(
                 self.url_for('pool', pool.key().id()))
         else:

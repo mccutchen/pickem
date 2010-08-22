@@ -124,6 +124,19 @@ class Pool(db.Model):
         """Does the given account have an entry in this pool?"""
         return self.entries.filter('account =', account).get() is not None
 
+    def add_entry(self, account):
+        """Adds an entry for the given account, if one does not already exist.
+        Returns a boolean indicated whether a new entry was created."""
+        def txn():
+            entry = self.entries.filter('account =', account).get()
+            if not entry:
+                entry = Entry(account=account, parent=self)
+                entry.put()
+                return True
+            else:
+                return False
+        return db.run_in_transaction(txn)
+
 
 class Entry(db.Model):
     """A single user's entry into a given Pool."""
