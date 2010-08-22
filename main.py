@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 from ext.webapp2 import WSGIApplication
-import urls
 
-app = WSGIApplication(urls.urls)
+import urls
+import settings
+
+app = WSGIApplication(urls.urls, debug=settings.DEBUG)
 
 def main():
     app.run()

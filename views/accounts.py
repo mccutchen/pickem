@@ -2,11 +2,13 @@ import logging
 from cgi import parse_qs
 from urllib import urlencode
 
+from google.appengine.ext import db
 from google.appengine.api import urlfetch
 from django.utils import simplejson as json
 
 from lib.webapp import RequestHandler
 
+from models import Account
 import settings
 
 
@@ -27,41 +29,35 @@ class Login(RequestHandler):
         code = self.request.get('code')
 
         # Get a Facebook object to work with
-        fb = Facebook(self.request.url)
+        fb = Facebook(self.request.path_url)
 
         # If not, we need to redirect them to Facebook to authorize us
         if not code:
+            logging.info('Auth URL: %s' % fb.auth_url)
             return self.redirect(fb.auth_url)
 
         # If so, we need to use the verification code to get an access code,
         # and use that to create/update a user account.
         else:
             access_token = fb.get_access_token(code)
+            assert access_token, 'No access token for code %s' % code
 
-            # See if we've got an existing OAuth connection for this OAuth
-            # account.
             profile = fb.get_profile(access_token)
-            assert profile is not None
+            assert profile, 'No profile for token %s' % access_token
 
-            # Get or create a new account in a transaction
-            def txn():
-                ext_id = profile['id']
-                acc = Account.all().filter(ext_id=ext_id).get()
-                if acc is None:
-                    logging.info('Creating new account for FB id %s' % ext_id)
-                    acc = Account(
-                        email=profile['email'],
-                        first_name=profile['first_name'],
-                        last_name=profile['last_name'],
-                        oauth_token=access_token)
-                    acc.put()
-                return acc
-            account = db.run_in_transaction(txn)
-            self.set_secure_cookie('account_id', acc.key().id())
+            key_name = 'facebook:%s' % profile['id']
+            acc = Account.get_or_insert(
+                key_name,
+                email=profile['email'],
+                first_name=profile['first_name'],
+                last_name=profile['last_name'],
+                oauth_token=access_token)
+
+            self.set_secure_cookie('account', str(acc.key()))
             return self.redirect_to('Index')
 
 
-class Account(RequestHandler):
+class AccountHandler(RequestHandler):
     pass
 
 
@@ -100,7 +96,7 @@ class Facebook(object):
 
     def get_profile(self, access_token):
         logging.info('Getting FB account for access token %s' % access_token)
-        resp = self.make_request(self.ACCESS_TOKEN_URL,
+        resp = self.make_request(self.PROFILE_URL,
                                  access_token=access_token)
         if resp.status_code == 200:
             return json.loads(resp.content)
@@ -112,6 +108,7 @@ class Facebook(object):
     def make_request(self, url, **kwargs):
         kwargs.update(self.base_args)
         url = '%s?%s' % (url, urlencode(kwargs))
+        logging.info('FB Request: %s' % url)
         return urlfetch.fetch(url)
 
     @property
