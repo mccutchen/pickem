@@ -1,0 +1,162 @@
+[
+  {
+    "place": "Philadelphia", 
+    "slug": "phi", 
+    "name": "Eagles"
+  }, 
+  {
+    "place": "Tennessee", 
+    "slug": "ten", 
+    "name": "Titans"
+  }, 
+  {
+    "place": "Buffalo", 
+    "slug": "buf", 
+    "name": "Bills"
+  }, 
+  {
+    "place": "Oakland", 
+    "slug": "oak", 
+    "name": "Raiders"
+  }, 
+  {
+    "place": "Dallas", 
+    "slug": "dal", 
+    "name": "Cowboys"
+  }, 
+  {
+    "place": "New England", 
+    "slug": "ne", 
+    "name": "Patriots"
+  }, 
+  {
+    "place": "Green Bay", 
+    "slug": "gb", 
+    "name": "Packers"
+  }, 
+  {
+    "place": "Seattle", 
+    "slug": "sea", 
+    "name": "Seahawks"
+  }, 
+  {
+    "place": "Washington", 
+    "slug": "wsh", 
+    "name": "Redskins"
+  }, 
+  {
+    "place": "Indianapolis", 
+    "slug": "ind", 
+    "name": "Colts"
+  }, 
+  {
+    "place": "Arizona", 
+    "slug": "ari", 
+    "name": "Cardinals"
+  }, 
+  {
+    "place": "Pittsburgh", 
+    "slug": "pit", 
+    "name": "Steelers"
+  }, 
+  {
+    "place": "Carolina", 
+    "slug": "car", 
+    "name": "Panthers"
+  }, 
+  {
+    "place": "Kansas City", 
+    "slug": "kc", 
+    "name": "Chiefs"
+  }, 
+  {
+    "place": "Minnesota", 
+    "slug": "min", 
+    "name": "Vikings"
+  }, 
+  {
+    "place": "Miami", 
+    "slug": "mia", 
+    "name": "Dolphins"
+  }, 
+  {
+    "place": "Cleveland", 
+    "slug": "cle", 
+    "name": "Browns"
+  }, 
+  {
+    "place": "Atlanta", 
+    "slug": "atl", 
+    "name": "Falcons"
+  }, 
+  {
+    "place": "New Orleans", 
+    "slug": "no", 
+    "name": "Saints"
+  }, 
+  {
+    "place": "Detroit", 
+    "slug": "det", 
+    "name": "Lions"
+  }, 
+  {
+    "place": "Cincinnati", 
+    "slug": "cin", 
+    "name": "Bengals"
+  }, 
+  {
+    "place": "New York", 
+    "slug": "nyg", 
+    "name": "Giants"
+  }, 
+  {
+    "place": "New York", 
+    "slug": "nyj", 
+    "name": "Jets"
+  }, 
+  {
+    "place": "St. Louis", 
+    "slug": "stl", 
+    "name": "Rams"
+  }, 
+  {
+    "place": "Houston", 
+    "slug": "hou", 
+    "name": "Texans"
+  }, 
+  {
+    "place": "Denver", 
+    "slug": "den", 
+    "name": "Broncos"
+  }, 
+  {
+    "place": "Chicago", 
+    "slug": "chi", 
+    "name": "Bears"
+  }, 
+  {
+    "place": "Baltimore", 
+    "slug": "bal", 
+    "name": "Ravens"
+  }, 
+  {
+    "place": "San Francisco", 
+    "slug": "sf", 
+    "name": "49ers"
+  }, 
+  {
+    "place": "Tampa Bay", 
+    "slug": "tb", 
+    "name": "Buccaneers"
+  }, 
+  {
+    "place": "Jacksonville", 
+    "slug": "jac", 
+    "name": "Jaguars"
+  }, 
+  {
+    "place": "San Diego", 
+    "slug": "sd", 
+    "name": "Chargers"
+  }
+]
