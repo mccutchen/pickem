@@ -52,19 +52,19 @@ class Game(db.Model):
 
     updated_at = db.DateTimeProperty(auto_now=True)
 
-    def is_winner(self, team, with_spread):
+    def is_winner(self, team, against_spread):
         """Returns True if the given team won or tied the game. Takes the
-        point spread into account if with_spread is True. NOTE: Assumes that
-        the game is over."""
-        winner = self.get_winner(with_spread)
+        point spread into account if against_spread is True. NOTE: Assumes
+        that the game is over."""
+        winner = self.get_winner(against_spread)
         return winner in (team, None)
 
-    def get_winner(self, with_spread):
+    def get_winner(self, against_spread):
         """Determines the winner of the game, taking the point spread into
-        account if with_spread is True. Returns the winning team, or None in
-        the case of a tie. NOTE: Assumes that the game is over."""
+        account if against_spread is True. Returns the winning team, or None
+        in the case of a tie. NOTE: Assumes that the game is over."""
         diff = self.home_score - self.away_score
-        if with_spread:
+        if against_spread:
             diff += self.spread
         if diff > 0:
             return self.home_team
@@ -81,14 +81,20 @@ class Pool(db.Model):
     name = db.StringProperty(required=True)
     description = db.StringProperty()
 
+    # Is this pool invite only?
+    invite_only = db.BooleanProperty(default=True)
+
     # How much does an entry cost?
     buy_in = db.FloatProperty(default=0.0)
 
     # Are games picked against the spread
-    with_spread = db.BooleanProperty(default=False)
+    against_spread = db.BooleanProperty(default=False)
 
-    # Is there a hard deadline for picking games?
-    hard_deadline = db.BooleanProperty(default=False)
+    # Which team are late picks stuck with?
+    default_team = db.ReferenceProperty(Team, collection_name='default_pools')
+
+    # Send updates to the manager?
+    email_updates = db.BooleanProperty(default=True)
 
     @property
     def entries(self):
