@@ -99,12 +99,24 @@ class Pool(db.Model):
         return self.entries.filter('active =', True)
 
     @property
-    def active_players(self):
-        pass
+    def paid_entries(self):
+        return self.entries.filter('paid =', True)
+
+    @property
+    def unpaid_entries(self):
+        return self.entries.filter('paid =', False)
 
     @property
     def pot(self):
+        return self.buy_in * self.paid_entries.count()
+
+    @property
+    def potential_pot(self):
         return self.buy_in * self.entries.count()
+
+    def is_member(self, account):
+        """Does the given account have an entry in this pool?"""
+        return self.entries.filter('account =', account).get() is not None
 
 
 class Entry(db.Model):
