@@ -2,43 +2,41 @@ import logging
 from lib.webapp import RequestHandler
 
 
-class PickemHandler(RequestHandler):
+class Index(RequestHandler):
+
+    def get(self):
+        return self.render('templates/index.html')
+
+
+class Pools(RequestHandler):
     pass
 
 
-class Index(PickemHandler):
+class Pool(RequestHandler):
     pass
 
 
-class Pools(PickemHandler):
+class Entries(RequestHandler):
     pass
 
 
-class Pool(PickemHandler):
+class Entry(RequestHandler):
     pass
 
 
-class Entries(PickemHandler):
+class Picks(RequestHandler):
     pass
 
 
-class Entry(PickemHandler):
+class Pick(RequestHandler):
     pass
 
 
-class Picks(PickemHandler):
+class ManagePool(RequestHandler):
     pass
 
 
-class Pick(PickemHandler):
-    pass
-
-
-class ManagePool(PickemHandler):
-    pass
-
-
-class Login(PickemHandler):
+class Login(RequestHandler):
 
     def get(self):
         """Handles both legs of OAuth authorization. On the first request, the
@@ -90,5 +88,5 @@ class Login(PickemHandler):
                 return self.redirect(url)
 
 
-class Account(PickemHandler):
+class Account(RequestHandler):
     pass

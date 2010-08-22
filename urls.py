@@ -1,16 +1,16 @@
 import views
 
 urls = [
-    (r'/', views.Index),
+    (r'/', views.pools.Index),
 
-    (r'/pools', views.Pools),
-    (r'/pools/(\d+)', views.Pool),
-    (r'/pools/(\d+)/entries', views.Entries),
-    (r'/pools/(\d+)/entries/(\d+)', views.Entry),
-    (r'/pools/(\d+)/entries/(\d+)/picks', views.Picks),
-    (r'/pools/(\d+)/entries/(\d+)/picks/(\d+)', views.Pick),
-    (r'/pools/(\d+)/manage', views.ManagePool),
+    (r'/pools', views.pools.Pools),
+    (r'/pools/(\d+)', views.pools.Pool),
+    (r'/pools/(\d+)/entries', views.pools.Entries),
+    (r'/pools/(\d+)/entries/(\d+)', views.pools.Entry),
+    (r'/pools/(\d+)/entries/(\d+)/picks', views.pools.Picks),
+    (r'/pools/(\d+)/entries/(\d+)/picks/(\d+)', views.pools.Pick),
+    (r'/pools/(\d+)/manage', views.pools.ManagePool),
 
-    (r'/accounts/login', views.Login),
-    (r'/accounts/(\d+)', views.Account),
+    (r'/accounts/login', views.accounts.Login),
+    (r'/accounts/(\d+)', views.accounts.Account),
     ]
