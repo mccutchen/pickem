@@ -17,11 +17,11 @@ class Account(db.Model):
 
 
 class Team(db.Model):
-    """A real life sports team, with a place and a name and a slug (the short
-    string used to identify the team in score feeds)."""
-    place = db.StringProperty()
-    name = db.StringProperty()
-    slug = db.StringProperty()
+    """A real life sports team, with a place and a name. The key name for a
+    team should be its slug, the short identifier used to identify the team in
+    score feeds (e.g., 'dal' for Dallas, 'mia' for Miami)."""
+    place = db.StringProperty(required=True)
+    name = db.StringProperty(required=True)
 
     def __unicode__(self):
         return u'%s %s' % (self.place, self.name)
