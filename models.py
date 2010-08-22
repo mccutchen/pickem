@@ -5,15 +5,15 @@ class Team(db.Model):
     """A real life sports team, with a place and a name and a slug (the short
     string used to identify the team in score feeds)."""
     place = db.StringProperty()
-	name = db.StringProperty()
-	slug = db.StringProperty()
+    name = db.StringProperty()
+    slug = db.StringProperty()
 
 
 class Season(db.Model):
     """A single season for a given sports league."""
     name = db.StringProperty() # E.g. 2010-11 Season
-	start_date = db.DateProperty()
-	end_date = db.DateProperty()
+    start_date = db.DateProperty()
+    end_date = db.DateProperty()
 
 
 class Slate(db.Model):
@@ -36,7 +36,7 @@ class Game(db.Model):
     # Spread will always be according to the home team
     spread = db.FloatProperty(default=0.0)
 
-    kickoff = db.DateTimeProperty()
+    start = db.DateTimeProperty()
     final = db.BooleanProperty(default=False)
 
     updated_at = db.DateTimeProperty(auto_now=True)
@@ -104,7 +104,7 @@ class Entry(db.Model):
 
 class Pick(db.Model):
     """A single user's pick for a specific game."""
-	slate = db.ReferenceProperty(Slate)
+    slate = db.ReferenceProperty(Slate)
     game = db.ReferenceProperty(Game)
     team = db.ReferenceProperty(Team)
     correct = db.BooleanProperty()
