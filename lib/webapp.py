@@ -16,7 +16,7 @@ from settings import COOKIE_SECRET
 
 
 DEFAULT_STATUS = 200
-DEFAULT_MIMETYPE = 'text/html'
+DEFAULT_MIMETYPE = 'text/html; charset=utf-8'
 
 
 class RequestHandler(webapp2.RequestHandler):
@@ -42,7 +42,8 @@ class RequestHandler(webapp2.RequestHandler):
         context = context or {}
         self.response.set_status(status or DEFAULT_STATUS)
         self.response.headers['Content-type'] = mimetype or DEFAULT_MIMETYPE
-        self.response.out.write(render_to_string(template, context))
+        resp = render_to_string(template, context)
+        self.response.out.write(resp.encode('utf-8', 'xmlcharrefreplace'))
 
     ##########################################################################
     # Cookie API and implementation ported from Tornado:
