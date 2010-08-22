@@ -1,4 +1,5 @@
 import logging
+import datetime
 
 from lib.webapp import RequestHandler, SecureRequestHandler
 from lib.decorators import pool_required, entry_required
@@ -24,6 +25,7 @@ class IndexHandler(RequestHandler):
                 ctx.update({
                         'pools': pools,
                         'entries': entries,
+                        'slate': models.Slate.next(),
                         })
                 return self.render('pools/dashboard.html', ctx)
 

@@ -5,22 +5,32 @@
     
     <p>Welcome back.</p>
     
-    <h3>Your Pools</h3>
-    <p>You're managing {{ pools|length }} pools.</p>
-    
-    {% for pool in pools %}
-        <h4>{{ pool.name }}</a></h4>
-        <p>
-            <a href="{{ url('pool', pool.key().id()) }}">View</a> |
-            <a href="{{ url('manage-pool', pool.key().id()) }}">Manage</a>
-        </p>
-    {% endfor %}
-    
+    {% if pools %}
+        <h3>Your Pools</h3>
+        <p>You're managing {{ pools|length }} pools.</p>
+
+        <ul>
+            {% for pool in pools %}
+                <li>
+                    <a href="{{ url('pool', pool.key().id()) }}">{{ pool }}</a>
+                    (<a href="{{ url('manage-pool', pool.key().id()) }}">Manage</a>)
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
     <h3>Your Entries</h3>
     <p>You've got {{ entries|length }} entries.</p>
-    {% for entry in entries %}
-        <h4><a href="{{ url('entry', entry.parent().key().id(), entry.key().id()) }}">{{ entry.parent() }}</a></h4>
-    {% endfor %}
+    <ul>
+        {% for entry in entries %}
+            <li>
+                <a href="{{ url('entry', entry.parent().key().id(), entry.key().id()) }}">{{ entry.parent() }}</a>
+                {% if not entry.has_picked(slate) %}
+                    Pick due by {{ slate.start }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
     
     <h3>New Pool</h3>
     <p>Create a new pool.</p>
