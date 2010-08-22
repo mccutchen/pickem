@@ -1,16 +1,26 @@
+from ext.webapp2 import Route
 import views
 
 urls = [
-    (r'/', views.pools.Index),
+    Route(r'/', views.pools.IndexHandler, 'index'),
 
-    (r'/pools', views.pools.Pools),
-    (r'/pools/(\d+)', views.pools.Pool),
-    (r'/pools/(\d+)/entries', views.pools.Entries),
-    (r'/pools/(\d+)/entries/(\d+)', views.pools.Entry),
-    (r'/pools/(\d+)/entries/(\d+)/picks', views.pools.Picks),
-    (r'/pools/(\d+)/entries/(\d+)/picks/(\d+)', views.pools.Pick),
-    (r'/pools/(\d+)/manage', views.pools.ManagePool),
+    Route(r'/pools', views.pools.PoolsHandler, 'pools'),
+    Route(r'/pools/<:\d+>', views.pools.PoolHandler, 'pool'),
+    Route(r'/pools/<:\d+>/entries', views.pools.EntriesHandler, 'entries'),
+    Route(r'/pools/<:\d+>/entries/<:\d+>', views.pools.EntryHandler, 'entry'),
 
-    (r'/accounts/login', views.accounts.Login),
-    (r'/accounts/(\d+)', views.accounts.Account),
+    Route(r'/pools/<:\d+>/entries/<:\d+>/picks',
+          views.pools.PicksHandler,
+          'picks'),
+    Route(r'/pools/<:\d+>/entries/<:\d+>/picks/<:\d+>',
+          views.pools.PickHandler,
+          'pick'),
+
+    Route(r'/pools/<:\d+>/manage',
+          views.pools.ManagePoolHandler,
+          'manage-pool'),
+
+    Route(r'/accounts/login', views.accounts.LoginHandler, 'login'),
+    Route(r'/account', views.accounts.AccountHandler, 'account'),
+    Route(r'/accounts/<:\d+>', views.accounts.ProfileHandler, 'profile'),
     ]

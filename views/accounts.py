@@ -12,7 +12,7 @@ from models import Account
 import settings
 
 
-class Login(RequestHandler):
+class LoginHandler(RequestHandler):
 
     def get(self):
         """Handles both legs of OAuth authorization. On the first request, the
@@ -54,7 +54,7 @@ class Login(RequestHandler):
                 oauth_token=access_token)
 
             self.set_secure_cookie('account', str(acc.key()))
-            return self.redirect_to('Index')
+            return self.redirect_to('index')
 
 
 class AccountHandler(RequestHandler):
@@ -115,3 +115,7 @@ class Facebook(object):
     def base_args(self):
         return dict(client_id=settings.FB_APP_ID,
                     redirect_uri=self.redirect_uri)
+
+
+class ProfileHandler(RequestHandler):
+    pass
