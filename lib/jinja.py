@@ -24,4 +24,8 @@ environment.filters['dateformat'] = dateformat
 ##############################################################################
 # Helper functions, available to all templates
 ##############################################################################
-environment.globals['reverse_url'] = lambda *args: '/XXX'
+def url(*args, **kwargs):
+    from main import app
+    return app.url_for(*args, **kwargs)
+
+environment.globals['url'] = url

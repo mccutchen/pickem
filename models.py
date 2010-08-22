@@ -90,6 +90,9 @@ class Account(db.Model):
     last_name = db.StringProperty()
     oauth_token = db.StringProperty()
 
+    def __unicode__(self):
+        return unicode(self.email)
+
 
 class Entry(db.Model):
     """A single user's entry into a given Pool."""
