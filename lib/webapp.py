@@ -39,11 +39,16 @@ class RequestHandler(webapp2.RequestHandler):
     def render(self, template, context=None, status=None, mimetype=None):
         """Renders the given template (or list of templates to choose) with
         the given context using Jinja2."""
-        context = context or {}
+        final_context = self.default_context
+        final_context.update(context or {})
         self.response.set_status(status or DEFAULT_STATUS)
         self.response.headers['Content-type'] = mimetype or DEFAULT_MIMETYPE
-        resp = render_to_string(template, context)
+        resp = render_to_string(template, final_context)
         self.response.out.write(resp.encode('utf-8', 'xmlcharrefreplace'))
+
+    @property
+    def default_context(self):
+        return { 'request': self.request }
 
     ##########################################################################
     # Cookie API and implementation ported from Tornado:
