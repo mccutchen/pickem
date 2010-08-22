@@ -42,9 +42,24 @@ class Season(db.Model):
     end_date = db.DateProperty(required=True)
 
     @property
+    def slates(self):
+        return db.Query(Slate).ancestor(self).order('start')
+
+    @property
     def name(self):
         return u'%d-%d Season' % (self.start_date.year,
                                   self.end_date.year % 1000)
+
+    @classmethod
+    def current(cls):
+        if not hasattr(cls, '_current'):
+            today = datetime.date.today()
+            season = cls.all()\
+                .filter('end_date >=', today)\
+                .order('end_date')\
+                .get()
+            cls._current = season
+        return cls._current
 
     def __unicode__(self):
         return self.name
@@ -63,6 +78,15 @@ class Slate(db.Model):
     @property
     def started(self):
         return datetime.datetime.now() > self.start
+
+    @classmethod
+    def next(cls):
+        if not hasattr(cls, '_next'):
+            season = Season.current()
+            now = datetime.datetime.now()
+            slate = season.slates.filter('start >', now).get()
+            cls._next = slate
+        return cls._next
 
     def __unicode__(self):
         return self.name
