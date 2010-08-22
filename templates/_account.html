@@ -1,0 +1,7 @@
+<div id="account">
+    {% if request.account %}
+        <a href="/xxx">{{ request.account }}</a>
+    {% else %}
+        <a href="/accounts/login">Log in</a>
+    {% endif %}
+</div>
