@@ -1,3 +1,6 @@
+import datetime
+import logging
+
 from google.appengine.ext import db
 
 
@@ -15,6 +18,9 @@ class Account(db.Model):
     def __unicode__(self):
        return self.name
 
+    def __str__(self):
+        return unicode(self).encode('utf8', 'ignore')
+
 
 class Team(db.Model):
     """A real life sports team, with a place and a name. The key name for a
@@ -26,18 +32,25 @@ class Team(db.Model):
     def __unicode__(self):
         return u'%s %s' % (self.place, self.name)
 
+    def __str__(self):
+        return unicode(self).encode('utf8', 'ignore')
+
 
 class Season(db.Model):
     """A single season for a given sports league."""
-    start_date = db.DateProperty()
-    end_date = db.DateProperty()
+    start_date = db.DateProperty(required=True)
+    end_date = db.DateProperty(required=True)
 
     @property
     def name(self):
-        return u'%d-%d Season' % (self.start_date.year, self.end_date.year)
+        return u'%d-%d Season' % (self.start_date.year,
+                                  self.end_date.year % 1000)
 
     def __unicode__(self):
         return self.name
+
+    def __str__(self):
+        return unicode(self).encode('utf8', 'ignore')
 
 
 class Slate(db.Model):
@@ -47,8 +60,15 @@ class Slate(db.Model):
     start = db.DateTimeProperty()
     end = db.DateTimeProperty()
 
+    @property
+    def started(self):
+        return datetime.datetime.now() > self.start
+
     def __unicode__(self):
         return self.name
+
+    def __str__(self):
+        return unicode(self).encode('utf8', 'ignore')
 
 
 class Game(db.Model):
@@ -91,6 +111,9 @@ class Game(db.Model):
 
     def __unicode__(self):
         return '%s at %s' % (self.away_team, self.home_team)
+
+    def __str__(self):
+        return unicode(self).encode('utf8', 'ignore')
 
 
 class Pool(db.Model):
@@ -159,6 +182,9 @@ class Pool(db.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return unicode(self).encode('utf8', 'ignore')
+
 
 class Entry(db.Model):
     """A single user's entry into a given Pool."""
@@ -172,6 +198,9 @@ class Entry(db.Model):
 
     def __unicode__(self):
         return unicode(self.account)
+
+    def __str__(self):
+        return unicode(self).encode('utf8', 'ignore')
 
 
 class Pick(db.Model):
@@ -194,3 +223,6 @@ class Pick(db.Model):
 
     def __unicode__(self):
         return unicode(self.team)
+
+    def __str__(self):
+        return unicode(self).encode('utf8', 'ignore')
