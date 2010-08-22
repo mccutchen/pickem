@@ -1,5 +1,9 @@
 #!/usr/bin/env python
+import os
 from ext.webapp2 import WSGIApplication
+
+from google.appengine.dist import use_library
+use_library('django', '1.1')
 
 import urls
 import settings
