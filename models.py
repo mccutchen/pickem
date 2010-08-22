@@ -220,6 +220,10 @@ class Entry(db.Model):
     # Has it been paid up?
     paid = db.BooleanProperty(default=False)
 
+    def has_picked(self, slate):
+        """Has a pick been made for the given slate?"""
+        return self.picks.filter('slate =', slate).get() is not None
+
     def __unicode__(self):
         return unicode(self.account)
 
@@ -229,6 +233,7 @@ class Entry(db.Model):
 
 class Pick(db.Model):
     """A single user's pick for a specific game."""
+    entry = db.ReferenceProperty(Entry, collection_name='picks')
     slate = db.ReferenceProperty(Slate, collection_name='picks')
     game = db.ReferenceProperty(Game, collection_name='picks')
     team = db.ReferenceProperty(Team, collection_name='picks')
