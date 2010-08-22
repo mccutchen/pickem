@@ -5,7 +5,6 @@ from lib.webapp import RequestHandler
 class IndexHandler(RequestHandler):
 
     def get(self):
-        return self.render('index.html')
 
 
 class PoolsHandler(RequestHandler):
@@ -13,6 +12,22 @@ class PoolsHandler(RequestHandler):
 
 
 class PoolHandler(RequestHandler):
+        if not self.account:
+            return self.render('pools/index.html')
+        else:
+            pools = self.account.pools.fetch(1000)
+            entries = self.account.entries.fetch(1000)
+            ctx = {
+                'form': forms.PoolForm(),
+                }
+            if not pools and not entries:
+                return self.render('pools/start.html', ctx)
+            else:
+                ctx.update({
+                        'pools': pools,
+                        'entries': entries,
+                        })
+                return self.render('pools/dashboard.html', ctx)
     pass
 
 

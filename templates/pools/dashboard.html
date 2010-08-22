@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Dashboard</h2>
+    
+    <p>Welcome back.</p>
+    
+    <h3>Your Pools</h3>
+    <p>You're managing {{ pools|length }} pools.</p>
+    
+    {% for pool in pools %}
+        <h4><a href="{{ url('manage-pool', pool.key().id()) }}">{{ pool.name }}</a></h4>
+        <p>{{ pool.entries.count() }} entries.</p>
+        <p>{{ pool.active_entries.count() }} active entries.</p>
+        <p>Pot: ${{ pool.pot }}.</p>
+    {% endfor %}
+    
+    <h3>Your Entries</h3>
+    <p>You've got {{ entries|length }} entries.</p>
+    {% for entry in entries %}
+        <h4><a href="{{ url('entry', entry.parent.key().id(), entry.key().id()) }}">#{{ entry.key().id() }} in {{ entry.parent.name }}</a></h4>
+        <p>{{ entry.active }}</p>
+    {% endfor %}
+{% endblock %}
