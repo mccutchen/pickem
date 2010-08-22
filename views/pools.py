@@ -1,5 +1,7 @@
 import logging
+
 from lib.webapp import RequestHandler, SecureRequestHandler
+from lib.decorators import pool_required, entry_required
 
 import models
 import forms
@@ -40,7 +42,17 @@ class PoolsHandler(SecureRequestHandler):
 
 
 class PoolHandler(SecureRequestHandler):
-    pass
+
+    @pool_required
+    def get(self, pool):
+        entries = pool.entries.fetch(1000)
+        active_entries = pool.active_entries.fetch(1000)
+        unpaid_entries = pool.unpaid_entries.fetch(1000)
+        ctx = dict(pool=pool,
+                   entries=entries,
+                   active_entries=active_entries,
+                   unpaid_entries=unpaid_entries)
+        return self.render('pools/pool.html', ctx)
 
 
 class EntriesHandler(SecureRequestHandler):

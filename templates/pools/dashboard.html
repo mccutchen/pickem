@@ -9,10 +9,11 @@
     <p>You're managing {{ pools|length }} pools.</p>
     
     {% for pool in pools %}
-        <h4><a href="{{ url('manage-pool', pool.key().id()) }}">{{ pool.name }}</a></h4>
-        <p>{{ pool.entries.count() }} entries.</p>
-        <p>{{ pool.active_entries.count() }} active entries.</p>
-        <p>Pot: ${{ pool.pot }}.</p>
+        <h4>{{ pool.name }}</a></h4>
+        <p>
+            <a href="{{ url('pool', pool.key().id()) }}">View</a> |
+            <a href="{{ url('manage-pool', pool.key().id()) }}">Manage</a>
+        </p>
     {% endfor %}
     
     <h3>Your Entries</h3>

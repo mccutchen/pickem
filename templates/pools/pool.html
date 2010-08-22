@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>{{ pool.name }}</h2>
+    {% if pool.decription %}
+        <p>{{ pool.description }}</p>
+    {% endif %}
+    
+    <div class="overview">
+        <ul>
+            <li>{{ active_entries|length }}/{{ entries|length }} active entries</li>
+            <li>Pot: ${{ pool.pot }}/{{ pool.potential_pot }}</li>
+            <li>{{ unpaid_entries|length }} unpaid entries</li>
+        </ul>
+    </div>
+
+    <h3>Active Entries</h3>
+    <ol>
+        {% for entry in active_entries %}
+            <li><a href="{{ url('entry', pool.key().id(), entry.key().id()) }}">{{ entry.account }}</a></li>
+        {% else %}
+            <li>None</li>
+        {% endfor %}
+    </ol>
+{% endblock %}
