@@ -1,6 +1,8 @@
 import os, sys
 
-PROJECT_ROOT = os.path.realpath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.realpath(
+    os.path.dirname(
+        os.path.dirname(__file__)))
 
 # See if we're running in production or in development
 PRODUCTION = 'Development' not in os.environ.get('SERVER_SOFTWARE', '')
