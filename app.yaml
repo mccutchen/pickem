@@ -4,5 +4,13 @@ runtime: python
 api_version: 1
 
 handlers:
+- url: /static
+  static_dir: static
+  secure: optional
+
+- url: /(favicon\.ico|robots\.txt|crossdomain\.xml|opensearch\.xml)
+  static_files: static/\1
+  upload: static/(favicon\.ico|robots\.txt|crossdomain\.xml|opensearch\.xml)
+
 - url: .*
   script: main.py
