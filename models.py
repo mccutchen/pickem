@@ -27,8 +27,8 @@ class Slate(db.Model):
 class Game(db.Model):
     """A single game in a slate in a season, between a home Team and an away
     Team, with a point spread."""
-    home_team = db.ReferenceProperty(Team)
-    away_team = db.ReferenceProperty(Team)
+    home_team = db.ReferenceProperty(Team, collection_name='home_games')
+    away_team = db.ReferenceProperty(Team, collection_name='away_games')
 
     home_score = db.IntegerProperty(default=0)
     away_score = db.IntegerProperty(default=0)
@@ -86,9 +86,9 @@ class Pool(db.Model):
 class Account(db.Model):
     """A user's account."""
     email = db.EmailProperty(required=True)
-    oauth_token = db.StringProperty(required=True)
     first_name = db.StringProperty()
     last_name = db.StringProperty()
+    oauth_token = db.StringProperty()
 
 
 class Entry(db.Model):
@@ -104,9 +104,9 @@ class Entry(db.Model):
 
 class Pick(db.Model):
     """A single user's pick for a specific game."""
-    slate = db.ReferenceProperty(Slate)
-    game = db.ReferenceProperty(Game)
-    team = db.ReferenceProperty(Team)
+    slate = db.ReferenceProperty(Slate, collection_name='picks')
+    game = db.ReferenceProperty(Game, collection_name='picks')
+    team = db.ReferenceProperty(Team, collection_name='picks')
     correct = db.BooleanProperty()
 
     def evaluate(self, commit=True):
