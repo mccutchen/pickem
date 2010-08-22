@@ -1,6 +1,17 @@
 from google.appengine.ext import db
 
 
+class Account(db.Model):
+    """A user's account."""
+    email = db.EmailProperty(required=True)
+    first_name = db.StringProperty()
+    last_name = db.StringProperty()
+    oauth_token = db.StringProperty()
+
+    def __unicode__(self):
+        return unicode(self.email)
+
+
 class Team(db.Model):
     """A real life sports team, with a place and a name and a slug (the short
     string used to identify the team in score feeds)."""
@@ -65,8 +76,13 @@ class Game(db.Model):
 
 class Pool(db.Model):
     """A pick 'em pool, with a manager and a set of players and entries."""
-    name = db.StringProperty()
+    manager = db.ReferenceProperty(
+        Account, required=True, collection_name='pools')
+    name = db.StringProperty(required=True)
     description = db.StringProperty()
+
+    # How much does an entry cost?
+    buy_in = db.FloatProperty(default=0.0)
 
     # Are games picked against the spread
     with_spread = db.BooleanProperty(default=False)
@@ -76,22 +92,19 @@ class Pool(db.Model):
 
     @property
     def entries(self):
-        return db.Query(Entry).ancestor(self).filter('active =', True)
+        return db.Query(Entry).ancestor(self)
+
+    @property
+    def active_entries(self):
+        return self.entries.filter('active =', True)
 
     @property
     def active_players(self):
         pass
 
-
-class Account(db.Model):
-    """A user's account."""
-    email = db.EmailProperty(required=True)
-    first_name = db.StringProperty()
-    last_name = db.StringProperty()
-    oauth_token = db.StringProperty()
-
-    def __unicode__(self):
-        return unicode(self.email)
+    @property
+    def pot(self):
+        return self.buy_in * self.entries.count()
 
 
 class Entry(db.Model):
