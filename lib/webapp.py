@@ -23,17 +23,20 @@ class RequestHandler(webapp2.RequestHandler):
     """A custom Tornado RequestHandler that knows how to tell if a user has
     logged in via Twitter and renders Jinja2 templates."""
 
+    def __call__(self, *args, **kwargs):
+        self.request.account = self.account
+        return super(RequestHandler, self).__call__(*args, **kwargs)
+
     @property
     def account(self):
         """A account is considered to be logged in via Twitter if they have
         their account_id stored in a secure cookie."""
         if not hasattr(self, '_account'):
+            account_key = self.get_secure_cookie('account')
             try:
-                account_id = int(self.get_secure_cookie('account_id'))
+                self._account = Account.get(account_key)
             except:
                 self._account = None
-            else:
-                self._account = Account.get_by_id(account_id)
         return self._account
 
     def render(self, template, context=None, status=None, mimetype=None):
