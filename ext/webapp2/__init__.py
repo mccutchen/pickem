@@ -587,6 +587,7 @@ class SimpleRoute(BaseRoute):
         """
         self.template = template
         self.handler = handler
+        self.name = handler.__class__.__name__
         # Lazy property.
         self._regex = None
 
