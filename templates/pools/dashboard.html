@@ -19,8 +19,7 @@
     <h3>Your Entries</h3>
     <p>You've got {{ entries|length }} entries.</p>
     {% for entry in entries %}
-        <h4><a href="{{ url('entry', entry.parent.key().id(), entry.key().id()) }}">#{{ entry.key().id() }} in {{ entry.parent.name }}</a></h4>
-        <p>{{ entry.active }}</p>
+        <h4><a href="{{ url('entry', entry.parent().key().id(), entry.key().id()) }}">{{ entry.parent() }}</a></h4>
     {% endfor %}
     
     <h3>New Pool</h3>

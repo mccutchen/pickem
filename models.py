@@ -8,8 +8,12 @@ class Account(db.Model):
     last_name = db.StringProperty()
     oauth_token = db.StringProperty()
 
+    @property
+    def name(self):
+        return u'%s %s' % (self.first_name, self.last_name)
+
     def __unicode__(self):
-        return unicode(self.email)
+       return self.name
 
 
 class Team(db.Model):
@@ -19,12 +23,21 @@ class Team(db.Model):
     name = db.StringProperty()
     slug = db.StringProperty()
 
+    def __unicode__(self):
+        return u'%s %s' % (self.place, self.name)
+
 
 class Season(db.Model):
     """A single season for a given sports league."""
-    name = db.StringProperty() # E.g. 2010-11 Season
     start_date = db.DateProperty()
     end_date = db.DateProperty()
+
+    @property
+    def name(self):
+        return u'%d-%d Season' % (self.start_date.year, self.end_date.year)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Slate(db.Model):
@@ -33,6 +46,9 @@ class Slate(db.Model):
     name = db.StringProperty() # E.g. Week 5
     start = db.DateTimeProperty()
     end = db.DateTimeProperty()
+
+    def __unicode__(self):
+        return self.name
 
 
 class Game(db.Model):
@@ -72,6 +88,9 @@ class Game(db.Model):
             return self.away_team
         else:
             return None
+
+    def __unicode__(self):
+        return '%s at %s' % (self.away_team, self.home_team)
 
 
 class Pool(db.Model):
@@ -137,6 +156,9 @@ class Pool(db.Model):
                 return False
         return db.run_in_transaction(txn)
 
+    def __unicode__(self):
+        return self.name
+
 
 class Entry(db.Model):
     """A single user's entry into a given Pool."""
@@ -146,7 +168,10 @@ class Entry(db.Model):
     active = db.BooleanProperty(default=True)
 
     # Has it been paid up?
-    paid = db.BooleanProperty(default=True)
+    paid = db.BooleanProperty(default=False)
+
+    def __unicode__(self):
+        return unicode(self.account)
 
 
 class Pick(db.Model):
@@ -166,3 +191,6 @@ class Pick(db.Model):
             return self.correct
         else:
             return None
+
+    def __unicode__(self):
+        return unicode(self.team)
