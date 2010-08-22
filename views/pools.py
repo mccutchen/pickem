@@ -1,17 +1,13 @@
 import logging
-from lib.webapp import RequestHandler
+from lib.webapp import RequestHandler, SecureRequestHandler
+
+import models
+import forms
 
 
 class IndexHandler(RequestHandler):
 
     def get(self):
-
-
-class PoolsHandler(RequestHandler):
-    pass
-
-
-class PoolHandler(RequestHandler):
         if not self.account:
             return self.render('pools/index.html')
         else:
@@ -28,24 +24,40 @@ class PoolHandler(RequestHandler):
                         'entries': entries,
                         })
                 return self.render('pools/dashboard.html', ctx)
+
+
+class PoolsHandler(SecureRequestHandler):
+
+    def post(self):
+        form = forms.PoolForm(self.request.params)
+        if form.is_valid():
+            form.cleaned_data['manager'] = self.account
+            pool = form.save()
+            return self.redirect_to('pool', pool.key().id())
+        else:
+            self.response.out.write(str(form.errors))
+            self.set_status(400)
+
+
+class PoolHandler(SecureRequestHandler):
     pass
 
 
-class EntriesHandler(RequestHandler):
+class EntriesHandler(SecureRequestHandler):
     pass
 
 
-class EntryHandler(RequestHandler):
+class EntryHandler(SecureRequestHandler):
     pass
 
 
-class PicksHandler(RequestHandler):
+class PicksHandler(SecureRequestHandler):
     pass
 
 
-class PickHandler(RequestHandler):
+class PickHandler(SecureRequestHandler):
     pass
 
 
-class ManagePoolHandler(RequestHandler):
+class ManagePoolHandler(SecureRequestHandler):
     pass

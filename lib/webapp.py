@@ -23,8 +23,13 @@ class RequestHandler(webapp2.RequestHandler):
     """A custom Tornado RequestHandler that knows how to tell if a user has
     logged in via Twitter and renders Jinja2 templates."""
 
+    # Is login required for all of this handler's methods?
+    login_required = False
+
     def __call__(self, *args, **kwargs):
         self.request.account = self.account
+        if self.login_required and self.account is None:
+            return self.redirect_to('login')
         return super(RequestHandler, self).__call__(*args, **kwargs)
 
     @property
@@ -107,6 +112,11 @@ class RequestHandler(webapp2.RequestHandler):
 
     def delete_cookie(self, *args, **kwargs):
         return self.response.delete_cookie(*args, **kwargs)
+
+
+class SecureRequestHandler(RequestHandler):
+    """A RequestHandler whose methods all require login."""
+    login_required = True
 
 
 ##############################################################################
