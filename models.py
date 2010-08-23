@@ -1,5 +1,6 @@
 import datetime
 import logging
+from itertools import groupby
 
 from google.appengine.ext import db
 
@@ -83,6 +84,10 @@ class Week(db.Model):
     @property
     def games(self):
         return db.Query(Game).ancestor(self).order('start')
+
+    @property
+    def grouped_games(self):
+        return groupby(self.games.fetch(25), lambda g: g.start.date())
 
     @property
     def started(self):

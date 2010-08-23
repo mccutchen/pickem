@@ -74,7 +74,21 @@ class EntryHandler(SecureRequestHandler):
 
     @objects_required('Pool', 'Entry')
     def get(self, pool, entry):
-        pass
+        season = models.Season.current()
+        weeks = season.weeks.fetch(25)
+        week =  models.Week.next()
+        ctx = dict(season=season,
+                   weeks=weeks,
+                   next_week=week,
+                   pool=pool,
+                   entry=entry,
+                   picks=entry.picks.fetch(1000))
+
+        if entry.account.key() == self.request.account.key():
+            template = 'pools/my_entry.html'
+        else:
+            template = 'pools/public_entry.html'
+        return self.render(template, ctx)
 
 
 class PicksHandler(SecureRequestHandler):
