@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>{{ season }} Season</h1>
+    <div class="summary">
+        <ul>
+            <li>{{ pool_count }} pools</li>
+            <li>{{ entry_count }} entries</li>
+        </ul>
+    </div>
+    
+    <h2>Weeks</h2>
+    <ol>
+        {% for week in weeks %}
+            <li>
+                <a href="{{ url('week', season.key().name(), week.key().id()) }}">{{ week }}</a>
+                Starts {{ week.start }}
+            </li>
+        {% endfor %}
+    </ol>
+{% endblock %}
