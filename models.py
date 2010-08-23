@@ -37,7 +37,8 @@ class Team(db.Model):
 
 
 class Season(db.Model):
-    """A single season for a given sports league."""
+    """A single season.  The key name should be a string containing the start
+    year and end year separated by a dash (e.g. '2010-2011')."""
     start_date = db.DateProperty(required=True)
     end_date = db.DateProperty(required=True)
 
@@ -87,6 +88,18 @@ class Slate(db.Model):
             slate = season.slates.filter('start >', now).get()
             cls._next = slate
         return cls._next
+
+    @classmethod
+    def current(cls):
+        if not hasattr(cls, '_current'):
+            season = Season.current()
+            now = datetime.datetime.now()
+            slate = season.slates\
+                .filter('start <=', now)\
+                .order('-start')\
+                .get()
+            cls._current = slate
+        return cls._current
 
     def __unicode__(self):
         return self.name

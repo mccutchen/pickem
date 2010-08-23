@@ -1,6 +1,6 @@
 import datetime
-import simplejson as json
 import env
+from django.utils import simplejson as json
 
 from google.appengine.ext import db
 import models
@@ -16,15 +16,9 @@ def parsedate(s):
 season_start = parsedate(scheduleData[0]['start']).date()
 season_end = parsedate(scheduleData[-1]['end']).date()
 
-season = models.Season.all()\
-    .filter('start_date =', season_start)\
-    .filter('end_date =', season_end)\
-    .get()
-if not season:
-    print 'making season'
-    season = models.Season(start_date=season_start, end_date=season_end)
-    season.put()
-
+season_key = '%s-%s' % (season_start.year, season_end.year)
+season = models.Season.get_or_insert(
+    season_key, start_date=season_start, end_date=season_end)
 print season
 
 slates = []
