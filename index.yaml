@@ -10,6 +10,16 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: Game
+  ancestor: yes
+  properties:
+  - name: start
+
+- kind: Pool
+  ancestor: yes
+  properties:
+  - name: created_at
+
 - kind: Week
   ancestor: yes
   properties:

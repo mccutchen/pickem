@@ -47,6 +47,10 @@ class Season(db.Model):
         return db.Query(Week).ancestor(self).order('start')
 
     @property
+    def pools(self):
+        return db.Query(Pool).ancestor(self).order('created_at')
+
+    @property
     def name(self):
         return u'%d-%d Season' % (self.start_date.year,
                                   self.end_date.year % 1000)
@@ -75,6 +79,10 @@ class Week(db.Model):
     name = db.StringProperty() # E.g. Week 5
     start = db.DateTimeProperty()
     end = db.DateTimeProperty()
+
+    @property
+    def games(self):
+        return db.Query(Game).ancestor(self).order('start')
 
     @property
     def started(self):
@@ -174,6 +182,9 @@ class Pool(db.Model):
 
     # Send updates to the manager?
     email_updates = db.BooleanProperty(default=True)
+
+    created_at = db.DateTimeProperty(auto_now_add=True)
+    updated_at = db.DateTimeProperty(auto_now=True)
 
     @property
     def entries(self):
