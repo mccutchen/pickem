@@ -2,7 +2,7 @@ import logging
 import datetime
 
 from lib.webapp import RequestHandler, SecureRequestHandler
-from lib.decorators import pool_required, entry_required
+from lib.decorators import objects_required
 
 import models
 import forms
@@ -47,7 +47,7 @@ class PoolsHandler(SecureRequestHandler):
 
 class PoolHandler(SecureRequestHandler):
 
-    @pool_required
+    @objects_required('Pool')
     def get(self, pool):
         entries = pool.entries.fetch(1000)
         active_entries = pool.active_entries.fetch(1000)
@@ -72,7 +72,7 @@ class EntriesHandler(SecureRequestHandler):
 
 class EntryHandler(SecureRequestHandler):
 
-    @entry_required
+    @objects_required('Pool', 'Entry')
     def get(self, pool, entry):
         pass
 
