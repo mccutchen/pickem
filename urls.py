@@ -23,4 +23,9 @@ urls = [
     Route(r'/accounts/login', views.accounts.LoginHandler, 'login'),
     Route(r'/account', views.accounts.AccountHandler, 'account'),
     Route(r'/accounts/<:\d+>', views.accounts.ProfileHandler, 'profile'),
+
+    Route(r'/seasons/<:\d+-\d+>', views.seasons.SeasonHandler, 'season'),
+    Route(r'/seasons/<:\d+-\d+>/weeks/<:\d+>',
+          views.seasons.WeekHandler,
+          'week'),
     ]

@@ -14,7 +14,7 @@
         </ul>
     </div>
     
-    <h3>Currently Picking {{ week }}</h3>
+    <h3>Currently Picking <a href="{{ url('week', season.key().name(), week.key().id()) }}">{{ week }}</a></h3>
     <p>Deadline: {{ week.start }}.</p>
 
     <h3>Active Entries</h3>
