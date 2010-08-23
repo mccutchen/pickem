@@ -52,10 +52,17 @@ class PoolHandler(SecureRequestHandler):
         entries = pool.entries.fetch(1000)
         active_entries = pool.active_entries.fetch(1000)
         unpaid_entries = pool.unpaid_entries.fetch(1000)
+        slate = models.Slate.current()
+        if not slate:
+            slate = models.Slate.next()
+        picks = slate.picks.fetch(1000) if slate.started else []
         ctx = dict(pool=pool,
                    entries=entries,
                    active_entries=active_entries,
-                   unpaid_entries=unpaid_entries)
+                   unpaid_entries=unpaid_entries,
+                   season=slate.parent(),
+                   slate=slate,
+                   picks=picks)
         return self.render('pools/pool.html', ctx)
 
 
@@ -64,7 +71,10 @@ class EntriesHandler(SecureRequestHandler):
 
 
 class EntryHandler(SecureRequestHandler):
-    pass
+
+    @entry_required
+    def get(self, pool, entry):
+        pass
 
 
 class PicksHandler(SecureRequestHandler):
