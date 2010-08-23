@@ -25,7 +25,7 @@ class IndexHandler(RequestHandler):
                 ctx.update({
                         'pools': pools,
                         'entries': entries,
-                        'slate': models.Slate.next(),
+                        'week': models.Week.next(),
                         })
                 return self.render('pools/dashboard.html', ctx)
 
@@ -52,16 +52,16 @@ class PoolHandler(SecureRequestHandler):
         entries = pool.entries.fetch(1000)
         active_entries = pool.active_entries.fetch(1000)
         unpaid_entries = pool.unpaid_entries.fetch(1000)
-        slate = models.Slate.current()
-        if not slate:
-            slate = models.Slate.next()
-        picks = slate.picks.fetch(1000) if slate.started else []
+        week = models.Week.current()
+        if not week:
+            week = models.Week.next()
+        picks = week.picks.fetch(1000) if week.started else []
         ctx = dict(pool=pool,
                    entries=entries,
                    active_entries=active_entries,
                    unpaid_entries=unpaid_entries,
-                   season=slate.parent(),
-                   slate=slate,
+                   season=week.parent(),
+                   week=week,
                    picks=picks)
         return self.render('pools/pool.html', ctx)
 

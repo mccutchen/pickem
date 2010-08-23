@@ -25,8 +25,8 @@
         {% for entry in entries %}
             <li>
                 <a href="{{ url('entry', entry.parent().key().id(), entry.key().id()) }}">{{ entry.parent() }}</a>
-                {% if not entry.has_picked(slate) %}
-                    Pick due by {{ slate.start }}
+                {% if not entry.has_picked(week) %}
+                    Pick due by {{ week.start }}
                 {% endif %}
             </li>
         {% endfor %}

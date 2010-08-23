@@ -43,8 +43,8 @@ class Season(db.Model):
     end_date = db.DateProperty(required=True)
 
     @property
-    def slates(self):
-        return db.Query(Slate).ancestor(self).order('start')
+    def weeks(self):
+        return db.Query(Week).ancestor(self).order('start')
 
     @property
     def name(self):
@@ -69,9 +69,9 @@ class Season(db.Model):
         return unicode(self).encode('utf8', 'ignore')
 
 
-class Slate(db.Model):
-    """A slate of games during a given season.  The games to pick are
-    presented by slate.  In the NFL, this would be one week's games."""
+class Week(db.Model):
+    """A week of games during a given season. Parent should be a Season. Key
+    should be the week's ordinal number in that season."""
     name = db.StringProperty() # E.g. Week 5
     start = db.DateTimeProperty()
     end = db.DateTimeProperty()
@@ -85,8 +85,8 @@ class Slate(db.Model):
         if not hasattr(cls, '_next'):
             season = Season.current()
             now = datetime.datetime.now()
-            slate = season.slates.filter('start >', now).get()
-            cls._next = slate
+            week = season.weeks.filter('start >', now).get()
+            cls._next = week
         return cls._next
 
     @classmethod
@@ -94,11 +94,11 @@ class Slate(db.Model):
         if not hasattr(cls, '_current'):
             season = Season.current()
             now = datetime.datetime.now()
-            slate = season.slates\
+            week = season.weeks\
                 .filter('start <=', now)\
                 .order('-start')\
                 .get()
-            cls._current = slate
+            cls._current = week
         return cls._current
 
     def __unicode__(self):
@@ -109,7 +109,7 @@ class Slate(db.Model):
 
 
 class Game(db.Model):
-    """A single game in a slate in a season, between a home Team and an away
+    """A single game in a week in a season, between a home Team and an away
     Team, with a point spread."""
     home_team = db.ReferenceProperty(Team, collection_name='home_games')
     away_team = db.ReferenceProperty(Team, collection_name='away_games')
@@ -233,9 +233,9 @@ class Entry(db.Model):
     # Has it been paid up?
     paid = db.BooleanProperty(default=False)
 
-    def has_picked(self, slate):
-        """Has a pick been made for the given slate?"""
-        return self.picks.filter('slate =', slate).get() is not None
+    def has_picked(self, week):
+        """Has a pick been made for the given week?"""
+        return self.picks.filter('week =', week).get() is not None
 
     def __unicode__(self):
         return unicode(self.account)
@@ -247,7 +247,7 @@ class Entry(db.Model):
 class Pick(db.Model):
     """A single user's pick for a specific game."""
     entry = db.ReferenceProperty(Entry, collection_name='picks')
-    slate = db.ReferenceProperty(Slate, collection_name='picks')
+    week = db.ReferenceProperty(Week, collection_name='picks')
     game = db.ReferenceProperty(Game, collection_name='picks')
     team = db.ReferenceProperty(Team, collection_name='picks')
     correct = db.BooleanProperty()
