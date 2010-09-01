@@ -1,37 +1,89 @@
 {% extends "base.html" %}
 
+{% block page_header %}
+    <h1>{{ pool }}</h1>
+{% endblock %}
+
 {% block content %}
-    <h1>My Entry in {{ pool }}</h1>
-    <h2>
-        {% if entry.active %}
-            Still Alive!
-        {% else %}
-            Dunzo.
-        {% endif %}
-    </h2>
-    
-    {% for week in weeks %}
-        <div class="week picks{% if week.started %} started{% endif %}{% if week == current_week %} current{% endif %}">
-            <h3>{{ week }}</h3>
-            <h4>
-                {% if week.started %}
-                    Finished.
+    <div class="entry-info">
+        <h2>My Entry</h2>
+        <ul>
+            <li class="active {% if entry.active %}good{% else %}bad{% endif %}">
+                {% if entry.active %}
+                    Still alive
                 {% else %}
-                    Deadline: {{ week.start }}
+                    Out of the running
                 {% endif %}
-            </h4>
-            {% for date, group in week.grouped_games %}
-                <div class="games group date">
-                    <h5>{{ date }}</h5>
+            </li>
+            {% if pool.buy_in %}
+                <li class="paid {% if entry.paid %}good{% else %}bad{% endif %}">
+                    {% if entry.paid %}
+                        Paid up
+                    {% else %}
+                        ${{ pool.buy_in }} overdue
+                    {% endif %}
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div id="current-week" class="week">
+        <h3>{{ next_week }}</h3>
+        <h4>
+            {% if next_week.started %}
+                Finished.
+            {% else %}
+                Deadline: {{ next_week.start|dateformat('%A, %B %d at %H:%M') }}
+            {% endif %}
+        </h4>
+        <form action="./picks/{{ next_week|id }}" method="put">
+            <table class="games">
+                {% set last_kickoff = None %}
+                {% for date, group in next_week.grouped_games %}
+                    <th class="date" colspan="5">{{ date|dateformat('%A, %B %d') }}</th>
                     {% for game in group %}
-                        <div class="game">
-                            <span class="away team">{{ game.away_team }}</span>
-                            at
-                            <span class="home team">{{ game.home_team }}</span>
-                        </div>
+                        <tr>
+                            <td class="kickoff">
+                                {% if not last_kickoff or last_kickoff != game.start %}
+                                    {{ game.start|dateformat('%H:%M') }}
+                                    {% set last_kickoff = game.start %}
+                                {% endif %}
+                            </td>
+                            <td class="away team">
+                                <label>
+                                    <input type="radio" name="pick" value="{{ game.away_team|keyname }}">
+                                    {{ game.away_team }}
+                                </label>
+                            </td>
+                            <td class="away spread">{{ game.spread * -1 }}</td>
+                            <td class="at">at</td>
+                            <td class="home team">
+                                <label>
+                                    <input type="radio" name="pick" value="{{ game.home_team|keyname }}">
+                                    {{ game.home_team }}
+                                </label>
+                            </td>
+                            <td class="home spread">{{ game.spread }}</td>
+                        </tr>
                     {% endfor %}
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </table>
+        </form>
+    </div>
+
+    <div id="other-weeks">
+        {% for week in weeks %}
+            <div class="week {% if week.started %} started{% endif %}{% if week|id == next_week|id %} current{% endif %}">
+                <h3>
+                    {{ week }}
+                    <span>
+                        {% if week.started %}
+                            (finished)
+                        {% else %}
+                            (deadline: {{ week.start|dateformat('%m/%d @ %H:%M') }})
+                        {% endif %}
+                    </span>
+                </h3>
+            </div>
     {% endfor %}
 {% endblock %}

@@ -10,9 +10,11 @@
             <h1><a href="/">Pickem Pickem</a></h1>
             {% include "_account.html" %}
         </div>
-        <div id="content">
+
+        <div id="page-header">{% block page_header %}{% endblock %}</div>
+
+        <div id="content" class="{% block content_class %}{% endblock %}">
             {% block content %}
-                
             {% endblock %}
         </div>
     </body>

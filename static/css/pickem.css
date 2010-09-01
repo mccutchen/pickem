@@ -1,7 +1,6 @@
 body {
-	background-color: #333;
-	max-width: 40em;
-	margin: 0 auto;
+	background-color: #fff;
+	margin: 0;
 	padding: 0;
 	font-family: "Lucida Grande";
 	font-size: 12px;
@@ -9,14 +8,21 @@ body {
 
 #header {
 	color: #fff;
+	background-color: #333;
 	position: relative;
-	margin-top: 2em;
+	padding: 1em 2em;
+	margin-bottom: 1em;
+	-webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, .25);
 }
 #header h1 {
-	font-family: "Cooper Black";
+	font-family: "Cooper Black", "Lucida Grande";
 	font-weight: normal;
 	margin: 0;
 	padding: 0;
+}
+#header h1 a {
+	color: #fff;
+	text-decoration: none;
 }
 #header #account {
 	font-size: 11px;
@@ -31,9 +37,40 @@ body {
 
 div#content {
 	color: #333;
-	background-color: #fff;
-	margin: 0 auto;
-	padding: 2em;
-	border-radius: 4px;
-	-webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, .25);
+	margin: 1em;
+}
+
+
+
+/* Entry pages */
+div#current-week {
+	border: 1px dotted #ccc;
+	border-radius: 6px;
+	display: inline-block;
+}
+
+div#current-week table.games th, div#current-week table.games td {
+	text-align: left;
+	padding: 2px 5px;
+}
+div#current-week table.games th {
+	padding-top: 10px;
+}
+div#current-week table.games td.team {
+}
+div#current-week table.games td.spread {
+	font-size: 11px;
+	color: #999;
+}
+div#current-week table.games td.kickoff {
+	font-size: 11px;
+}
+
+
+div#other-weeks {
+	border: 1px dotted #ccc;
+	border-radius: 6px;
+}
+div#other-weeks div.current {
+	background-color: #ccc;
 }
