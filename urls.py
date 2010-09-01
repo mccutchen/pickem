@@ -28,4 +28,7 @@ urls = [
     Route(r'/seasons/<:\d+-\d+>/weeks/<:\d+>',
           views.seasons.WeekHandler,
           'week'),
+
+    Route(r'/teams/', views.teams.TeamsHandler, 'teams'),
+    Route(r'/teams/<:\w+>', views.teams.TeamHandler, 'team'),
     ]
