@@ -14,8 +14,8 @@
         <ul>
             {% for pool in pools %}
                 <li>
-                    <a href="{{ url('pool', pool.key().id()) }}">{{ pool }}</a>
-                    (<a href="{{ url('manage-pool', pool.key().id()) }}">Manage</a>)
+                    <a href="{{ url('pool', pool|id) }}">{{ pool }}</a>
+                    (<a href="{{ url('manage-pool', pool|id) }}">Manage</a>)
                 </li>
             {% endfor %}
         </ul>
@@ -26,7 +26,7 @@
     <ul>
         {% for entry in entries %}
             <li>
-                <a href="{{ url('entry', entry.parent().key().id(), entry.key().id()) }}">{{ entry.parent() }}</a>
+                <a href="{{ url('entry', entry.parent()|id, entry|id) }}">{{ entry.parent() }}</a>
                 {% if not entry.has_picked(week) %}
                     Pick due by {{ week.start }}
                 {% endif %}

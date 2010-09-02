@@ -1,5 +1,5 @@
 <div class="entry-info">
-    <h2>This Entry</h2>
+    <h2><a href="{{ url('entry', pool|id, entry|id) }}">This Entry</a></h2>
     <ul>
         <li class="active {% if entry.active %}good{% else %}bad{% endif %}">
             {% if entry.active %}
@@ -21,7 +21,7 @@
 </div>
 
 <div class="pool info">
-    <h2>This Pool</h2>
+    <h2><a href="{{ url('pool', pool|id) }}">This Pool</a></h2>
     <ul>
         <li>{{ pool.entries.count() }} entries</li>
         <li>{{ pool.active_entries.count() }} active entries</li>
