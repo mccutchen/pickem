@@ -88,7 +88,7 @@ class EntryHandler(SecureRequestHandler):
                    picks=entry.picks.fetch(1000))
 
         if entry.account.key() == self.request.account.key():
-            template = 'pools/my_entry.html'
+            template = 'pools/pick.html'
         else:
             template = 'pools/public_entry.html'
         return self.render(template, ctx)
@@ -117,7 +117,7 @@ class PickHandler(SecureRequestHandler):
                    picks=entry.picks.fetch(1000))
 
         if entry.account.key() == self.request.account.key():
-            template = 'pools/my_entry.html'
+            template = 'pools/pick.html'
         else:
             template = 'pools/public_entry.html'
         return self.render(template, ctx)
