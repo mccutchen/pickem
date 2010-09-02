@@ -35,7 +35,7 @@ for i, weekData in enumerate(scheduleData):
             name='Week %i' % week_num)
         week.put()
     print week
-    
+
     for gamedata in weekData['games']:
         home_key = gamedata['home'].keys()[0]
         away_key = gamedata['away'].keys()[0]
@@ -52,6 +52,7 @@ for i, weekData in enumerate(scheduleData):
                 parent=week,
                 home_team=home_team,
                 away_team=away_team,
+                teams=[home_team.key(), away_team.key()],
                 start=parsedate(gamedata['datetime']))
         games.append(game)
         print ' -', game

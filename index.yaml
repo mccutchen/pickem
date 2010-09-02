@@ -15,6 +15,12 @@ indexes:
   properties:
   - name: start
 
+- kind: Game
+  ancestor: yes
+  properties:
+  - name: teams
+  - name: start
+
 - kind: Pool
   ancestor: yes
   properties:

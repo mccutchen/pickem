@@ -93,6 +93,9 @@ class Week(db.Model):
     def started(self):
         return datetime.datetime.now() > self.start
 
+    def find_game_for(self, team):
+        return self.games.filter('teams =', team.key()).get()
+
     @classmethod
     def next(cls):
         if not hasattr(cls, '_next'):
@@ -126,6 +129,10 @@ class Game(db.Model):
     Team, with a point spread."""
     home_team = db.ReferenceProperty(Team, collection_name='home_games')
     away_team = db.ReferenceProperty(Team, collection_name='away_games')
+
+    # Also store the teams' keys in a list, so we can query for which game in
+    # a week features a given team.
+    teams = db.ListProperty(db.Key)
 
     home_score = db.IntegerProperty(default=0)
     away_score = db.IntegerProperty(default=0)
@@ -249,6 +256,10 @@ class Entry(db.Model):
     # Has it been paid up?
     paid = db.BooleanProperty(default=False)
 
+    @property
+    def picks(self):
+        return db.Query(Pick).ancestor(self)
+
     def has_picked(self, week):
         """Has a pick been made for the given week?"""
         return self.picks.filter('week =', week).get() is not None
@@ -261,8 +272,8 @@ class Entry(db.Model):
 
 
 class Pick(db.Model):
-    """A single user's pick for a specific game."""
-    entry = db.ReferenceProperty(Entry, collection_name='picks')
+    """A single user's pick for a specific game. Should have an entry as its
+    parent."""
     week = db.ReferenceProperty(Week, collection_name='picks')
     game = db.ReferenceProperty(Game, collection_name='picks')
     team = db.ReferenceProperty(Team, collection_name='picks')
