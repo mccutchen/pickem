@@ -88,7 +88,7 @@ class EntryHandler(SecureRequestHandler):
                    picks=entry.picks.fetch(1000))
 
         if entry.account.key() == self.request.account.key():
-            template = 'pools/pick.html'
+            template = 'pools/entry.html'
         else:
             template = 'pools/public_entry.html'
         return self.render(template, ctx)

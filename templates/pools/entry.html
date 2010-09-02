@@ -1,0 +1,15 @@
+{% extends "2columns.html" %}
+
+{% block page_header %}
+    <h1><label>Pool:</label> {{ pool }}</h1>
+{% endblock %}
+
+{% block left %}
+    {% include "pools/_left.html" %}
+{% endblock %}
+
+{% block right %}
+    <h2>Picks</h2>
+    {% set current_week = week %}
+    {% include 'pools/_weeks.html' %}
+{% endblock %}
