@@ -128,31 +128,31 @@ div#current-week table.games td.kickoff {
 }
 
 
-div#other-weeks a {
-    text-decoration: none;
-    color: #000;
-    border-bottom: 1px dotted #999;
-}
-div#other-weeks ol {
+ol.weeks {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-div#other-weeks ol li {
+ol.weeks li {
     display: block;
     padding: 5px;
 }
-div#other-weeks ol li span {
+ol.weeks a {
+    text-decoration: none;
+    color: #000;
+    border-bottom: 1px dotted #999;
+}
+ol.weeks li span {
     color: #666;
     font-size: 11px;
 }
-div#other-weeks ol li.current {
+ol.weeks li.current {
     background-color: #666;
 }
-div#other-weeks ol li.current a {
+ol.weeks li.current a {
     color: #fff;
     border-color: #ccc;
 }
-div#other-weeks ol li.current span {
+ol.weeks li.current span {
     color: #ccc;
 }
