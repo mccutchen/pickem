@@ -40,18 +40,18 @@
 
 {% block middle %}
     <div id="current-week" class="week">
-        <h2><span>Picking:</span> {{ next_week }}</h2>
+        <h2><span>Picking:</span> {{ week }}</h2>
         <h3>
-            {% if next_week.started %}
+            {% if week.started %}
                 Finished.
             {% else %}
-                Deadline: {{ next_week.start|dateformat('%A, %B %d at %H:%M') }}
+                Deadline: {{ week.start|dateformat('%A, %B %d at %H:%M') }}
             {% endif %}
         </h3>
-        <form action="./picks/{{ next_week|id }}" method="put">
+        <form action="./picks/{{ week|id }}" method="put">
             <table class="games">
                 {% set last_kickoff = None %}
-                {% for date, group in next_week.grouped_games %}
+                {% for date, group in week.grouped_games %}
                     <th class="date" colspan="5">{{ date|dateformat('%A, %B %d') }}</th>
                     {% for game in group %}
                         <tr>
@@ -89,7 +89,7 @@
         <h3>Other Weeks</h3>
         <ol>
             {% for week in weeks %}
-                <li class="week {% if week.started %} started{% endif %}{% if week|id == next_week|id %} current{% endif %}">
+                <li class="week {% if week.started %} started{% endif %}{% if week|id == week|id %} current{% endif %}">
                     {{ week }}
                     <span>
                         {% if week.started %}

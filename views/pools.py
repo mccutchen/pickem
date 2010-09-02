@@ -79,7 +79,7 @@ class EntryHandler(SecureRequestHandler):
         week =  models.Week.next()
         ctx = dict(season=season,
                    weeks=weeks,
-                   next_week=week,
+                   week=week,
                    pool=pool,
                    entry=entry,
                    picks=entry.picks.fetch(1000))
