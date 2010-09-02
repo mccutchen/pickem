@@ -1,4 +1,5 @@
 {% extends "3columns.html" %}
+{% import "macros/games.html" as games %}
 
 {% block page_header %}
     <h1><label>Pool:</label> {{ pool }}</h1>
@@ -25,37 +26,7 @@
         </p>
 
         <form action="{{ url('pick', pool|id, entry|id, week|id) }}" method="post">
-            <table class="games">
-                {% set last_kickoff = None %}
-                {% for date, group in week.grouped_games %}
-                    <th class="date" colspan="5">{{ date|dateformat('%A, %B %d') }}</th>
-                    {% for game in group %}
-                        <tr>
-                            <td class="kickoff">
-                                {% if not last_kickoff or last_kickoff != game.start %}
-                                    {{ game.start|dateformat('%I:%M') }}
-                                    {% set last_kickoff = game.start %}
-                                {% endif %}
-                            </td>
-                            <td class="away team">
-                                <label>
-                                    <input type="radio" name="pick" value="{{ game.away_team|keyname }}"{% if pick.team == game.away_team %} checked{% endif %}>
-                                    {{ game.away_team }}
-                                </label>
-                            </td>
-                            <td class="away spread">{{ (game.spread * -1)|default('--', True) }}</td>
-                            <td class="at">at</td>
-                            <td class="home team">
-                                <label>
-                                    <input type="radio" name="pick" value="{{ game.home_team|keyname }}"{% if pick.team == game.home_team %} checked{% endif %}>
-                                    {{ game.home_team }}
-                                </label>
-                            </td>
-                            <td class="home spread">{{ game.spread|default('--', True) }}</td>
-                        </tr>
-                    {% endfor %}
-                {% endfor %}
-            </table>
+            {{ games.showgames(week, pick) }}
             <input type="submit" value="Make Pick!">
         </form>
     </div>

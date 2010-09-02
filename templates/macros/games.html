@@ -1,0 +1,37 @@
+{% macro showgames(week, pick) %}
+    <table class="games">
+        {% set last_kickoff = None %}
+        {% for date, group in week.grouped_games %}
+            <th class="date" colspan="5">{{ date|dateformat('%A, %B %d') }}</th>
+            {% for game in group %}
+                {{ showgame(game, pick) }}
+            {% endfor %}
+        {% endfor %}
+    </table>
+{% endmacro %}
+
+{% macro showgame(game, pick) %}
+    <tr>
+        <td class="kickoff">
+            {% if not last_kickoff or last_kickoff != game.start %}
+                {{ game.start|dateformat('%I:%M') }}
+                {% set last_kickoff = game.start %}
+            {% endif %}
+        </td>
+        {{ showteam(game.away_team, game, pick, home=False) }}
+        <td class="at">at</td>
+        {{ showteam(game.home_team, game, pick, home=True) }}
+    </tr>
+{% endmacro %}
+
+{% macro showteam(team, game, pick, home) %}
+    {% set picked = team == pick.team %}
+    {% set tdclass = 'home' if home else 'away' %}
+    <td class="team {{ tdclass }} {% if picked %}picked{% endif %}">
+        <label>
+            <input type="radio" name="pick" value="{{ team|keyname }}"{% if picked %} checked{% endif %}>
+            {{ team }}
+        </label>
+    </td>
+    <td class="spread {{ tdclass }}">{{ (game.spread * (1 if home else -1))|default('--', True) }}</td>
+{% endmacro %}
