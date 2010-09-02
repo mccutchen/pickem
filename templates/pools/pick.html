@@ -5,37 +5,7 @@
 {% endblock %}
 
 {% block left %}
-    <div class="entry-info">
-        <h2>This Entry</h2>
-        <ul>
-            <li class="active {% if entry.active %}good{% else %}bad{% endif %}">
-                {% if entry.active %}
-                    Still alive
-                {% else %}
-                    Out of the running
-                {% endif %}
-            </li>
-            {% if pool.buy_in %}
-                <li class="paid {% if entry.paid %}good{% else %}bad{% endif %}">
-                    {% if entry.paid %}
-                        Paid up
-                    {% else %}
-                        ${{ pool.buy_in }} overdue
-                    {% endif %}
-                </li>
-            {% endif %}
-        </ul>
-    </div>
-    
-    <div class="pool info">
-        <h2>This Pool</h2>
-        <ul>
-            <li>{{ pool.entries.count() }} entries</li>
-            <li>{{ pool.active_entries.count() }} active entries</li>
-            <li>{{ pool.paid_entries.count() }} paid entries</li>
-            <li>Pot: ${{ pool.pot }} of ${{ pool.potential_pot }}</li>
-        </ul>
-    </div>
+    {% include "pools/_left.html" %}
 {% endblock %}
 
 {% block middle %}
@@ -87,19 +57,6 @@
 {% block right %}
     <div id="other-weeks">
         <h3>Other Picks</h3>
-        <ol>
-            {% set current_week = week %}
-            {% for week in weeks %}
-                <li class="week {% if week.started %} started{% endif %}{% if week|id == current_week|id %} current{% endif %}">
-                    <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
-                    <span>
-                        {% if week.started %}
-                            (finished)
-                        {% else %}
-                            (due {{ week.start|dateformat('%m/%d @ %H:%M') }})
-                        {% endif %}
-                    </span>
-                </li>
-            {% endfor %}
-        </ol>
+        {% set current_week = week %}
+        {% include 'pools/_weeks.html' %}
 {% endblock %}

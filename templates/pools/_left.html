@@ -1,0 +1,31 @@
+<div class="entry-info">
+    <h2>This Entry</h2>
+    <ul>
+        <li class="active {% if entry.active %}good{% else %}bad{% endif %}">
+            {% if entry.active %}
+                Still alive
+            {% else %}
+                Out of the running
+            {% endif %}
+        </li>
+        {% if pool.buy_in %}
+            <li class="paid {% if entry.paid %}good{% else %}bad{% endif %}">
+                {% if entry.paid %}
+                    Paid up
+                {% else %}
+                    ${{ pool.buy_in }} overdue
+                {% endif %}
+            </li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="pool info">
+    <h2>This Pool</h2>
+    <ul>
+        <li>{{ pool.entries.count() }} entries</li>
+        <li>{{ pool.active_entries.count() }} active entries</li>
+        <li>{{ pool.paid_entries.count() }} paid entries</li>
+        <li>Pot: ${{ pool.pot }} of ${{ pool.potential_pot }}</li>
+    </ul>
+</div>
