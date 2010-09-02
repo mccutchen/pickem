@@ -94,7 +94,7 @@ class Week(db.Model):
         return groupby(self.games.fetch(25), lambda g: g.start.date())
 
     @property
-    def started(self):
+    def closed(self):
         return datetime.datetime.now() > self.start
 
     def find_game_for(self, team):

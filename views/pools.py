@@ -58,7 +58,7 @@ class PoolHandler(SecureRequestHandler):
         week = models.Week.current()
         if not week:
             week = models.Week.next()
-        picks = week.picks.fetch(1000) if week.started else []
+        picks = week.picks.fetch(1000) if week.closed else []
         ctx = dict(pool=pool,
                    entries=entries,
                    active_entries=active_entries,

@@ -1,19 +1,21 @@
 <ol class="weeks">
     {% for week in weeks %}
         {% set is_current = week|id == current_week|id %}
+        {% set is_closed = week.closed %}
         {% set has_picked = entry.has_picked(week) %}
-        <li class="week {% if week.started %}started{% endif %}{% if is_current %}current{% endif %} {% if not has_picked %}not-{% endif %}picked">
+        <li class="week {% if is_close %}closed{% endif %} {% if is_current %}current{% endif %} {% if has_picked %}picked{% endif %}">
             {% if is_current %}
                 <div class="left arrow"></div>
             {% endif %}
             <span class="indicator" title="You have {% if not has_picked %}not{% endif %} picked this week">
+                {# A check or an X #}
                 {% if has_picked %}&#10003;{% else %}&#10008;{% endif %}
             </span>
             <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
             {% if not has_picked %}
-                <span class="deadline">
-                    {% if week.started %}
-                        finished
+                <span class="deadline {% if week.closed %}closed{% endif %}">
+                    {% if week.closed %}
+                        closed
                     {% else %}
                         due {{ week.start|dateformat('%m/%d @ %I:%M') }}
                     {% endif %}

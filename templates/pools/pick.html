@@ -11,16 +11,19 @@
 {% block middle %}
     <div id="current-week" class="week">
         <h2><span>Picking:</span> {{ week }}</h2>
+
         {% if entry.has_picked(week) %}
             <h3 class="pick"><span>Your pick:</span> {{ pick }}</h3>
         {% endif %}
-        <h3>
-            {% if week.started %}
-                Finished.
+
+        <p class="deadline{% if week.closed %} closed{% endif %}">
+            {% if week.closed %}
+                Closed.
             {% else %}
                 Deadline: {{ week.start|dateformat('%A, %B %d at %I:%M') }}
             {% endif %}
-        </h3>
+        </p>
+
         <form action="{{ url('pick', pool|id, entry|id, week|id) }}" method="post">
             <table class="games">
                 {% set last_kickoff = None %}

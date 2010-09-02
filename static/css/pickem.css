@@ -62,6 +62,7 @@ h1, h2, h3, h4, h5 {
 #header {
 	color: #fff;
 	background-color: #333;
+	z-index: 500;
 }
 #header h1 {
 	font-size: 3em;
@@ -160,12 +161,10 @@ ol.weeks li.current span {
 ol.weeks li span.indicator {
 	margin-right: 5px;
 	cursor: default;
+	color: #900;
 }
 ol.weeks li.picked span.indicator {
 	color: #090;
-}
-ol.weeks li.not-picked span.indicator {
-	color: #900;
 }
 
 /* We only want to show the arrows when we're showing the list of weeks in
