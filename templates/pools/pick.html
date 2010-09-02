@@ -15,7 +15,7 @@
             {% if week.started %}
                 Finished.
             {% else %}
-                Deadline: {{ week.start|dateformat('%A, %B %d at %H:%M') }}
+                Deadline: {{ week.start|dateformat('%A, %B %d at %I:%M') }}
             {% endif %}
         </h3>
         <form action="./picks/{{ week|id }}" method="put">
@@ -27,7 +27,7 @@
                         <tr>
                             <td class="kickoff">
                                 {% if not last_kickoff or last_kickoff != game.start %}
-                                    {{ game.start|dateformat('%H:%M') }}
+                                    {{ game.start|dateformat('%I:%M') }}
                                     {% set last_kickoff = game.start %}
                                 {% endif %}
                             </td>

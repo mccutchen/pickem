@@ -6,7 +6,7 @@
                 {% if week.started %}
                     (finished)
                 {% else %}
-                    (due {{ week.start|dateformat('%m/%d @ %H:%M') }})
+                    (due {{ week.start|dateformat('%m/%d @ %I:%M') }})
                 {% endif %}
             </span>
         </li>
