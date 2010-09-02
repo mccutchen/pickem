@@ -36,24 +36,26 @@
         {% set current_week = week %}
         {% include 'pools/_weeks.html' %}
         
-        <h4>Key</h4>
-        <table>
-            <tr>
-                <th class="indicator picked">&#10003;</th>
-                <td>Picked</td>
-            </tr>
-            <tr>
-                <th class="indicator picked correct">&#10003;</th>
-                <td>Picked correctly</td>
-            </tr>
-            <tr>
-                <th class="indicator picked incorrect">&#10008;</th>
-                <td>Picked incorrectly</td>
-            </tr>
-            <tr>
-                <th class="indicator">&#10008;</th>
-                <td>Not picked</td>
-            </tr>
-        </table>
+        <div id="key">
+            <h4>Key</h4>
+            <table>
+                <tr>
+                    <th class="indicator picked">&#10003;</th>
+                    <td>Picked</td>
+                </tr>
+                <tr>
+                    <th class="indicator picked correct">&#10003;</th>
+                    <td>Picked correctly</td>
+                </tr>
+                <tr>
+                    <th class="indicator picked incorrect">&#10008;</th>
+                    <td>Picked incorrectly</td>
+                </tr>
+                <tr>
+                    <th class="indicator">&#10008;</th>
+                    <td>Not picked</td>
+                </tr>
+            </table>
+        </div>
     </div>
 {% endblock %}

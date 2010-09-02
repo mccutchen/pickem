@@ -13,6 +13,12 @@ body {
 	position: relative;
 }
 
+a {
+	color: #369;
+	text-decoration: none;
+	border-bottom: 1px dotted #ccc;
+}
+
 div#grid {
     height: 100%;
     width: 100%;
@@ -236,4 +242,16 @@ div#other-weeks ol.weeks div.left.arrow {
 	position: absolute;
 	top: -5px;
 	left: -18px;
+}
+
+div#other-weeks div#key {
+	margin-top: 1.5em;
+}
+div#other-weeks div#key h4 {
+	margin-bottom: .5em;
+}
+div#other-weeks div#key th,
+div#other-weeks div#key td {
+	padding: 2px 5px;
+	font-weight: normal;
 }
