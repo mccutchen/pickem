@@ -1,12 +1,12 @@
-{% extends "base.html" %}
+{% extends "3columns.html" %}
 
 {% block page_header %}
     <h1><label>Pool:</label> {{ pool }}</h1>
 {% endblock %}
 
-{% block content %}
+{% block left %}
     <div class="entry-info">
-        <h2>My Entry</h2>
+        <h2>This Entry</h2>
         <ul>
             <li class="active {% if entry.active %}good{% else %}bad{% endif %}">
                 {% if entry.active %}
@@ -26,16 +26,28 @@
             {% endif %}
         </ul>
     </div>
+    
+    <div class="pool info">
+        <h2>This Pool</h2>
+        <ul>
+            <li>{{ pool.entries.count() }} entries</li>
+            <li>{{ pool.active_entries.count() }} active entries</li>
+            <li>{{ pool.paid_entries.count() }} paid entries</li>
+            <li>Pot: ${{ pool.pot }} of ${{ pool.potential_pot }}</li>
+        </ul>
+    </div>
+{% endblock %}
 
+{% block middle %}
     <div id="current-week" class="week">
-        <h3>{{ next_week }}</h3>
-        <h4>
+        <h2><span>Picking:</span> {{ next_week }}</h2>
+        <h3>
             {% if next_week.started %}
                 Finished.
             {% else %}
                 Deadline: {{ next_week.start|dateformat('%A, %B %d at %H:%M') }}
             {% endif %}
-        </h4>
+        </h3>
         <form action="./picks/{{ next_week|id }}" method="put">
             <table class="games">
                 {% set last_kickoff = None %}
@@ -70,20 +82,20 @@
             </table>
         </form>
     </div>
+{% endblock %}
 
-    <div id="other-weeks">
+{% block right %}
+    <ol id="other-weeks">
         {% for week in weeks %}
-            <div class="week {% if week.started %} started{% endif %}{% if week|id == next_week|id %} current{% endif %}">
-                <h3>
-                    {{ week }}
-                    <span>
-                        {% if week.started %}
-                            (finished)
-                        {% else %}
-                            (deadline: {{ week.start|dateformat('%m/%d @ %H:%M') }})
-                        {% endif %}
-                    </span>
-                </h3>
-            </div>
-    {% endfor %}
+            <li class="week {% if week.started %} started{% endif %}{% if week|id == next_week|id %} current{% endif %}">
+                {{ week }}
+                <span>
+                    {% if week.started %}
+                        (finished)
+                    {% else %}
+                        (deadline: {{ week.start|dateformat('%m/%d @ %H:%M') }})
+                    {% endif %}
+                </span>
+            </li>
+        {% endfor %}
 {% endblock %}

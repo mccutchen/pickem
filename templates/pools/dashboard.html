@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
+{% block page_header %}
+    <h1>Dashboard</h1>
+{% endblock %}
+
 {% block content %}
-    <h2>Dashboard</h2>
-    
-    <p>Welcome back.</p>
+    <h2>Welcome back.</h2>
     
     {% if pools %}
         <h3>Your Pools</h3>

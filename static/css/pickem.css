@@ -1,23 +1,63 @@
+html {
+    width: 1020px;
+    margin: 0 auto;
+    padding: 0;
+}
+
 body {
 	background-color: #fff;
 	margin: 0;
 	padding: 0;
 	font-family: "Lucida Grande";
 	font-size: 12px;
+	position: relative;
+}
+
+div#grid {
+    height: 100%;
+    width: 100%;
+    background: transparent url(/static/img/grid.png) repeat-y top center;
+    position: absolute;
+    z-index: 1000;
+    opacity: 10%;
+}
+
+div.column {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 20px;
+}
+body.three.columns div.left.column {
+    width: 180px;
+}
+body.three.columns div.middle.column {
+    width: 480px;
+}
+body.three.columns div.right.column {
+    width: 260px;
+    overflow: hidden;
+    margin-right: 0;
+}
+
+.header {
+    color: #fff;
+    position: relative;
+	padding: 10px 20px;
+	-webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Cooper Black", "Lucida Grande";
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
 }
 
 #header {
 	color: #fff;
 	background-color: #333;
-	position: relative;
-	padding: 1em 2em;
-	-webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
 }
 #header h1 {
-	font-family: "Cooper Black", "Lucida Grande";
-	font-weight: normal;
-	margin: 0;
-	padding: 0;
 	font-size: 3em;
 }
 #header h1 a {
@@ -37,9 +77,8 @@ body {
 
 #page-header {
     background-color: #666;
-    color: #fff;
-    padding: .5em 2em;
-    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 #page-header h1 {
     margin: 0;
@@ -55,16 +94,13 @@ body {
 
 div#content {
 	color: #333;
-	margin: 1em;
+    margin: 20px;
 }
 
 
 
 /* Entry pages */
 div#current-week {
-	border: 1px dotted #ccc;
-	border-radius: 6px;
-	display: inline-block;
 }
 
 div#current-week table.games th, div#current-week table.games td {
@@ -86,8 +122,6 @@ div#current-week table.games td.kickoff {
 
 
 div#other-weeks {
-	border: 1px dotted #ccc;
-	border-radius: 6px;
 }
 div#other-weeks div.current {
 	background-color: #ccc;
