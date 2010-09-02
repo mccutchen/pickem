@@ -193,21 +193,12 @@ ol.weeks li span {
     font-size: 11px;
 }
 ol.weeks li.current {
-    background-color: #666;
-}
-ol.weeks li.current a {
-    color: #fff;
-    border-color: #ccc;
-}
-ol.weeks li.current span.deadline {
-    color: #ccc;
+    border: 1px dotted #ccc;
+	-webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
 }
 ol.weeks li span.indicator {
 	margin-right: 5px;
 	cursor: default;
-}
-ol.weeks li.current span.indicator {
-    color: #ccc;
 }
 
 
@@ -225,24 +216,6 @@ ol.weeks li.current span.indicator {
 	color: #900;
 }
 
-/* We only want to show the arrows when we're showing the list of weeks in
-the sidebar.  Source for arrow styling:
-http://www.dinnermint.org/css/creating-triangles-in-css/ */
-ol.weeks div.left.arrow {
-	display: none;
-}
-div#other-weeks ol.weeks div.left.arrow {
-	font-size: 0px;
-	line-height: 0%;
-	width: 0px;
-	border-top: 18px solid #fff;
-	border-right: 18px solid #666;
-	border-bottom: 18px solid #fff;
-	display: block;
-	position: absolute;
-	top: -5px;
-	left: -18px;
-}
 
 div#other-weeks div#key {
 	margin-top: 1.5em;

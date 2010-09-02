@@ -9,9 +9,6 @@
             {% set is_correct = '' %}
         {% endif %}
         <li class="week {{ is_closed }} {{ is_current }} {{ has_picked }} {{ is_correct }}">
-            {% if is_current %}
-                <div class="left arrow"></div>
-            {% endif %}
             <span class="indicator {{ has_picked }} {{ is_correct }}">
                 {# A check or an X #}
                 {% if has_picked %}&#10003;{% else %}&#10008;{% endif %}
