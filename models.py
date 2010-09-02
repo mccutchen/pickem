@@ -36,6 +36,10 @@ class Team(db.Model):
     def __str__(self):
         return unicode(self).encode('utf8', 'ignore')
 
+    def __eq__(self, other):
+        return isinstance(other, Team) and other.key() == self.key()
+
+
 
 class Season(db.Model):
     """A single season.  The key name should be a string containing the start

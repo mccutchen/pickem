@@ -36,7 +36,7 @@
                             </td>
                             <td class="away team">
                                 <label>
-                                    <input type="radio" name="pick" value="{{ game.away_team|keyname }}">
+                                    <input type="radio" name="pick" value="{{ game.away_team|keyname }}"{% if pick.team == game.away_team %} checked{% endif %}>
                                     {{ game.away_team }}
                                 </label>
                             </td>
@@ -44,7 +44,7 @@
                             <td class="at">at</td>
                             <td class="home team">
                                 <label>
-                                    <input type="radio" name="pick" value="{{ game.home_team|keyname }}">
+                                    <input type="radio" name="pick" value="{{ game.home_team|keyname }}"{% if pick.team == game.home_team %} checked{% endif %}>
                                     {{ game.home_team }}
                                 </label>
                             </td>
