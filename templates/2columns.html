@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block bodyclass %}two columns{% endblock %}
+
+{% block content %}
+    <div class="left column">
+        {% block left %}{% endblock %}
+    </div>
+    <div class="right column">
+        {% block right %}{% endblock %}
+    </div>
+{% endblock %}

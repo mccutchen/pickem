@@ -22,14 +22,20 @@ div#grid {
     opacity: 10%;
 }
 
-div.column {
+body.columns div.column {
     display: inline-block;
     vertical-align: top;
     margin-right: 20px;
 }
+body.two.columns div.left.column,
 body.three.columns div.left.column {
     width: 180px;
 }
+
+body.two.columns div.right.column {
+	width: 480px;
+}
+
 body.three.columns div.middle.column {
     width: 480px;
 }
@@ -38,6 +44,7 @@ body.three.columns div.right.column {
     overflow: hidden;
     margin-right: 0;
 }
+
 
 .header {
     color: #fff;
