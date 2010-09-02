@@ -1,19 +1,24 @@
 <ol class="weeks">
     {% for week in weeks %}
-        {% set is_current = week|id == current_week|id %}
-        {% set is_closed = week.closed %}
-        {% set has_picked = entry.has_picked(week) %}
-        <li class="week {% if is_close %}closed{% endif %} {% if is_current %}current{% endif %} {% if has_picked %}picked{% endif %}">
+        {% set is_current = 'current' if week|id == current_week|id else '' %}
+        {% set is_closed = 'closed' if week.closed else '' %}
+        {% set has_picked = 'picked' if entry.has_picked(week) else '' %}
+        {% if pick %}
+            {% set is_correct = 'correct' if pick.evaluate() == True else ('incorrect' if pick.evaluate() == False else '') %}
+        {% else %}
+            {% set is_correct = '' %}
+        {% endif %}
+        <li class="week {{ is_closed }} {{ is_current }} {{ has_picked }} {{ is_correct }}">
             {% if is_current %}
                 <div class="left arrow"></div>
             {% endif %}
-            <span class="indicator" title="You have {% if not has_picked %}not{% endif %} picked this week">
+            <span class="indicator {{ has_picked }} {{ is_correct }}">
                 {# A check or an X #}
                 {% if has_picked %}&#10003;{% else %}&#10008;{% endif %}
             </span>
             <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
             {% if not has_picked %}
-                <span class="deadline {% if week.closed %}closed{% endif %}">
+                <span class="deadline {{ is_closed }}">
                     {% if week.closed %}
                         closed
                     {% else %}

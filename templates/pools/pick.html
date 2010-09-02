@@ -13,16 +13,16 @@
     <div id="current-week" class="week">
         <h2>{{ week }} <span>vs <strong>{{ pool.active_entries.count() }}</strong> competitors</span></h2>
 
-        <h3>Your pick: <span class="{{ 'picked' if pick else 'not picked'}}">{{ pick|default('None', True) }}</span></h3>
-        
         <p class="deadline{% if week.closed %} closed{% endif %}">
             {% if week.closed %}
                 Closed.
             {% else %}
-                Deadline: {{ week.start|dateformat('%A, %B %d at %I:%M') }}
+                <span>Deadline:</span> {{ week.start|dateformat('%A, %B %d at %I:%M') }}
             {% endif %}
         </p>
 
+        <h3>Your pick: <span class="{{ 'picked' if pick else 'not picked'}}">{{ pick|default('None', True) }}</span></h3>
+        
         <form action="{{ url('pick', pool|id, entry|id, week|id) }}" method="post">
             {{ games.showgames(week, pick) }}
             <input type="submit" value="Make Pick!">
@@ -35,4 +35,25 @@
         <h3>All Picks</h3>
         {% set current_week = week %}
         {% include 'pools/_weeks.html' %}
+        
+        <h4>Key</h4>
+        <table>
+            <tr>
+                <th class="indicator picked">&#10003;</th>
+                <td>Picked</td>
+            </tr>
+            <tr>
+                <th class="indicator picked correct">&#10003;</th>
+                <td>Picked correctly</td>
+            </tr>
+            <tr>
+                <th class="indicator picked incorrect">&#10008;</th>
+                <td>Picked incorrectly</td>
+            </tr>
+            <tr>
+                <th class="indicator">&#10008;</th>
+                <td>Not picked</td>
+            </tr>
+        </table>
+    </div>
 {% endblock %}

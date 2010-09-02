@@ -286,7 +286,7 @@ class Pick(db.Model):
     def evaluate(self, commit=True):
         """Evaluates this pick to determine if it's correct.  Returns True if
         so, False if not, or None if the game has not finished."""
-        if self.game.finished:
+        if self.game.final:
             self.correct = self.game.is_winner(self.team)
             if commit:
                 self.put()

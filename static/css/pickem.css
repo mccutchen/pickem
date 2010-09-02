@@ -58,6 +58,10 @@ h1, h2, h3, h4, h5 {
     margin: 0;
     padding: 0;
 }
+h1 { font-size: 3em; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.5em; }
+h4 { font-size: 1.25em; }
 
 #header {
 	color: #fff;
@@ -112,13 +116,24 @@ h2 {
 div#current-week {
 }
 div#current-week h2 {
-	padding-bottom: 5px;
-	margin-bottom: 10px;
-	border-bottom: 1px dotted #666;
 }
 div#current-week h2 span {
 	font-size: .75em;
 	color: #666;
+}
+div#current-week p.deadline {
+	margin-top: 5px;
+}
+div#current-week p.deadline span {
+	color: #666;
+	font-size: 11px;
+}
+
+div#current-week h3 {
+	padding: 10px;
+	margin: 15px 20px 15px 0;
+	border: 1px dotted #ccc;
+	-webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, .15);
 }
 div#current-week h3 span.picked {
 	border: 1px solid rgba(255, 200, 50, 1);
@@ -178,17 +193,30 @@ ol.weeks li.current a {
     color: #fff;
     border-color: #ccc;
 }
-ol.weeks li.current span {
+ol.weeks li.current span.deadline {
     color: #ccc;
 }
-
 ol.weeks li span.indicator {
 	margin-right: 5px;
 	cursor: default;
-	color: #900;
 }
-ol.weeks li.picked span.indicator {
+ol.weeks li.current span.indicator {
+    color: #ccc;
+}
+
+
+.indicator {
+	color: #666;
+	font-weight: normal;
+}
+.indicator.picked {
+	color: rgba(255, 200, 50, 1);
+}
+.indicator.correct {
 	color: #090;
+}
+.indicator.incorrect {
+	color: #900;
 }
 
 /* We only want to show the arrows when we're showing the list of weeks in
