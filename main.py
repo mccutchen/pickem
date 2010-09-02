@@ -1,5 +1,13 @@
 #!/usr/bin/env python
-import os
+import os, sys
+
+extpath = os.path.join(os.path.dirname(__file__), 'ext')
+if extpath not in sys.path:
+    sys.path.append(extpath)
+
+# Stupid fucking setuptools
+sys.path = filter(lambda p: 'egg' not in p, sys.path)
+
 from ext.webapp2 import WSGIApplication
 
 from google.appengine.dist import use_library
