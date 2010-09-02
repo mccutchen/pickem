@@ -11,6 +11,9 @@
 {% block middle %}
     <div id="current-week" class="week">
         <h2><span>Picking:</span> {{ week }}</h2>
+        {% if entry.has_picked(week) %}
+            <h3 class="pick"><span>Your pick:</span> {{ pick }}</h3>
+        {% endif %}
         <h3>
             {% if week.started %}
                 Finished.
@@ -18,7 +21,7 @@
                 Deadline: {{ week.start|dateformat('%A, %B %d at %I:%M') }}
             {% endif %}
         </h3>
-        <form action="./picks/{{ week|id }}" method="put">
+        <form action="{{ url('pick', pool|id, entry|id, week|id) }}" method="post">
             <table class="games">
                 {% set last_kickoff = None %}
                 {% for date, group in week.grouped_games %}
@@ -50,6 +53,7 @@
                     {% endfor %}
                 {% endfor %}
             </table>
+            <input type="submit" value="Make Pick!">
         </form>
     </div>
 {% endblock %}

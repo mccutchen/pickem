@@ -103,17 +103,17 @@ class PickHandler(SecureRequestHandler):
     @objects_required('Pool', 'Entry')
     def get(self, pool, entry, week_num):
         season = models.Season.current()
-        week_key = db.Key.from_path(
-            'Week', int(week_num), parent=season.key())
-        week = db.get(week_key)
-        if week is None:
-            raise HTTPNotFound('Week %s not found' % week_num)
+        week = self.get_week(week_num, season=season)
+        pick_key = db.Key.from_path(
+            'Pick', week.key().id(), parent=entry.key())
+        pick = db.get(pick_key)
         weeks = season.weeks.fetch(25)
         ctx = dict(season=season,
                    weeks=weeks,
                    week=week,
                    pool=pool,
                    entry=entry,
+                   pick=pick,
                    picks=entry.picks.fetch(1000))
 
         if entry.account.key() == self.request.account.key():
@@ -121,6 +121,47 @@ class PickHandler(SecureRequestHandler):
         else:
             template = 'pools/public_entry.html'
         return self.render(template, ctx)
+
+    @objects_required('Pool', 'Entry')
+    def post(self, pool, entry, week_num):
+        week = self.get_week(week_num)
+        team_slug = self.request.POST.get('pick')
+        if team_slug is None:
+            raise HTTPBadRequest('Pick required')
+        team = models.Team.get_by_key_name(team_slug)
+        if team is None:
+            raise HTTPBadRequest('Unknown team: %s' % team_slug)
+        game = week.find_game_for(team)
+        if game is None:
+            raise HTTPBadRequest('No game for %s in week %s' % (team, week))
+
+        # We should have enough data to create the pick (in a transaction)
+        pick_key = db.Key.from_path(
+            'Pick', week.key().id(), parent=entry.key())
+        def txn():
+            pick = db.get(pick_key)
+            if pick is None:
+                pick = models.Pick(
+                    key=pick_key,
+                    week=week,
+                    game=game,
+                    team=team)
+                pick.put()
+            return pick
+        pick = db.run_in_transaction(txn)
+
+        url = self.url_for(
+            'pick', pool.key().id(), entry.key().id(), week_num)
+        return self.redirect_to(url)
+
+    def get_week(self, week_num, season=None):
+        season = season or models.Season.current()
+        week_key = db.Key.from_path(
+            'Week', int(week_num), parent=season.key())
+        week = db.get(week_key)
+        if week is None:
+            raise HTTPNotFound('Week %s not found' % week_num)
+        return week
 
 
 class ManagePoolHandler(SecureRequestHandler):

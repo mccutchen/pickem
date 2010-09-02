@@ -10,13 +10,15 @@
                 {% if has_picked %}&#10003;{% else %}&#10008;{% endif %}
             </span>
             <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
-            <span class="deadline">
-                {% if week.started %}
-                    finished
-                {% else %}
-                    due {{ week.start|dateformat('%m/%d @ %I:%M') }}
-                {% endif %}
-            </span>
+            {% if not has_picked %}
+                <span class="deadline">
+                    {% if week.started %}
+                        finished
+                    {% else %}
+                        due {{ week.start|dateformat('%m/%d @ %I:%M') }}
+                    {% endif %}
+                </span>
+            {% endif %}
         </li>
     {% endfor %}
 </ol>
