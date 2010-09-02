@@ -157,6 +157,17 @@ ol.weeks li.current span {
     color: #ccc;
 }
 
+ol.weeks li span.indicator {
+	margin-right: 5px;
+	cursor: default;
+}
+ol.weeks li.picked span.indicator {
+	color: #090;
+}
+ol.weeks li.not-picked span.indicator {
+	color: #900;
+}
+
 /* We only want to show the arrows when we're showing the list of weeks in
 the sidebar.  Source for arrow styling:
 http://www.dinnermint.org/css/creating-triangles-in-css/ */
@@ -170,7 +181,7 @@ div#other-weeks ol.weeks div.left.arrow {
 	border-top: 18px solid #fff;
 	border-right: 18px solid #666;
 	border-bottom: 18px solid #fff;
-	float: left;
+	display: block;
 	position: absolute;
 	top: -5px;
 	left: -18px;
