@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block page_header %}
-    <h1>{{ pool }}</h1>
+    <h1><label>Pool:</label> {{ pool }}</h1>
 {% endblock %}
 
 {% block content %}
@@ -55,7 +55,7 @@
                                     {{ game.away_team }}
                                 </label>
                             </td>
-                            <td class="away spread">{{ game.spread * -1 }}</td>
+                            <td class="away spread">{{ (game.spread * -1)|default('--', True) }}</td>
                             <td class="at">at</td>
                             <td class="home team">
                                 <label>
@@ -63,7 +63,7 @@
                                     {{ game.home_team }}
                                 </label>
                             </td>
-                            <td class="home spread">{{ game.spread }}</td>
+                            <td class="home spread">{{ game.spread|default('--', True) }}</td>
                         </tr>
                     {% endfor %}
                 {% endfor %}

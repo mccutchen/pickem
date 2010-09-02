@@ -11,14 +11,14 @@ body {
 	background-color: #333;
 	position: relative;
 	padding: 1em 2em;
-	margin-bottom: 1em;
-	-webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, .25);
+	-webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
 }
 #header h1 {
 	font-family: "Cooper Black", "Lucida Grande";
 	font-weight: normal;
 	margin: 0;
 	padding: 0;
+	font-size: 3em;
 }
 #header h1 a {
 	color: #fff;
@@ -33,6 +33,24 @@ body {
 	padding: 4px 6px;
 	border-radius: 3px;
 	background-color: rgba(255, 255, 255, .75);
+}
+
+#page-header {
+    background-color: #666;
+    color: #fff;
+    padding: .5em 2em;
+    -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+}
+#page-header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2em;
+    font-family: "Cooper Black", "Lucida Grande";
+	font-weight: normal;
+}
+#page-header h1 label {
+    font-size: .85em;
+    color: #ccc;
 }
 
 div#content {
