@@ -85,17 +85,20 @@
 {% endblock %}
 
 {% block right %}
-    <ol id="other-weeks">
-        {% for week in weeks %}
-            <li class="week {% if week.started %} started{% endif %}{% if week|id == next_week|id %} current{% endif %}">
-                {{ week }}
-                <span>
-                    {% if week.started %}
-                        (finished)
-                    {% else %}
-                        (deadline: {{ week.start|dateformat('%m/%d @ %H:%M') }})
-                    {% endif %}
-                </span>
-            </li>
-        {% endfor %}
+    <div id="other-weeks">
+        <h3>Other Weeks</h3>
+        <ol>
+            {% for week in weeks %}
+                <li class="week {% if week.started %} started{% endif %}{% if week|id == next_week|id %} current{% endif %}">
+                    {{ week }}
+                    <span>
+                        {% if week.started %}
+                            (finished)
+                        {% else %}
+                            (deadline: {{ week.start|dateformat('%m/%d @ %H:%M') }})
+                        {% endif %}
+                    </span>
+                </li>
+            {% endfor %}
+        </ol>
 {% endblock %}
