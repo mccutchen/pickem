@@ -1,6 +1,9 @@
 <ol class="weeks">
     {% for week in weeks %}
         <li class="week {% if week.started %} started{% endif %}{% if week|id == current_week|id %} current{% endif %}">
+            {% if week|id == current_week|id %}
+                <div class="left arrow"></div>
+            {% endif %}
             <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
             <span>
                 {% if week.started %}

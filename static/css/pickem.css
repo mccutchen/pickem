@@ -41,7 +41,6 @@ body.three.columns div.middle.column {
 }
 body.three.columns div.right.column {
     width: 260px;
-    overflow: hidden;
     margin-right: 0;
 }
 
@@ -134,6 +133,7 @@ ol.weeks {
     padding: 0;
 }
 ol.weeks li {
+	position: relative;
     display: block;
     padding: 5px;
 }
@@ -155,4 +155,23 @@ ol.weeks li.current a {
 }
 ol.weeks li.current span {
     color: #ccc;
+}
+
+/* We only want to show the arrows when we're showing the list of weeks in
+the sidebar.  Source for arrow styling:
+http://www.dinnermint.org/css/creating-triangles-in-css/ */
+ol.weeks div.left.arrow {
+	display: none;
+}
+div#other-weeks ol.weeks div.left.arrow {
+	font-size: 0px;
+	line-height: 0%;
+	width: 0px;
+	border-top: 18px solid #fff;
+	border-right: 18px solid #666;
+	border-bottom: 18px solid #fff;
+	float: left;
+	position: absolute;
+	top: -5px;
+	left: -18px;
 }
