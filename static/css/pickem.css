@@ -80,6 +80,7 @@ h4 { font-size: 1.25em; }
 #header h1 a {
 	color: #fff;
 	text-decoration: none;
+	border: none;
 }
 #header #account {
 	font-size: 11px;
@@ -227,4 +228,11 @@ div#other-weeks div#key th,
 div#other-weeks div#key td {
 	padding: 2px 5px;
 	font-weight: normal;
+}
+
+
+div.info ul {
+	list-style-type: none;
+	margin: .5em 0 1.5em 0;
+	padding: 0;
 }

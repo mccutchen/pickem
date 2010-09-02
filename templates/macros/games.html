@@ -1,8 +1,7 @@
 {% macro showgames(week, pick) %}
     <table class="games">
-        {% set last_kickoff = None %}
         {% for date, group in week.grouped_games %}
-            <th class="date" colspan="5">{{ date|dateformat('%A, %B %d') }}</th>
+            <th class="date" colspan="5">{{ date|dateformat('%A, %B %d', fix=False) }}</th>
             {% for game in group %}
                 {{ showgame(game, pick) }}
             {% endfor %}
@@ -15,7 +14,6 @@
         <td class="kickoff">
             {% if not last_kickoff or last_kickoff != game.start %}
                 {{ game.start|dateformat('%I:%M') }}
-                {% set last_kickoff = game.start %}
             {% endif %}
         </td>
         {{ showteam(game.away_team, game, pick, home=False) }}
