@@ -11,12 +11,10 @@
 
 {% block middle %}
     <div id="current-week" class="week">
-        <h2><span>Picking:</span> {{ week }}</h2>
+        <h2>{{ week }} <span>vs <strong>{{ pool.active_entries.count() }}</strong> competitors</span></h2>
 
-        {% if entry.has_picked(week) %}
-            <h3 class="pick"><span>Your pick:</span> {{ pick }}</h3>
-        {% endif %}
-
+        <h3>Your pick: <span class="{{ 'picked' if pick else 'not picked'}}">{{ pick|default('None', True) }}</span></h3>
+        
         <p class="deadline{% if week.closed %} closed{% endif %}">
             {% if week.closed %}
                 Closed.

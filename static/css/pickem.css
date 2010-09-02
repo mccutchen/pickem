@@ -104,10 +104,30 @@ div#content {
     margin: 20px;
 }
 
-
+h2 {
+	font-size: 2em;
+}
 
 /* Entry pages */
 div#current-week {
+}
+div#current-week h2 {
+	padding-bottom: 5px;
+	margin-bottom: 10px;
+	border-bottom: 1px dotted #666;
+}
+div#current-week h2 span {
+	font-size: .75em;
+	color: #666;
+}
+div#current-week h3 span.picked {
+	border: 1px solid rgba(255, 200, 50, 1);
+	background-color: rgba(255, 200, 50, .5);
+	padding: 3px 5px;
+}
+div#current-week h3 span.not.picked {
+	border: 1px solid rgba(153, 0, 0, 1);
+	background-color: rgba(153, 0, 0, .4);
 }
 
 div#current-week table.games th, div#current-week table.games td {
@@ -125,6 +145,10 @@ div#current-week table.games td.spread {
 }
 div#current-week table.games td.kickoff {
 	font-size: 11px;
+}
+div#current-week table.games td.picked {
+	border: 1px solid rgba(255, 200, 50, 1);
+	background-color: rgba(255, 200, 50, .5);
 }
 
 
