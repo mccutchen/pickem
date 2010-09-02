@@ -86,16 +86,17 @@
 
 {% block right %}
     <div id="other-weeks">
-        <h3>Other Weeks</h3>
+        <h3>Other Picks</h3>
         <ol>
+            {% set current_week = week %}
             {% for week in weeks %}
-                <li class="week {% if week.started %} started{% endif %}{% if week|id == week|id %} current{% endif %}">
-                    {{ week }}
+                <li class="week {% if week.started %} started{% endif %}{% if week|id == current_week|id %} current{% endif %}">
+                    <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
                     <span>
                         {% if week.started %}
                             (finished)
                         {% else %}
-                            (deadline: {{ week.start|dateformat('%m/%d @ %H:%M') }})
+                            (due {{ week.start|dateformat('%m/%d @ %H:%M') }})
                         {% endif %}
                     </span>
                 </li>

@@ -121,6 +121,11 @@ div#current-week table.games td.kickoff {
 }
 
 
+div#other-weeks a {
+    text-decoration: none;
+    color: #000;
+    border-bottom: 1px dotted #999;
+}
 div#other-weeks ol {
     list-style-type: none;
     margin: 0;
@@ -128,9 +133,19 @@ div#other-weeks ol {
 }
 div#other-weeks ol li {
     display: block;
-    padding: 3px 0;
+    padding: 5px;
 }
 div#other-weeks ol li span {
     color: #666;
     font-size: 11px;
+}
+div#other-weeks ol li.current {
+    background-color: #666;
+}
+div#other-weeks ol li.current a {
+    color: #fff;
+    border-color: #ccc;
+}
+div#other-weeks ol li.current span {
+    color: #ccc;
 }

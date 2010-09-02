@@ -1,6 +1,9 @@
 import logging
 import datetime
 
+from google.appengine.ext import db
+from webob.exc import HTTPNotFound, HTTPBadRequest
+
 from lib.webapp import RequestHandler, SecureRequestHandler
 from lib.decorators import objects_required
 
@@ -96,7 +99,28 @@ class PicksHandler(SecureRequestHandler):
 
 
 class PickHandler(SecureRequestHandler):
-    pass
+
+    @objects_required('Pool', 'Entry')
+    def get(self, pool, entry, week_num):
+        season = models.Season.current()
+        week_key = db.Key.from_path(
+            'Week', int(week_num), parent=season.key())
+        week = db.get(week_key)
+        if week is None:
+            raise HTTPNotFound('Week %s not found' % week_num)
+        weeks = season.weeks.fetch(25)
+        ctx = dict(season=season,
+                   weeks=weeks,
+                   week=week,
+                   pool=pool,
+                   entry=entry,
+                   picks=entry.picks.fetch(1000))
+
+        if entry.account.key() == self.request.account.key():
+            template = 'pools/my_entry.html'
+        else:
+            template = 'pools/public_entry.html'
+        return self.render(template, ctx)
 
 
 class ManagePoolHandler(SecureRequestHandler):
