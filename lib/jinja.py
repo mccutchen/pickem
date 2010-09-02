@@ -1,4 +1,4 @@
-import datetime
+import datetime, re
 from ext import jinja2
 
 import settings
@@ -15,8 +15,11 @@ def render_to_string(filename, context={}):
 ##############################################################################
 # Filters, available to all templates
 ##############################################################################
-def dateformat(d, format):
-    return getattr(d, 'strftime', lambda x: x)(format)
+def dateformat(d, format, fix=True):
+    if fix:
+        d += datetime.timedelta(hours=-5)
+    result = d.strftime(format)
+    return re.sub(r'0(\d.\d{2})', r'\1', result)
 
 def key(obj):
     try:
