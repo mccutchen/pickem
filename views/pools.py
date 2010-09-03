@@ -70,7 +70,10 @@ class PoolHandler(SecureRequestHandler):
 
 
 class JoinHandler(RequestHandler):
-    pass
+
+    @objects_required('Pool')
+    def get(self, pool, code):
+        pass
 
 
 class EntriesHandler(SecureRequestHandler):

@@ -229,8 +229,11 @@ class Pool(db.Model):
 
     @property
     def invite_code(self):
-        s = '%s:%s' % (self.key(), self.created_at)
-        return hashlib.sha1(s).hexdigest()
+        if self.invite_only:
+            s = '%s:%s' % (self.key(), self.created_at)
+            return hashlib.sha1(s).hexdigest()
+        else:
+            return 'public'
 
     def check_invite_code(self, code):
         from lib.webapp import time_independent_equals
