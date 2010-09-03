@@ -48,25 +48,38 @@ class PoolsHandler(SecureRequestHandler):
             self.set_status(400)
 
 
-class PoolHandler(SecureRequestHandler):
+class PoolHandler(RequestHandler):
 
     @objects_required('Pool')
     def get(self, pool):
+        entry = pool.find_entry_for(self.account) if self.account else None
+        if pool.invite_only:
+            if self.account is None or entry is None:
+                ctx = dict(pool=pool)
+                return self.render('pools/pool_denied.html', ctx, status=403)
+
+        # We should either have a public pool or a private one with a valid
+        # entry at this point.
         entries = pool.entries.fetch(1000)
-        active_entries = pool.active_entries.fetch(1000)
-        unpaid_entries = pool.unpaid_entries.fetch(1000)
-        week = models.Week.current()
-        if not week:
-            week = models.Week.next()
+        active_entries = filter(lambda e: e.active, entries)
+        inactive_entries = filter(lambda e: not e.active, entries)
+        unpaid_entries = filter(lambda e: not e.paid, entries)
+
+        week = models.Week.current() or models.Week.next()
         picks = week.picks.fetch(1000) if week.closed else []
+
         ctx = dict(pool=pool,
+                   entry=entry,
                    entries=entries,
                    active_entries=active_entries,
+                   inactive_entries=inactive_entries,
                    unpaid_entries=unpaid_entries,
                    season=week.parent(),
                    week=week,
                    picks=picks)
-        return self.render('pools/pool.html', ctx)
+
+        tmpl = 'pools/pool.html' if entry else 'pools/pool_preview.html'
+        return self.render(tmpl, ctx)
 
 
 class JoinHandler(RequestHandler):

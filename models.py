@@ -216,6 +216,10 @@ class Pool(db.Model):
         return self.entries.filter('active =', True)
 
     @property
+    def inactive_entries(self):
+        return self.entries.filter('active =', False)
+
+    @property
     def paid_entries(self):
         return self.entries.filter('paid =', True)
 

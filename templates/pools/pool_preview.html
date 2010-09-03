@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block page_header %}
+    <h1><label>Previewing Pool:</label> {{ pool }}</h1>
+{% endblock %}
+
+{% block content %}
+    {% if pool.decription %}
+        <p>{{ pool.description }}</p>
+    {% endif %}
+
+    {% include "pools/_pool_overview.html" %}
+
+    <section>
+        <h3>Entry Fee<a class="footnote" href="#gambling">*</a></h3>
+        {% if pool.entry_fee > 0 %}
+            <p>This pool has an entry fee of
+            <strong class="fee">${{ pool.entry_fee }}</strong><a class="footnote" href="#gambling">*</a>.</p>
+            
+            <p>If you join this pool, <strong><em>it is up to you to coordinate payment
+            with {{ pool.manager }}</em></strong>, the manager of the pool.</p>
+        {% else %}
+            <p>This pool doesn't have an entry fee.  I guess you're playing for bragging rights, for whatever
+            that's worth.  I don't think bragging rights will pay for any cold beers, though.</p>
+        {% endif %}
+        <p class="footnote" id="gambling">* You know, if gambling were legal.</p>
+    </section>
+
+    <section>
+        {% set invite_url = url('join-pool', pool|id, pool.invite_code, _full=True) %}
+        <a class="button" href="{{ invite_url }}">Join <span>{{ pool }}</span></a>
+        {% if pool.entry_fee %}
+            <p class="footnote">By clicking this button, I'm promising that I'll
+            the ${{ pool.entry_fee }} that I will owe.</p>
+        {% endif %}
+    </section>
+
+{% endblock %}
