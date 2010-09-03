@@ -92,7 +92,11 @@ class Week(db.Model):
 
     @property
     def grouped_games(self):
-        return groupby(self.games.fetch(25), lambda g: g.start.date())
+        # Game times are stored as UTC, need to be offset back to EST or the
+        # night games overflow into the next day.
+        offset = datetime.timedelta(hours=-5)
+        grouper = lambda g: (g.start + offset).date()
+        return groupby(self.games.fetch(25), grouper)
 
     @property
     def closed(self):
