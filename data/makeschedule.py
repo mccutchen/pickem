@@ -1,5 +1,4 @@
 import datetime
-import env
 from django.utils import simplejson as json
 
 from google.appengine.ext import db

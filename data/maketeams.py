@@ -1,5 +1,4 @@
 import simplejson as json
-import env
 
 from google.appengine.ext import db
 import models
@@ -14,4 +13,4 @@ for team in teamsData:
 
 keys = db.put(teams)
 print keys
-    
+
