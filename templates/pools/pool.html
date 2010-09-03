@@ -9,36 +9,71 @@
         <p>{{ pool.description }}</p>
     {% endif %}
     
-    <div class="overview">
+    <section>
+        <h3>Overview</h3>
         <ul>
-            <li>{{ active_entries|length }}/{{ entries|length }} active entries</li>
-            <li>Pot: ${{ pool.pot }}/{{ pool.potential_pot }}</li>
-            <li>{{ unpaid_entries|length }} unpaid entries</li>
+            <li>{{ entries|length }} players</li>
+            {% if pool.entry_fee %}
+                <li>${{ poo.entry_fee }} entry fee</li>
+                <li>${{ pool.potential_pot }} pot</a>
+                <li>{{ unpaid_entries|length }} unpaid entries</li>
+            {% endif %}
+            <li>{{ active_entries|length }} players still alive</li>
         </ul>
-    </div>
-    
-    <h3>Invitation Code</h3>
-    {% set invite_url = url('join-pool', pool|id, pool.invite_code, _full=True) %}
-    {% if pool.invite_only %}
-        <p>The invitation code for joining this pool is:<br>
-        <span class="invite-code">{{ pool.invite_code }}</span></p>
+    </section>
 
-        <p>You can share the following link with your friends to invite them to join this pool:<br>
-        <a href="{{ invite_url }}">{{ invite_url }}</a></p>
-    {% else %}
-        <p>This is a public pool, open to anyone. Invite your friends to join it by sharing this link:<br>
-        <a href="{{ invite_url }}">{{ invite_url }}</a></p>
-    {% endif %}
-    
-    <h3>Currently Picking <strong>{{ week }}</strong></h3>
-    <p>Deadline: {{ week.start }}.</p>
-
-    <h3>Active Entries</h3>
-    <ol>
-        {% for entry in active_entries %}
-            <li><a href="{{ url('entry', pool.key().id(), entry.key().id()) }}">{{ entry.account }}</a></li>
+    <section>
+        <h3>Entry Fee<a class="footnote" href="#gambling">*</a></h3>
+        {% if pool.entry_fee > 0 %}
+            <p>This pool has an entry fee of <strong class="fee">${{ pool.entry_fee }}</strong><sup>*</sup>.
+            {% if entry and entry.paid %}
+                You're all paid up!
+            {% else %}
+                {% if entry %}You have not yet paid your fee.{% endif %}  It is up to you to coordinate
+                with {{ pool.manager }}, the manager of the pool, to pay for your entry.
+            {% endif %}
+            </p>
         {% else %}
-            <li>None</li>
-        {% endfor %}
-    </ol>
+            <p>This pool doesn't have an entry fee.  I guess you're playing for bragging rights, for whatever
+            that's worth.  I don't think bragging rights will pay for any cold beers, though.</p>
+        {% endif %}
+        <p class="footnote" id="gambling">* You know, if gambling were legal.</p>
+    </section>
+
+    <section>
+        <h3>Invitation Code</h3>
+        {% set invite_url = url('join-pool', pool|id, pool.invite_code, _full=True) %}
+        {% if pool.invite_only %}
+            <p>The invitation code for joining this pool is:<br>
+            <span class="invite-code">{{ pool.invite_code }}</span></p>
+
+            <p>You can share the following link with your friends to invite them to join this pool:<br>
+            <a href="{{ invite_url }}">{{ invite_url }}</a></p>
+        {% else %}
+            <p>This is a public pool, open to anyone. Invite your friends to join it by sharing this link:<br>
+            <a href="{{ invite_url }}">{{ invite_url }}</a></p>
+        {% endif %}
+    </section>
+
+    <section>
+        <h3>Currently Picking <strong>{{ week }}</strong></h3>
+        <p>Deadline: {{ week.start }}.</p>
+    </section>
+
+    <section>
+        <h3>Winning Entries</h3>
+        <p>There are {{ active_entries|length }} players still alive.</p>
+        <ol>
+            {% for entry in active_entries %}
+                <li><a href="{{ url('entry', pool.key().id(), entry.key().id()) }}">{{ entry.account }}</a></li>
+            {% else %}
+                <li>None</li>
+            {% endfor %}
+        </ol>
+    </section>
+    
+    <section>
+        <h3>Losing Entries</h3>
+        <p>{{ inactive_entries|length }} players have already lost.</p>
+    </section>
 {% endblock %}

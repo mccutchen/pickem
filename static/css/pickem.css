@@ -262,3 +262,13 @@ span.invite-code {
 	margin-top: 10px;
 	-webkit-box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
 }
+
+a.footnote {
+	border: none;
+	color: #900;
+}
+p.footnote {
+	color: #666;
+	font-size: 11px;
+	font-style: italic;
+}
