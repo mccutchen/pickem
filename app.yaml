@@ -12,5 +12,13 @@ handlers:
   static_files: static/\1
   upload: static/(favicon\.ico|robots\.txt|crossdomain\.xml|opensearch\.xml)
 
+- url: /_ah/queue/deferred
+  script: $PYTHON_LIB/google/appengine/ext/deferred/handler.py
+  login: admin
+
+- url: /remote_api
+  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
+  login: admin
+
 - url: .*
   script: main.py
