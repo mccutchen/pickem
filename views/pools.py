@@ -40,9 +40,9 @@ class PoolsHandler(SecureRequestHandler):
         if form.is_valid():
             form.cleaned_data['manager'] = self.account
             pool = form.save()
-            pool.add_entry(self.account)
+            entry, added = pool.add_entry(self.account)
             return self.redirect(
-                self.url_for('pool', pool.key().id()))
+                self.url_for('entry', pool.key().id(), entry.key().id()))
         else:
             self.response.out.write(str(form.errors))
             self.set_status(400)

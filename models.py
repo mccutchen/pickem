@@ -264,9 +264,10 @@ class Pool(db.Model):
             if not entry:
                 entry = Entry(account=account, parent=self)
                 entry.put()
-                return True
+                created = True
             else:
-                return False
+                created = False
+            return entry, created
         return db.run_in_transaction(txn)
 
     def __unicode__(self):
