@@ -19,4 +19,4 @@ FB_APP_ID = ''
 FB_APP_SECRET = ''
 
 # Used to sign cookies. Generate with something like `os.urandom(30)`
-COOKIE_SECRET = None
+SECRET = None

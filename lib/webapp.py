@@ -12,7 +12,7 @@ from ext import webapp2
 from lib.jinja import render_to_string
 
 from models import Account
-from settings import COOKIE_SECRET
+from settings import SECRET
 
 
 DEFAULT_STATUS = 200
@@ -125,7 +125,7 @@ class SecureRequestHandler(RequestHandler):
 ##############################################################################
 
 def cookie_signature(*parts):
-    h = hmac.new(COOKIE_SECRET, digestmod=hashlib.sha1)
+    h = hmac.new(SECRET, digestmod=hashlib.sha1)
     for part in parts:
         h.update(part)
     return h.hexdigest()
