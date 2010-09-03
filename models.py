@@ -1,4 +1,5 @@
 import datetime
+import hashlib
 import logging
 from itertools import groupby
 
@@ -225,6 +226,15 @@ class Pool(db.Model):
     @property
     def potential_pot(self):
         return self.buy_in * self.entries.count()
+
+    @property
+    def invite_code(self):
+        s = '%s:%s' % (self.key(), self.created_at)
+        return hashlib.sha1(s).hexdigest()
+
+    def check_invite_code(self, code):
+        from lib.webapp import time_independent_equals
+        return time_independent_equals(self.invite_code, code)
 
     def is_member(self, account):
         """Does the given account have an entry in this pool?"""
