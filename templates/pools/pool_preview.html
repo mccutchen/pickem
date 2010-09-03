@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block content %}
+    
+    {% if error %}
+        <p class="warning">{{ error }}</p>
+    {% endif %}
+
     {% if pool.decription %}
         <p>{{ pool.description }}</p>
     {% endif %}
@@ -28,7 +33,9 @@
 
     <section>
         {% set invite_url = url('join-pool', pool|id, pool.invite_code, _full=True) %}
-        <a class="button" href="{{ invite_url }}">Join <span>{{ pool }}</span></a>
+        <form action="{{ url('join-pool', pool|id, code) }}" method="post">
+            <input class="button" type="submit" value="Join {{ pool }}">
+        </form>
         {% if pool.entry_fee %}
             <p class="footnote">By clicking this button, I'm promising that I'll
             the ${{ pool.entry_fee }} that I will owe.</p>

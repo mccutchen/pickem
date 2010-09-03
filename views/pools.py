@@ -48,15 +48,14 @@ class PoolsHandler(SecureRequestHandler):
             self.set_status(400)
 
 
-class PoolHandler(RequestHandler):
+class PoolHandler(SecureRequestHandler):
 
     @objects_required('Pool')
     def get(self, pool):
-        entry = pool.find_entry_for(self.account) if self.account else None
-        if pool.invite_only:
-            if self.account is None or entry is None:
-                ctx = dict(pool=pool)
-                return self.render('pools/pool_denied.html', ctx, status=403)
+        entry = pool.find_entry_for(self.account)
+        if pool.invite_only and entry is None:
+            ctx = dict(pool=pool)
+            return self.render('pools/pool_denied.html', ctx, status=403)
 
         # We should either have a public pool or a private one with a valid
         # entry at this point.
@@ -76,17 +75,30 @@ class PoolHandler(RequestHandler):
                    unpaid_entries=unpaid_entries,
                    season=week.parent(),
                    week=week,
-                   picks=picks)
+                   picks=picks,
+                   code=pool.invite_code)
 
         tmpl = 'pools/pool.html' if entry else 'pools/pool_preview.html'
         return self.render(tmpl, ctx)
 
 
-class JoinHandler(RequestHandler):
+class JoinHandler(SecureRequestHandler):
 
     @objects_required('Pool')
     def get(self, pool, code):
-        pass
+        ctx = dict(pool=pool, code=code)
+        return self.render('pools/pool_preview.html', ctx)
+
+    @objects_required('Pool')
+    def post(self, pool, code):
+        if pool.check_invite_code(code):
+            entry, joined = pool.add_entry(self.account)
+            url = self.url_for('entry', pool.key().id(), entry.key().id())
+            return self.redirect(url)
+        else:
+            error = "Invalid invitation code: %s" % code
+            ctx = dict(pool=pool, code=code, error=error)
+            return self.render('pools/pool_preview.html', ctx, status=400)
 
 
 class EntriesHandler(SecureRequestHandler):

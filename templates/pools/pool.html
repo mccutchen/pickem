@@ -9,27 +9,8 @@
         <p>{{ pool.description }}</p>
     {% endif %}
 
-    <section>
-        <h3>Overview</h3>
-        <ul>
-            <li>
-                {% if pool.invite_only %}
-                    Invitation Only
-                {% else %}
-                    Open to anyone
-                {% endif %}
-            </li>
-            <li>{{ entries|length }} players</li>
-            {% if pool.entry_fee %}
-                <li>${{ poo.entry_fee }} entry fee</li>
-                <li>${{ pool.potential_pot }} pot</a>
-                <li>{{ unpaid_entries|length }} unpaid entries</li>
-            {% else %}
-                <li>No entry fee</li>
-            {% endif %}
-        </ul>
-    </section>
-    
+    {% include "pools/_pool_overview.html" %}
+
     <section>
         <h3>Your Status</h3>
         <ul>
