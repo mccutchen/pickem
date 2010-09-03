@@ -28,12 +28,17 @@ class LoginHandler(RequestHandler):
         # Facebook)
         code = self.request.get('code')
 
+        # Figure out if we've got a "next" destination
+        next = self.request.get('next')
+
         # Get a Facebook object to work with
         fb = Facebook(self.request.path_url)
 
         # If not, we need to redirect them to Facebook to authorize us
         if not code:
             logging.info('Auth URL: %s' % fb.auth_url)
+            if next:
+                self.set_secure_cookie('next', next)
             return self.redirect(fb.auth_url)
 
         # If so, we need to use the verification code to get an access code,
@@ -54,7 +59,12 @@ class LoginHandler(RequestHandler):
                 oauth_token=access_token)
 
             self.set_secure_cookie('account', str(acc.key()))
-            return self.redirect_to('index')
+            next = self.get_secure_cookie('next')
+            if next:
+                self.delete_cookie('next')
+                return self.redirect(next)
+            else:
+                return self.redirect_to('index')
 
 
 class AccountHandler(RequestHandler):
