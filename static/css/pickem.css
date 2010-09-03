@@ -252,3 +252,13 @@ div.info ul {
 	margin: .5em 0 1.5em 0;
 	padding: 0;
 }
+
+span.invite-code {
+	display: inline-block;
+	font-size: 1.5em;
+	font-family: monospace;
+	padding: 5px 10px;
+	border: 1px dotted #ccc;
+	margin-top: 10px;
+	-webkit-box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
+}

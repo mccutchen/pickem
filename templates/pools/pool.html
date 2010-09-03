@@ -18,7 +18,12 @@
     </div>
     
     <h3>Invitation Code</h3>
-    <p>Give your friends the following URL to invite them to join this pool:<br>
+
+    <p>The invitation code for joining this pool is:<br>
+    <span class="invite-code">{{ pool.invite_code }}</span></p>
+
+    <p>You can share the following link with your friends to invite them to join this pool:<br>
+    {% set invite_url = url('join-pool', pool|id, pool.invite_code, _full=True) %}
     <a href="{{ invite_url }}">{{ invite_url }}</a></p>
     
     <h3>Currently Picking <strong>{{ week }}</strong></h3>

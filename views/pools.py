@@ -59,17 +59,13 @@ class PoolHandler(SecureRequestHandler):
         if not week:
             week = models.Week.next()
         picks = week.picks.fetch(1000) if week.closed else []
-
-        invite_url = self.url_for(
-            'join-pool', pool.key().id(), pool.invite_code, _full=True)
         ctx = dict(pool=pool,
                    entries=entries,
                    active_entries=active_entries,
                    unpaid_entries=unpaid_entries,
                    season=week.parent(),
                    week=week,
-                   picks=picks,
-                   invite_url=invite_url)
+                   picks=picks)
         return self.render('pools/pool.html', ctx)
 
 
