@@ -243,9 +243,14 @@ class Pool(db.Model):
         from lib.webapp import time_independent_equals
         return time_independent_equals(self.invite_code, code)
 
+    def find_entry_for(self, account):
+        """Find an entry in this pool for the given account, if there is
+        one."""
+        return self.entries.filter('account =', account).get()
+
     def is_member(self, account):
         """Does the given account have an entry in this pool?"""
-        return self.entries.filter('account =', account).get() is not None
+        return self.find_entry_for(account) is not None
 
     def add_entry(self, account):
         """Adds an entry for the given account, if one does not already exist.

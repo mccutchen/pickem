@@ -15,6 +15,18 @@ import settings
 class LoginHandler(RequestHandler):
 
     def get(self):
+        next = self.request.get('next')
+        login_url = self.url_for('facebook-login')
+        if next:
+            login_url += '?next=%s' % next
+        ctx = { 'next': next,
+                'login_url': login_url }
+        return self.render('accounts/login.html', ctx)
+
+
+class FacebookLoginHandler(RequestHandler):
+
+    def get(self):
         """Handles both legs of OAuth authorization. On the first request, the
         user is redirected to Facebook to authorize our application, with this
         same URL as the return point.  On the second request, a verification

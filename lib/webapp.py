@@ -29,9 +29,8 @@ class RequestHandler(webapp2.RequestHandler):
     def __call__(self, *args, **kwargs):
         self.request.account = self.account
         if self.login_required and self.account is None:
-            url = self.url_for('login')
-            url += '?next=%s' % self.request.path_qs
-            return self.redirect(url)
+            ctx = { 'next': self.request.path_qs }
+            return self.render('accounts/login.html', ctx, status=403)
         return super(RequestHandler, self).__call__(*args, **kwargs)
 
     @property

@@ -21,6 +21,10 @@ urls = [
           'manage-pool'),
 
     Route(r'/accounts/login', views.accounts.LoginHandler, 'login'),
+    Route(r'/accounts/login/facebook',
+          views.accounts.FacebookLoginHandler,
+          'facebook-login'),
+
     Route(r'/account', views.accounts.AccountHandler, 'account'),
     Route(r'/accounts/<:\d+>', views.accounts.ProfileHandler, 'profile'),
 
