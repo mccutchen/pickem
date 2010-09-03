@@ -189,7 +189,7 @@ class Pool(db.Model):
     invite_only = db.BooleanProperty(default=True)
 
     # How much does an entry cost?
-    buy_in = db.FloatProperty(default=0.0)
+    entry_fee = db.FloatProperty(default=0.0)
 
     # Are games picked against the spread
     against_spread = db.BooleanProperty(default=False)
@@ -221,11 +221,11 @@ class Pool(db.Model):
 
     @property
     def pot(self):
-        return self.buy_in * self.paid_entries.count()
+        return self.entry_fee * self.paid_entries.count()
 
     @property
     def potential_pot(self):
-        return self.buy_in * self.entries.count()
+        return self.entry_fee * self.entries.count()
 
     @property
     def invite_code(self):

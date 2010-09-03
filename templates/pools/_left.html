@@ -8,12 +8,12 @@
                 Out of the running
             {% endif %}
         </li>
-        {% if pool.buy_in %}
+        {% if pool.entry_fee %}
             <li class="paid {% if entry.paid %}good{% else %}bad{% endif %}">
                 {% if entry.paid %}
                     Paid up
                 {% else %}
-                    ${{ pool.buy_in }} overdue
+                    ${{ pool.entry_fee }} overdue
                 {% endif %}
             </li>
         {% endif %}
