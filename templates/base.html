@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block title %}{% endblock %} Pickem Pickem</title>
+        <script type="text/javascript" src="http://use.typekit.com/cfo6pfq.js"></script>
+        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
         <link rel="stylesheet" href="/static/css/pickem.css">
         {% block head %}{% endblock %}
         <script type="text/javascript">
@@ -9,6 +10,7 @@
           center: false
         };
         </script>
+        <title>{% block title %}{% endblock %} Pickem Pickem</title>
     </head>
     <body id="{% block bodyid %}{% endblock %}" class="{% block bodyclass %}{% endblock %}">
         <div id="gridbutton" style="position: absolute; top: 0; left: -50px;"><a href="javascript:document.getElementById('grid').style.display='block';return false;">GRID</a></div>

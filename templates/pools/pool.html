@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
+{% block page_header %}
+    <h1><label>Pool:</label> {{ pool }}</h1>
+{% endblock %}
+
 {% block content %}
-    <h2>{{ pool.name }}</h2>
     {% if pool.decription %}
         <p>{{ pool.description }}</p>
     {% endif %}
