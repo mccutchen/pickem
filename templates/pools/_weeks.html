@@ -2,7 +2,8 @@
     {% for week in weeks %}
         {% set is_current = 'current' if week|id == current_week|id else '' %}
         {% set is_closed = 'closed' if week.closed else '' %}
-        {% set has_picked = 'picked' if entry.has_picked(week) else '' %}
+        {% set week_pick = entry.find_pick_for(week) %}
+        {% set has_picked = 'picked' if week_pick else '' %}
         {% if pick %}
             {% set is_correct = 'correct' if pick.evaluate() == True else ('incorrect' if pick.evaluate() == False else '') %}
         {% else %}
@@ -14,7 +15,9 @@
                 {% if has_picked %}&#10003;{% else %}&#10008;{% endif %}
             </span>
             <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
-            {% if not has_picked %}
+            {% if has_picked %}
+                <span class="pick">&#8594; {{ week_pick.team.name }}</span>
+            {% else %}
                 <span class="deadline {{ is_closed }}">
                     {% if week.closed %}
                         closed

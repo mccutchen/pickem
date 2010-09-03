@@ -274,9 +274,13 @@ class Entry(db.Model):
     def picks(self):
         return db.Query(Pick).ancestor(self)
 
+    def find_pick_for(self, week):
+        """Find this entry's pick for the given week."""
+        return self.picks.filter('week =', week).get()
+
     def has_picked(self, week):
         """Has a pick been made for the given week?"""
-        return self.picks.filter('week =', week).get() is not None
+        return self.find_pick_for(week) is not None
 
     def __unicode__(self):
         return unicode(self.account)
