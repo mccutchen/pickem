@@ -31,6 +31,10 @@ class Team(db.Model):
     place = db.StringProperty(required=True)
     name = db.StringProperty(required=True)
 
+    @property
+    def slug(self):
+        return self.key().name()
+
     def __unicode__(self):
         return u'%s %s' % (self.place, self.name)
 
