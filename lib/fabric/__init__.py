@@ -112,6 +112,10 @@ Usage:
     else:
         deploy_src = '.'
 
+    # Copy in deployed secrets file
+    with cd(deploy_src):
+        local('scp overloaded.org:pickempickem/secrets.py settings/')
+
     # Deploy the application using appcfg.py
     cmd = 'appcfg.py -A %s -V %s update %s' % (
         env.gae.app_id, env.gae.version, deploy_src)
