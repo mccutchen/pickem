@@ -42,18 +42,12 @@ for i, weekData in enumerate(scheduleData):
         away_team = models.Team.get_by_key_name(away_key)
         assert home_team
         assert away_team
-        game = db.Query(models.Game).ancestor(week)\
-            .filter('home_team =', home_team)\
-            .filter('away_team =', away_team)\
-            .get()
-        if not game:
-            game = models.Game(
-                parent=week,
-                home_team=home_team,
-                away_team=away_team,
-                teams=[home_team.key(), away_team.key()],
-                start=parsedate(gamedata['datetime']))
-        games.append(game)
+
+        game, created = week.add_game(
+            home_team, away_team, start=parsedate(gamedata['datetime']),
+            commit=False)
+        if created:
+            games.append(game)
         print ' -', game
 
 gamekeys = db.put(games)

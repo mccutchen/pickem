@@ -45,7 +45,6 @@ class Team(db.Model):
         return isinstance(other, Team) and other.key() == self.key()
 
 
-
 class Season(db.Model):
     """A single season.  The key name should be a string containing the start
     year and end year separated by a dash (e.g. '2010-2011')."""
@@ -108,6 +107,26 @@ class Week(db.Model):
 
     def find_game_for(self, team):
         return self.games.filter('teams =', team.key()).get()
+
+    def add_game(self, home_team, away_team, **kwargs):
+        commit = kwargs.pop('commit', True)
+        game_key = '%s@%s' % (away_team.slug, home_team.slug)
+        def txn():
+            key = db.Key.from_path('Game', game_key, parent=self.key())
+            game = db.get(key)
+            if not game:
+                game = Game(parent=self,
+                            home_team=home_team,
+                            away_team=away_team,
+                            teams=[home_team.key(), away_team.key()],
+                            **kwargs)
+                if commit:
+                    game.put()
+                created = True
+            else:
+                created = False
+            return game, created
+        return db.run_in_transaction(txn)
 
     @classmethod
     def next(cls):
