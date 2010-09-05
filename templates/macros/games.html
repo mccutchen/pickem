@@ -24,12 +24,14 @@
 
 {% macro showteam(team, game, pick, home) %}
     {% set picked = team == pick.team %}
-    {% set tdclass = 'home' if home else 'away' %}
+    {% set spread = (game.spread * (1 if home else -1)) %}
+    {% set favorite = 'favorite' if spread < 0 else 'underdog' %}
+    {% set tdclass = ('home' if home else 'away') + ' ' + favorite %}
     <td class="team {{ tdclass }} {% if picked %}picked{% endif %}">
         <label>
             <input type="radio" name="pick" value="{{ team|keyname }}"{% if picked %} checked{% endif %}>
             {{ team }}
         </label>
     </td>
-    <td class="spread {{ tdclass }}">{{ (game.spread * (1 if home else -1))|default('--', True) }}</td>
+    <td class="spread {{ tdclass }}">{{ spread|floatformat if spread else '--' }}</td>
 {% endmacro %}
