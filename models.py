@@ -5,6 +5,8 @@ from itertools import groupby
 
 from google.appengine.ext import db
 
+from lib.caching import cachemodel, uncachemodel
+
 
 class Account(db.Model):
     """A user's account."""
@@ -34,6 +36,14 @@ class Team(db.Model):
     @property
     def slug(self):
         return self.key().name()
+
+    @classmethod
+    def all_teams(cls):
+        teams = uncachemodel('teams', namespace='teams')
+        if not teams:
+            teams = cls.all().fetch(32)
+            cachemodel('teams', teams, namespace='teams')
+        return teams
 
     def __unicode__(self):
         return u'%s %s' % (self.place, self.name)
