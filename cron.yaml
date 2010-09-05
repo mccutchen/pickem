@@ -1,0 +1,4 @@
+cron:
+- description: Update odds
+  url: /data/odds
+  schedule: every 12 hours
