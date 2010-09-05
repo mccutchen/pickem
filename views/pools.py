@@ -184,7 +184,7 @@ class PickHandler(SecureRequestHandler):
 
         url = self.url_for(
             'pick', pool.key().id(), entry.key().id(), week_num)
-        return self.redirect_to(url)
+        return self.redirect(url)
 
     def get_week(self, week_num, season=None):
         season = season or models.Season.current()
