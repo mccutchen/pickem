@@ -24,6 +24,13 @@ class LoginHandler(RequestHandler):
         return self.render('accounts/login.html', ctx)
 
 
+class LogoutHandler(RequestHandler):
+
+    def get(self):
+        self.delete_cookie('account')
+        return self.redirect('/')
+
+
 class FacebookLoginHandler(RequestHandler):
 
     def get(self):

@@ -20,6 +20,7 @@ urls = [
           views.pools.ManagePoolHandler,
           'manage-pool'),
 
+    Route(r'/accounts/logout', views.accounts.LogoutHandler, 'logout'),
     Route(r'/accounts/login', views.accounts.LoginHandler, 'login'),
     Route(r'/accounts/login/facebook',
           views.accounts.FacebookLoginHandler,
