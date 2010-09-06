@@ -1,4 +1,4 @@
-import datetime, re
+import datetime, logging, re
 from ext import jinja2
 from django.template.defaultfilters import (floatformat, timeuntil)
 
@@ -53,6 +53,10 @@ environment.filters['timeuntil'] = timeuntil
 ##############################################################################
 def url(*args, **kwargs):
     from main import app
-    return app.url_for(*args, **kwargs)
+    try:
+        return app.url_for(*args, **kwargs)
+    except KeyError, e:
+        logging.warn('URL error: %s' % e)
+        return '/xxx'
 
 environment.globals['url'] = url
