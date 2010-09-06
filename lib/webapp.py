@@ -27,10 +27,20 @@ class RequestHandler(webapp2.RequestHandler):
     login_required = False
 
     def __call__(self, *args, **kwargs):
-        self.request.account = self.account
+        # If this handler requires login and there is no account, render the
+        # login page in place, with an appropriate status code.
         if self.login_required and self.account is None:
             ctx = { 'next': self.request.path_qs }
             return self.render('accounts/login.html', ctx, status=403)
+
+        # Add the current account, if there is one, to the request object
+        self.request.account = self.account
+
+        # Add an is_ajax() method to the request object, a la Django
+        self.request.is_ajax = lambda: \
+			self.request.environ.get('HTTP_X_REQUESTED_WITH', '').lower()\
+            == 'xmlhttprequest'
+
         return super(RequestHandler, self).__call__(*args, **kwargs)
 
     @property
