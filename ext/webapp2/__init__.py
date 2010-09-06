@@ -13,7 +13,7 @@ import re
 import urllib
 import urlparse
 
-from google.appengine.ext.webapp import Request
+from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_bare_wsgi_app, run_wsgi_app
 
 import webob
@@ -38,6 +38,15 @@ _ROUTE_REGEX = re.compile(r'''
     ''', re.VERBOSE)
 
 
+class Request(webapp.Request):
+    def __init__(self, *args, **kwargs):
+        super(Request, self).__init__(*args, **kwargs)
+        # A registry for objects used during the request lifetime.
+        self.registry = {}
+        # A dictionary for variables used in rendering.
+        self.context = {}
+
+
 class Response(webob.Response):
     """Abstraction for an HTTP response.
 
@@ -49,6 +58,18 @@ class Response(webob.Response):
         # webapp uses response.out.write(), so we point `.out` to `self`
         # and it will use `Response.write()`.
         self.out = self
+
+    def write(self, text):
+        """Appends a text to the response body."""
+        # webapp uses StringIO as Response.out, so we need to convert anything
+        # that is not str or unicode to string to keep same behavior.
+        if not isinstance(text, basestring):
+            text = unicode(text)
+
+        if isinstance(text, unicode) and not self.charset:
+            self.charset = self.default_charset
+
+        super(Response, self).write(text)
 
     def set_status(self, code, message=None):
         """Sets the HTTP status code of this response.
@@ -90,9 +111,13 @@ class RequestHandler(object):
 
     Implements most of ``webapp.RequestHandler`` interface.
     """
-    def __init__(self, app, request, response):
+    def __init__(self, app=None, request=None, response=None):
         """Initializes this request handler with the given WSGI application,
         Request and Response.
+
+        .. note::
+           Parameters are optional only to support webapp's constructor which
+           doesn't take any arguments. Consider them as required.
 
         :param app:
             A :class:`WSGIApplication` instance.
@@ -102,6 +127,26 @@ class RequestHandler(object):
             A :class:`Response` instance.
         """
         self.app = app
+        self.request = request
+        self.response = response
+
+    def initialize(self, request, response):
+        """Initializes this request handler with the given WSGI application,
+        Request and Response.
+
+        .. warning::
+           This is deprecated. It is here for compatibility with webapp only.
+           Use __init__() instead.
+
+        :param request:
+            A ``webapp.Request`` instance.
+        :param response:
+            A :class:`Response` instance.
+        """
+        logging.warning('RequestHandler.initialize() is deprecated. '
+            'Use __init__() instead.')
+
+        self.app = WSGIApplication.active_instance
         self.request = request
         self.response = response
 
@@ -256,6 +301,14 @@ class RequestHandler(object):
         :returns:
             An absolute or relative URL.
 
+        .. note::
+           This method, like :meth:`WSGIApplication.url_for`, needs the request
+           attribute to be set to build absolute URLs. This is because some
+           routes may need to retrieve information from the request to set the
+           URL host. We pass the request object explicitly instead of relying
+           on ``os.environ`` mainly for better testability, but it also helps
+           middleware.
+
         .. seealso:: :meth:`Router.build`.
         """
         return self.app.router.build(_name, self.request, args, kwargs)
@@ -263,14 +316,14 @@ class RequestHandler(object):
     def get_config(self, module, key=None, default=REQUIRED_VALUE):
         """Returns a configuration value for a module.
 
-        .. seealso:: :meth:`Config.load_and_get`.
+        .. seealso:: :meth:`Config.get_or_load`.
         """
-        return self.app.config.load_and_get(module, key=key, default=default)
+        return self.app.config.get_or_load(module, key=key, default=default)
 
     def handle_exception(self, exception, debug_mode):
         """Called if this handler throws an exception during execution.
 
-        The default behavior is to raise the exception to be handled by
+        The default behavior is to re-raise the exception to be handled by
         :meth:`WSGIApplication.handle_exception`.
 
         :param exception:
@@ -451,22 +504,26 @@ class Config(dict):
         :param key:
             The key from the module configuration.
         :param default:
-            A default value to return in case the configuration for
-            the module/key is not set.
+            A default value to return when the configuration for the given
+            key is not set. It is only returned if **key** is defined.
         :returns:
             The configuration value.
         """
         if module not in self:
+            if key is None:
+                return None
+
             return default
 
         if key is None:
             return self[module]
-        elif key not in self[module]:
+
+        if key not in self[module]:
             return default
 
         return self[module][key]
 
-    def load_and_get(self, module, key=None, default=REQUIRED_VALUE):
+    def get_or_load(self, module, key=None, default=REQUIRED_VALUE):
         """Returns a configuration value for a module. If it is not already
         set, loads a ``default_config`` variable from the given module,
         updates the app configuration with those default values and returns
@@ -498,13 +555,14 @@ class Config(dict):
             self.loaded.append(module)
 
         value = self.get(module, key, default)
-        if value is not REQUIRED_VALUE:
+
+        if value is not REQUIRED_VALUE and not (key is None and value is None):
             return value
 
-        if key is None:
+        if key is None and value is None:
             raise KeyError('Module %s is not configured.' % module)
-        else:
-            raise KeyError('Module %s requires the config key "%s" to be '
+
+        raise KeyError('Module %s requires the config key "%s" to be '
                 'set.' % (module, key))
 
 
@@ -587,29 +645,26 @@ class SimpleRoute(BaseRoute):
         """
         self.template = template
         self.handler = handler
-        self.name = handler.__class__.__name__
         # Lazy property.
-        self._regex = None
+        self.regex = None
 
-    @property
-    def regex(self):
-        if self._regex is None:
-            if not self.template.startswith('^'):
-                self.template = '^' + self.template
+    def _regex(self):
+        if not self.template.startswith('^'):
+            self.template = '^' + self.template
 
-            if not self.template.endswith('$'):
-                self.template += '$'
+        if not self.template.endswith('$'):
+            self.template += '$'
 
-            self._regex = re.compile(self.template)
-
-        return self._regex
+        self.regex = re.compile(self.template)
+        return self.regex
 
     def match(self, request):
         """Matches this route against the current request.
 
         .. seealso:: :meth:`BaseRoute.match`.
         """
-        match = self.regex.match(request.path)
+        regex = self.regex or self._regex()
+        match = regex.match(request.path)
         if match:
             return self.handler, match.groups(), {}
 
@@ -670,14 +725,14 @@ class Route(BaseRoute):
         self.defaults = defaults or {}
         self.build_only = build_only
         # Lazy properties.
-        self._regex = None
-        self._variables = None
-        self._reverse_template = None
+        self.regex = None
+        self.variables = None
+        self.reverse_template = None
 
     def _parse_template(self):
-        self._variables = {}
+        self.variables = {}
         last = count = 0
-        regex = template = ''
+        regex = reverse_template = ''
         for match in _ROUTE_REGEX.finditer(self.template):
             part = self.template[last:match.start()]
             name = match.group(1)
@@ -688,42 +743,34 @@ class Route(BaseRoute):
                 name = '__%d__' % count
                 count += 1
 
-            template += '%s%%(%s)s' % (part, name)
+            reverse_template += '%s%%(%s)s' % (part, name)
             regex += '%s(?P<%s>%s)' % (re.escape(part), name, expr)
-            self._variables[name] = re.compile('^%s$' % expr)
+            self.variables[name] = re.compile('^%s$' % expr)
 
         regex = '^%s%s$' % (regex, re.escape(self.template[last:]))
-        self._regex = re.compile(regex)
-        self._reverse_template = template + self.template[last:]
+        self.regex = re.compile(regex)
+        self.reverse_template = reverse_template + self.template[last:]
         self.has_positional_variables = count > 0
 
-    @property
-    def regex(self):
-        if self._regex is None:
-            self._parse_template()
+    def _regex(self):
+        self._parse_template()
+        return self.regex
 
-        return self._regex
+    def _variables(self):
+        self._parse_template()
+        return self.variables
 
-    @property
-    def variables(self):
-        if self._variables is None:
-            self._parse_template()
-
-        return self._variables
-
-    @property
-    def reverse_template(self):
-        if self._reverse_template is None:
-            self._parse_template()
-
-        return self._reverse_template
+    def _reverse_template(self):
+        self._parse_template()
+        return self.reverse_template
 
     def match(self, request):
         """Matches this route against the current request.
 
         .. seealso:: :meth:`BaseRoute.match`.
         """
-        match = self.regex.match(request.path)
+        regex = self.regex or self._regex()
+        match = regex.match(request.path)
         if match:
             kwargs = self.defaults.copy()
             kwargs.update(match.groupdict())
@@ -763,7 +810,7 @@ class Route(BaseRoute):
             A tuple ``(path, kwargs)`` with the built URL path and extra
             keywords to be used as URL query arguments.
         """
-        variables = self.variables
+        variables = self.variables or self._variables()
         if self.has_positional_variables:
             for index, value in enumerate(args):
                 key = '__%d__' % index
@@ -803,12 +850,15 @@ class Router(object):
     #: Class used when the route is a tuple. Default is compatible with webapp.
     route_class = SimpleRoute
 
-    def __init__(self, routes=None):
+    def __init__(self, app, routes=None):
         """Initializes the router.
 
+        :param app:
+            The :class:`WSGIApplication` instance.
         :param routes:
             A list of :class:`Route` instances to initialize the router.
         """
+        self.app = app
         # Handler classes imported lazily.
         self._handlers = {}
         # All routes that can be matched.
@@ -847,9 +897,11 @@ class Router(object):
         for route in self.match_routes:
             match = route.match(request)
             if match:
+                request.route = route
+                request.route_args, request.route_kwargs = match[1], match[2]
                 return match
 
-    def dispatch(self, app, request, response, match):
+    def dispatch(self, app, request, response, match, method=None):
         """Dispatches a request. This calls the :class:`RequestHandler` from
         the matched :class:`Route`.
 
@@ -862,8 +914,12 @@ class Router(object):
         :param match:
             A tuple ``(handler, args, kwargs)``, resulted from the matched
             route.
+        :param method:
+            Handler method to be called. In cases like exception handling, a
+            method can be forced instead of using the request method.
         """
         handler_class, args, kwargs = match
+        method = method or request.method.lower().replace('-', '_')
 
         if isinstance(handler_class, basestring):
             if handler_class not in self._handlers:
@@ -871,13 +927,27 @@ class Router(object):
 
             handler_class = self._handlers[handler_class]
 
-        handler = handler_class(app, request, response)
+        new_style_handler = True
+        try:
+            handler = handler_class(app, request, response)
+        except TypeError, e:
+            # Support webapp's initialize().
+            new_style_handler = False
+            handler = handler_class()
+            handler.initialize(request, response)
 
         try:
-            handler(request.method.lower(), *args, **kwargs)
+            if new_style_handler:
+                handler(method, *args, **kwargs)
+            else:
+                # Support webapp handlers which don't implement __call__().
+                getattr(handler, method)(*args)
         except Exception, e:
-            # If the handler implements exception handling,
-            # let it handle it.
+            if method == 'handle_exception':
+                # We are already handling an exception.
+                raise
+
+            # If the handler implements exception handling, let it handle it.
             handler.handle_exception(e, app.debug)
 
     def build(self, name, request, args, kwargs):
@@ -954,10 +1024,6 @@ class WSGIApplication(object):
     router_class = Router
     #: Default class used for the config object.
     config_class = Config
-    #: A dictionary mapping HTTP error codes to :class:`RequestHandler`
-    #: classes used to handle them. The handler set for status 500 is used
-    #: as default if others are not set.
-    error_handlers = {}
 
     def __init__(self, routes=None, debug=False, config=None):
         """Initializes the WSGI application.
@@ -970,8 +1036,17 @@ class WSGIApplication(object):
             A configuration dictionary for the application.
         """
         self.debug = debug
-        self.router = self.router_class(routes)
         self.config = self.config_class(config)
+        self.router = self.router_class(self, routes)
+        # A dictionary mapping HTTP error codes to :class:`RequestHandler`
+        # classes used to handle them.
+        self.error_handlers = {}
+        # A registry for objects used during the app lifetime.
+        self.registry = {}
+        # For compatibility with webapp only. Don't use it!
+        WSGIApplication.active_instance = self
+        # Current request did not start yet, so we set a fallback.
+        self.request = None
 
     def __call__(self, environ, start_response):
         """Called by WSGI when a request comes in. Calls :meth:`wsgi_app`."""
@@ -1000,6 +1075,9 @@ class WSGIApplication(object):
             optional exception context to start the response.
         """
         try:
+            # For compatibility with webapp only. Don't use it!
+            WSGIApplication.active_instance = self
+
             self.request = request = self.request_class(environ)
             response = self.response_class()
 
@@ -1007,7 +1085,7 @@ class WSGIApplication(object):
                 # 501 Not Implemented.
                 raise webob.exc.HTTPNotImplemented()
 
-            # match is (route, args, kwargs)
+            # Matched values are (handler, args, kwargs).
             match = self.router.match(request)
 
             if match:
@@ -1022,11 +1100,12 @@ class WSGIApplication(object):
                 # Use the exception as response.
                 response = e
             except Exception, e:
-                # Our last chance to handle the error.
+                # Error wasn't handled so we have nothing else to do.
+                logging.exception(e)
                 if self.debug:
                     raise
 
-                # 500 Internal Server Error: nothing else to do.
+                # 500 Internal Server Error.
                 response = webob.exc.HTTPInternalServerError()
         finally:
             self.request = None
@@ -1034,10 +1113,33 @@ class WSGIApplication(object):
         return response(environ, start_response)
 
     def handle_exception(self, request, response, e):
-        """Handles an exception. Searches :attr:`error_handlers` for a handler
-        with the error code, if it is a :class:`HTTPException`, or the 500
-        status code as fall back. Dispatches the handler if found, or re-raises
-        the exception to be caught by :class:`WSGIApplication`.
+        """Handles an exception. To set app-wide error handlers, define them
+        using the corresponent HTTP status code in the ``error_handlers``
+        dictionary of :class:`WSGIApplication`. For example, to set a custom
+        `Not Found` page::
+
+            class Handle404(RequestHandler):
+                def handle_exception(self, exception, debug_mode):
+                    self.response.out.write('Oops! I could swear this page was here!')
+                    self.response.set_status(404)
+
+            app = WSGIApplication([
+                (r'/', MyHandler),
+            ])
+            app.error_handlers[404] = Handle404
+
+        When an ``HTTPException`` is raised using :func:`abort` or because the
+        app could not fulfill the request, the error handler defined for the
+        current HTTP status code will be called. If it is not set, the
+        exception is re-raised.
+
+        .. note::
+           Although being a :class:`RequestHandler`, the error handler will
+           execute the ``handle_exception`` method after instantiation, instead
+           of the method corresponding to the current request.
+
+           Also, the error handler is responsible for setting the response
+           status code, as shown in the example above.
 
         :param request:
             A ``webapp.Request`` instance.
@@ -1046,19 +1148,17 @@ class WSGIApplication(object):
         :param e:
             The raised exception.
         """
-        logging.exception(e)
-        if self.debug:
-            raise
-
         if isinstance(e, HTTPException):
             code = e.code
         else:
             code = 500
 
-        handler = self.error_handlers.get(code) or self.error_handlers.get(500)
+        handler = self.error_handlers.get(code)
         if handler:
             # Handle the exception using a custom handler.
-            handler(self, request, response)('get', exception=e)
+            match = (handler, (e, self.debug), {})
+            self.router.dispatch(self, request, response, match,
+                method='handle_exception')
         else:
             # No exception handler. Catch it in the WSGI app.
             raise
@@ -1073,9 +1173,9 @@ class WSGIApplication(object):
     def get_config(self, module, key=None, default=REQUIRED_VALUE):
         """Returns a configuration value for a module.
 
-        .. seealso:: :meth:`Config.load_and_get`.
+        .. seealso:: :meth:`Config.get_or_load`.
         """
-        return self.config.load_and_get(module, key=key, default=default)
+        return self.config.get_or_load(module, key=key, default=default)
 
     def run(self, bare=False):
         """Runs the app using ``google.appengine.ext.webapp.util.run_wsgi_app``.
@@ -1098,6 +1198,10 @@ class WSGIApplication(object):
             If True, uses ``run_bare_wsgi_app`` instead of ``run_wsgi_app``,
             which doesn't add WSGI middleware.
         """
+        # Fix issue #772.
+        if self.debug:
+            fix_sys_path()
+
         if bare:
             run_bare_wsgi_app(self)
         else:
@@ -1131,7 +1235,8 @@ def get_valid_methods(handler):
     :returns:
         A list of HTTP methods supported by the handler.
     """
-    return [m for m in ALLOWED_METHODS if getattr(handler, m.lower(), None)]
+    return [method for method in ALLOWED_METHODS if getattr(handler,
+        method.lower().replace('-', '_'), None)]
 
 
 def import_string(import_name, silent=False):
@@ -1236,6 +1341,23 @@ def urlunsplit(scheme=None, netloc=None, path=None, query=None, fragment=None):
         query = urllib.urlencode(query_args)
 
     if fragment:
-        fragment = urllib.quote_plus(to_utf8(fragment))
+        fragment = urllib.quote(to_utf8(fragment))
 
     return urlparse.urlunsplit((scheme, netloc, path, query, fragment))
+
+
+_ULTIMATE_SYS_PATH = None
+
+
+def fix_sys_path():
+    """A fix for issue 772. We must keep this here until it is fixed in the dev
+    server. I know, I don't like it either.
+
+    See: http://code.google.com/p/googleappengine/issues/detail?id=772
+    """
+    global _ULTIMATE_SYS_PATH
+    import sys
+    if _ULTIMATE_SYS_PATH is None:
+        _ULTIMATE_SYS_PATH = list(sys.path)
+    elif sys.path != _ULTIMATE_SYS_PATH:
+        sys.path[:] = _ULTIMATE_SYS_PATH
