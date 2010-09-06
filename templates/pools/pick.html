@@ -2,7 +2,7 @@
 {% import "macros/games.html" as games %}
 
 {% block page_header %}
-    <h1><label>Pool:</label> {{ pool }}</h1>
+    <h1><label>Pool:</label> <a href="{{ url('pool', pool|id) }}">{{ pool }}</a></h1>
 {% endblock %}
 
 {% block left %}
@@ -17,7 +17,7 @@
             {% if week.closed %}
                 Closed.
             {% else %}
-                <span>Deadline:</span> {{ week.start|dateformat('%A, %B %d at %I:%M') }}
+                <span>Deadline:</span> {{ week.start|timeuntil }}
             {% endif %}
         </p>
 

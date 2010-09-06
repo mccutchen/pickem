@@ -13,7 +13,7 @@
                 {% if entry.paid %}
                     Paid up
                 {% else %}
-                    ${{ pool.entry_fee }} overdue
+                    ${{ pool.entry_fee|floatformat('-2') }} overdue
                 {% endif %}
             </li>
         {% endif %}
@@ -27,6 +27,6 @@
         <li>{{ pool.entries.count() }} entries</li>
         <li>{{ pool.active_entries.count() }} active entries</li>
         <li>{{ pool.paid_entries.count() }} paid entries</li>
-        <li>Pot: ${{ pool.pot }} of ${{ pool.potential_pot }}</li>
+        <li>Pot: ${{ pool.pot|floatformat('-2') }} of ${{ pool.potential_pot|floatformat('-2') }}</li>
     </ul>
 </div>

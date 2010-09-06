@@ -10,8 +10,8 @@
         </li>
         <li>{{ entries|length }} players</li>
         {% if pool.entry_fee %}
-            <li>${{ pool.entry_fee }} entry fee</li>
-            <li>${{ pool.potential_pot }} pot</a>
+            <li>${{ pool.entry_fee|floatformat('-2') }} entry fee</li>
+            <li>${{ pool.potential_pot|floatformat('-2') }} pot</a>
             <li>{{ unpaid_entries|length }} unpaid entries</li>
         {% else %}
             <li>No entry fee</li>

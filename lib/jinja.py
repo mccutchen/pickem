@@ -1,6 +1,6 @@
 import datetime, re
 from ext import jinja2
-from django.template.defaultfilters import (floatformat)
+from django.template.defaultfilters import (floatformat, timeuntil)
 
 import settings
 
@@ -45,6 +45,7 @@ environment.filters['key'] = key
 environment.filters['id'] = _id
 environment.filters['keyname'] = keyname
 environment.filters['floatformat'] = floatformat
+environment.filters['timeuntil'] = timeuntil
 
 
 ##############################################################################

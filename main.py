@@ -5,6 +5,8 @@ extpath = os.path.join(os.path.dirname(__file__), 'ext')
 if extpath not in sys.path:
     sys.path.append(extpath)
 
+os.environ['DJANGO_SETTINGS_MODULE'] = 'settings'
+
 from ext.webapp2 import WSGIApplication
 
 from google.appengine.dist import use_library
