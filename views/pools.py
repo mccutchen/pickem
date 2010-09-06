@@ -170,21 +170,22 @@ class PickHandler(SecureRequestHandler):
         # We should have enough data to create the pick (in a transaction)
         pick_key = db.Key.from_path(
             'Pick', week.key().id(), parent=entry.key())
-        def txn():
-            pick = db.get(pick_key)
-            if pick is None:
-                pick = models.Pick(
-                    key=pick_key,
-                    week=week,
-                    game=game,
-                    team=team)
-                pick.put()
-            return pick
-        pick = db.run_in_transaction(txn)
+        pick = models.Pick(
+            key=pick_key,
+            week=week,
+            game=game,
+            team=team)
+        pick.put()
+        logging.info(u'Created pick %s for team %s' % (pick, team))
 
-        url = self.url_for(
-            'pick', pool.key().id(), entry.key().id(), week_num)
-        return self.redirect(url)
+        if self.request.is_ajax():
+            self.response.set_status(201)
+            return self.response.out.write('OK')
+
+        else:
+            url = self.url_for(
+                'pick', pool.key().id(), entry.key().id(), week_num)
+            return self.redirect(url)
 
     def get_week(self, week_num, season=None):
         season = season or models.Season.current()

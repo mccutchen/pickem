@@ -1,6 +1,36 @@
 {% extends "3columns.html" %}
 {% import "macros/games.html" as games %}
 
+{% block head %}
+    {{ super() }}
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            var form = $('#pick');
+            form.children('div.submit').hide();
+            form.find('input[type="radio"]').change(function() {
+                var label = $(this).parent();
+                console.log(form.attr('action'), form.attr('method'));
+                $.ajax({
+                    url: form.attr('action'),
+                    type: form.attr('method'),
+                    data: form.serialize(),
+                    success: function() {
+                        $('td.picked').removeClass('picked');
+                        label.parent('td').addClass('picked');
+                        $('#your-pick span')
+                            .addClass('picked')
+                            .removeClass('not')
+                            .text(label.text().trim());
+                    },
+                    error: function() {
+                        alert('Error submitting pick');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block page_header %}
     <h1><label>Pool:</label> <a href="{{ url('pool', pool|id) }}">{{ pool }}</a></h1>
 {% endblock %}
@@ -21,11 +51,13 @@
             {% endif %}
         </p>
 
-        <h3>Your pick: <span class="{{ 'picked' if pick else 'not picked'}}">{{ pick|default('None', True) }}</span></h3>
+        <h3 id="your-pick">Your pick: <span class="{{ 'picked' if pick else 'not picked'}}">{{ pick|default('None', True) }}</span></h3>
         
-        <form action="{{ url('pick', pool|id, entry|id, week|id) }}" method="post">
+        <form id="pick" action="{{ url('pick', pool|id, entry|id, week|id) }}" method="post">
             {{ games.showgames(week, pick) }}
-            <input type="submit" value="Make Pick!">
+            <div class="submit">
+                <input type="submit" value="Make Pick!">
+            </div>
         </form>
     </div>
 {% endblock %}
