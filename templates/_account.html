@@ -1,7 +1,9 @@
 <div id="account">
     {% if request.account %}
-        <a href="{{ url('account') }}">{{ request.account }}</a>
+        Logged in as <a href="{{ url('account') }}">{{ request.account }}</a>&nbsp;&nbsp;|&nbsp;
+        <a href="{{ url('logout') }}">Log out</a>
     {% else %}
+        Not logged in&nbsp;&nbsp;|&nbsp;
         <a href="{{ url('login')}}">Log in</a>
     {% endif %}
 </div>
