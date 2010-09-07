@@ -4,11 +4,14 @@
 {% block head %}
     {{ super() }}
     <script type="text/javascript" charset="utf-8">
+        if ((typeof console) == 'undefined')
+            var console = { log: function() {} };
+
         $(document).ready(function() {
             var form = $('#pick');
             form.children('div.submit').hide();
             form.find('input[type="radio"]').change(function() {
-                console.log(form.attr('action'), form.attr('method'));
+                var self = $(this);
                 $.ajax({
                     url: form.attr('action'),
                     type: form.attr('method'),
@@ -16,7 +19,7 @@
                     success: function(data, textStatus, xhr) {
                         // Update the form field
                         $('td.picked').removeClass('picked');
-                        $(this).parent('td').addClass('picked');
+                        self.parents('td').addClass('picked');
                         // Update the "your pick" header
                         $('#your-pick span')
                             .addClass('picked')
@@ -26,7 +29,7 @@
                         $('li.week.current')
                             .removeClass('negative')
                             .addClass('picked positive')
-                            .find('span.deadline').remove().end()
+                            .find('span.deadline, span.pick').remove().end()
                             .append('<span class="pick">&#8594; ' + data['name']);
                     },
                     error: function() {
