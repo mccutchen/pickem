@@ -8,19 +8,26 @@
             var form = $('#pick');
             form.children('div.submit').hide();
             form.find('input[type="radio"]').change(function() {
-                var label = $(this).parent();
                 console.log(form.attr('action'), form.attr('method'));
                 $.ajax({
                     url: form.attr('action'),
                     type: form.attr('method'),
                     data: form.serialize(),
-                    success: function() {
+                    success: function(data, textStatus, xhr) {
+                        // Update the form field
                         $('td.picked').removeClass('picked');
-                        label.parent('td').addClass('picked');
+                        $(this).parent('td').addClass('picked');
+                        // Update the "your pick" header
                         $('#your-pick span')
                             .addClass('picked')
                             .removeClass('not')
-                            .text(label.text().trim());
+                            .text(data['team']);
+                        // Update the current week in the sidebar
+                        $('li.week.current')
+                            .removeClass('negative')
+                            .addClass('picked positive')
+                            .find('span.deadline').remove().end()
+                            .append('<span class="pick">&#8594; ' + data['name']);
                     },
                     error: function() {
                         alert('Error submitting pick');
