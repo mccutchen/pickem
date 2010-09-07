@@ -51,6 +51,20 @@ body.three.columns div.right.column {
 }
 
 
+#footer {
+    font-size: 11px;
+    color: #fff;
+    background-color: #333;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-top: 1px dotted #222;
+    -webkit-box-shadow: rgba(0, 0, 0, .3) 0 -2px 2px;
+}
+#footer a {
+    color: #ccc;
+}
+
+
 .header {
     color: #fff;
     position: relative;
