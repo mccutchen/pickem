@@ -1,25 +1,11 @@
-{% extends "base.html" %}
+{% extends "2columns.html" %}
 
 {% block page_header %}
     <h1>Dashboard</h1>
 {% endblock %}
 
-{% block content %}
-    <h2>Welcome back.</h2>
-    
-    {% if pools %}
-        <h3>Your Pools</h3>
-        <p>You're managing {{ pools|length }} pools.</p>
-
-        <ul>
-            {% for pool in pools %}
-                <li>
-                    <a href="{{ url('pool', pool|id) }}">{{ pool }}</a>
-                    (<a href="{{ url('manage-pool', pool|id) }}">Manage</a>)
-                </li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+{% block left %}
+    <h2>Welcome back, <strong>{{ request.account.first_name }}</strong>.</h2>
 
     <h3>Your Entries</h3>
     <p>You've got {{ entries|length }} entries.</p>
@@ -33,7 +19,23 @@
             </li>
         {% endfor %}
     </ul>
-    
+
+    {% if pools %}
+        <h3>Your Pools</h3>
+        <p>You're managing {{ pools|length }} pools.</p>
+
+        <ul>
+            {% for pool in pools %}
+                <li>
+                    <a href="{{ url('pool', pool|id) }}">{{ pool }}</a>
+                    (<a href="{{ url('manage-pool', pool|id) }}">Manage</a>)
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block right %}
     <h3>New Pool</h3>
     <p>Create a new pool.</p>
     <form action="{{ url('pools') }}" method="post">
