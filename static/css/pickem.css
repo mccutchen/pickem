@@ -11,6 +11,8 @@ body {
 	font-size: 12px;
 	position: relative;
 	-webkit-box-shadow: rgba(0, 0, 0, .5) 0 2px 4px;
+    -moz-box-shadow: rgba(0, 0, 0, .5) 0 2px 4px;
+    box-shadow: rgba(0, 0, 0, .5) 0 2px 4px;
 }
 
 a {
@@ -59,6 +61,8 @@ body.three.columns div.right.column {
     margin-top: 10px;
     border-top: 1px dotted #222;
     -webkit-box-shadow: rgba(0, 0, 0, .3) 0 -2px 2px;
+    -moz-box-shadow: rgba(0, 0, 0, .3) 0 -2px 2px;
+    box-shadow: rgba(0, 0, 0, .3) 0 -2px 2px;
 }
 #footer a {
     color: #ccc;
@@ -70,6 +74,8 @@ body.three.columns div.right.column {
     position: relative;
 	padding: 15px 20px 8px;
 	-webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+    -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
+    box-shadow: 0 2px 2px rgba(0, 0, 0, .3);
 }
 
 h1, h2, h3, h4, h5 {
@@ -107,10 +113,16 @@ h4 { font-size: 1.25em; }
 	top: 0;
 	right: 20px;
 	margin: 0;
-	padding: 5px 10px 7px;
-	border-radius: 0 0 3px 3px;
-	background-color: rgba(255, 255, 255, 1);
+	padding: 5px 10px 7px;    
+    background-color: rgba(255, 255, 255, 1);
+
+	border-radius: 0 0 3px 3px;        
+    -webkit-border-radius: 0 0 3px 3px;    
+    -moz-border-radius: 0 0 3px 3px;    
+
 	-webkit-box-shadow: rgba(0, 0, 0, .5) 0 2px 2px;
+    -moz-box-shadow: rgba(0, 0, 0, .5) 0 2px 2px;
+    box-shadow: rgba(0, 0, 0, .5) 0 2px 2px;
 }
 
 #page-header {
@@ -175,6 +187,8 @@ div#current-week h3 {
 	margin: 15px 20px 15px 0;
 	border: 1px dotted #ccc;
 	-webkit-box-shadow: 0 0 4px rgba(0, 0, 0, .15);
+    -moz-box-shadow: 0 0 4px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 4px rgba(0, 0, 0, .15);
 }
 div#current-week h3 span.picked {
 	border: 1px solid rgba(255, 200, 50, 1);
@@ -241,6 +255,8 @@ ol.weeks li span.pick {
 ol.weeks li.current {
     border: 1px dotted #ccc;
 	-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 3px rgba(0, 0, 0, .15);
 }
 ol.weeks li span.indicator {
 	margin-right: 5px;
@@ -301,6 +317,8 @@ span.invite-code {
 	border: 1px dotted #ccc;
 	margin-top: 10px;
 	-webkit-box-shadow: rgba(0, 0, 0, .15) 0 0 4px;
+    -moz-box-shadow: rgba(0, 0, 0, .15) 0 0 4px;
+    box-shadow: rgba(0, 0, 0, .15) 0 0 4px;
 }
 
 a.footnote {
@@ -320,6 +338,8 @@ div#facebook-login {
 	border: 1px dotted #ccc;
 	padding: 10px;
 	-webkit-box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
+    -moz-box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
+    box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
 }
 div#facebook-login p {
 	margin-bottom: 0;
@@ -336,6 +356,8 @@ div#facebook-login a img {
 	border: 1px dotted rgba(153, 100, 0, .5);
 	padding: 10px;
 	-webkit-box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
+    -moz-box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
+    box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
 }
 
 .button {
@@ -346,8 +368,14 @@ div#facebook-login a img {
 	border: none;
 	font-size: 2em;
 	text-shadow: rgba(0, 0, 0, .35) -1px -1px 0;
+
 	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+
 	-webkit-box-shadow: rgba(0, 0, 0, .25) 2px 2px 2px;
+    -moz-box-shadow: rgba(0, 0, 0, .25) 2px 2px 2px;
+    box-shadow: rgba(0, 0, 0, .25) 2px 2px 2px;
 }
 .button span {
 	color: #fff;
