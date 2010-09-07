@@ -1,4 +1,4 @@
-{% extends "2columns.html" %}
+{% extends "3columns.html" %}
 
 {% block page_header %}
     <h1><label>Pool:</label> {{ pool }}</h1>
@@ -8,7 +8,7 @@
     {% include "pools/_left.html" %}
 {% endblock %}
 
-{% block right %}
+{% block middle %}
     <h2>{% if entry.account|id == request.account|id %}Your {% endif %}Picks</h2>
     {% set current_week = week %}
     {% include 'pools/_weeks.html' %}

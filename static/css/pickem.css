@@ -33,23 +33,24 @@ div#grid {
 body.columns div.column {
     display: inline-block;
     vertical-align: top;
-    margin-right: 20px;
+    /* Should be 20px, but inline-block does something weird with
+    the spacing */
+    margin-right: 16px;
 }
-body.two.columns div.left.column,
+body.columns div.column:last-child {
+    margin-right: 0;
+}
+body.two.columns div.column {
+    width: 480px;
+}
 body.three.columns div.left.column {
     width: 180px;
 }
-
-body.two.columns div.right.column {
-    width: 480px;
-}
-
 body.three.columns div.middle.column {
     width: 480px;
 }
 body.three.columns div.right.column {
     width: 260px;
-    margin-right: 0;
 }
 
 
