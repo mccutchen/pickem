@@ -70,24 +70,12 @@
         
         <div id="key">
             <h4>Key</h4>
-            <table>
-                <tr>
-                    <th class="indicator picked">&#10003;</th>
-                    <td>Picked</td>
-                </tr>
-                <tr>
-                    <th class="indicator picked correct">&#10003;</th>
-                    <td>Picked correctly</td>
-                </tr>
-                <tr>
-                    <th class="indicator picked incorrect">&#10008;</th>
-                    <td>Picked incorrectly</td>
-                </tr>
-                <tr>
-                    <th class="indicator">&#10008;</th>
-                    <td>Not picked</td>
-                </tr>
-            </table>
+            <ul>
+                <li class="indicator positive pending">Picked</li>
+                <li class="indicator positive correct">Picked correctly</li>
+                <li class="indicator negative incorrect">Picked incorrectly</li>
+                <li class="indicator negative pending">Not picked</li>
+            </ul>
         </div>
     </div>
 {% endblock %}

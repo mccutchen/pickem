@@ -1,7 +1,7 @@
 <div class="entry info">
     <h3><a href="{{ url('entry', pool|id, entry|id) }}">This Entry</a></h3>
     <ul>
-        <li class="active {% if entry.active %}good{% else %}bad{% endif %}">
+        <li class="active indicator {% if entry.active %}positive{% else %}negative{% endif %}">
             {% if entry.active %}
                 Still alive
             {% else %}
@@ -9,7 +9,7 @@
             {% endif %}
         </li>
         {% if pool.entry_fee %}
-            <li class="paid {% if entry.paid %}good{% else %}bad{% endif %}">
+            <li class="paid indicator {% if entry.paid %}positive{% else %}negative{% endif %}">
                 {% if entry.paid %}
                     Paid up
                 {% else %}

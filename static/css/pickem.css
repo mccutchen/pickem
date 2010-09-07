@@ -209,6 +209,7 @@ ol.weeks li {
 	position: relative;
     display: block;
     padding: 5px;
+    padding-left: 18px;
 }
 ol.weeks a {
     text-decoration: none;
@@ -235,15 +236,22 @@ ol.weeks li span.indicator {
 .indicator {
 	color: #666;
 	font-weight: normal;
+	background-position: center left;
+	background-repeat: no-repeat;
+	min-height: 16px;
+	padding-left: 18px;
 }
-.indicator.picked {
-	color: rgba(255, 200, 50, 1);
+.indicator.positive {
+    background-image: url(/static/img/icons/tick-small.png);
 }
-.indicator.correct {
-	color: #090;
+.indicator.negative {
+    background-image: url(/static/img/icons/cross-small.png);
 }
-.indicator.incorrect {
-	color: #900;
+.indicator.positive.pending {
+    background-image: url(/static/img/icons/tick-small-pending.png);
+}
+.indicator.negative.pending {
+    background-image: url(/static/img/icons/cross-small-pending.png);
 }
 
 
@@ -253,10 +261,10 @@ div#other-weeks div#key {
 div#other-weeks div#key h4 {
 	margin-bottom: .5em;
 }
-div#other-weeks div#key th,
-div#other-weeks div#key td {
-	padding: 2px 5px;
-	font-weight: normal;
+div#other-weeks div#key ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 
