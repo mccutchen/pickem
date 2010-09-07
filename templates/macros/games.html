@@ -1,7 +1,7 @@
 {% macro showgames(week, pick) %}
     <table class="games">
         {% for date, group in week.grouped_games %}
-            <th class="date" colspan="5">{{ date|dateformat('%A, %B %d', fix=False) }}</th>
+            <th class="date" colspan="5">{{ date|date('%A, %B %d', fix=False) }}</th>
             {% for game in group %}
                 {{ showgame(game, pick) }}
             {% endfor %}
@@ -13,7 +13,7 @@
     <tr>
         <td class="kickoff">
             {% if not last_kickoff or last_kickoff != game.start %}
-                {{ game.start|dateformat('%I:%M') }}
+                {{ game.start|date('%I:%M') }}
             {% endif %}
         </td>
         {{ showteam(game.away_team, game, pick, home=False) }}
@@ -29,7 +29,7 @@
     {% set tdclass = ('home' if home else 'away') + ' ' + favorite %}
     <td class="team {{ tdclass }} {% if picked %}picked{% endif %}">
         <label>
-            <input type="radio" name="pick" value="{{ team|keyname }}"{% if picked %} checked{% endif %}>
+            <input type="radio" name="pick" value="{{ team|id }}"{% if picked %} checked{% endif %}>
             {{ team }}
         </label>
     </td>
