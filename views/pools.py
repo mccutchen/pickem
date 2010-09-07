@@ -179,8 +179,10 @@ class PickHandler(SecureRequestHandler):
         logging.info(u'Created pick %s for team %s' % (pick, team))
 
         if self.request.is_ajax():
-            self.response.set_status(201)
-            return self.response.out.write('OK')
+            resp = { 'team': unicode(team),
+                     'place': team.place,
+                     'name': team.name }
+            return self.send_json(resp, status=201)
 
         else:
             url = self.url_for(
