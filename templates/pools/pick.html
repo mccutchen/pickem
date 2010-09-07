@@ -41,7 +41,7 @@
 
 {% block middle %}
     <div id="current-week" class="week">
-        <h2>{{ week }} <span>vs <strong>{{ pool.active_entries.count() }}</strong> competitors</span></h2>
+        <h2>{{ week }} <span>vs {{ pool.active_entries.count() - 1 }} other players</span></h2>
 
         <p class="deadline{% if week.closed %} closed{% endif %}">
             {% if week.closed %}
