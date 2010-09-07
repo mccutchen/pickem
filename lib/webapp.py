@@ -9,6 +9,7 @@ import re
 import time
 
 from ext import webapp2
+from django.utils import simplejson as json
 from lib.jinja import render_to_string
 
 from models import Account
@@ -64,6 +65,14 @@ class RequestHandler(webapp2.RequestHandler):
         self.response.headers['Content-type'] = mimetype or DEFAULT_MIMETYPE
         resp = render_to_string(template, final_context)
         self.response.out.write(resp.encode('utf-8', 'xmlcharrefreplace'))
+
+    def send_json(self, data, serialize=True, status=None):
+        """Sends the given data to the client as application/json. If
+        `serialize` is True, first serializes the data to JSON."""
+        data = json.dumps(data) if serialize else data
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.set_status(status or 200)
+        return self.response.out.write(data)
 
     @property
     def default_context(self):
