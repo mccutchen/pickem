@@ -92,11 +92,10 @@ h4 { font-size: 1.25em; }
 
 #header {
     color: #fff;
-    background-color: #333;
     z-index: 500;
     border-bottom: 1px solid #030;
     /* http://www.flickr.com/photos/23178550@N08/4603091727/ */
-    background: #333 url(/static/img/header-grass.jpg) top left no-repeat;
+    background: #030 url(/static/img/header-grass.jpg) top left no-repeat;
 }
 #header h1 {
     font-size: 3em;
