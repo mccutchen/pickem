@@ -24,5 +24,18 @@
         <div id="footer" class="footer">
             <a href="/" class="logo">Pickem Pickem</a> &#8594; made by <a href="http://mccutchen.me/">Will McCutchen</a>
         </div>
+
+        {% if PRODUCTION %}
+            <script type="text/javascript">
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-18144240-2']);
+                _gaq.push(['_trackPageview']);
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+        {% endif %}
     </body>
 </html>
