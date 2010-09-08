@@ -47,3 +47,7 @@ add_module_to_env(filters, environment.filters)
 # Helper functions, available to all templates
 ##############################################################################
 add_module_to_env(helpers, environment.globals)
+
+# Also make some settings available to all templates
+environment.globals['PRODUCTION'] = settings.PRODUCTION
+environment.globals['DEBUG'] = settings.DEBUG
