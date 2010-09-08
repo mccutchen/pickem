@@ -6,9 +6,17 @@
         <link rel="stylesheet" href="/static/css/pickem.css">
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
         {% block head %}{% endblock %}
+        <script type="text/javascript">
+        var gOverride = {
+          center: false
+        };
+        </script>
         <title>{% block title %}{% endblock %} Pickem Pickem</title>
     </head>
     <body id="{% block bodyid %}{% endblock %}" class="{% block bodyclass %}{% endblock %}">
+        <div id="gridbutton" style="position: absolute; top: 0; left: -50px;"><a href="javascript:document.getElementById('grid').style.display='block';return false;">GRID</a></div>
+        <div id="grid" style="display: none;">&nbsp;</div>
+        
         <div id="header" class="header">
             <h1><a href="/">Pickem Pickem</a></h1>
             {% include "_account.html" %}
