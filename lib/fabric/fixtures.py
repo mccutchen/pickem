@@ -20,6 +20,14 @@ def json_encoder(obj):
         return { '__datetime__': obj.strftime(DATETIME_FORMAT) }
     elif isinstance(obj, datetime.date):
         return { '__date__': obj.strftime(DATE_FORMAT) }
+    elif isinstance(obj, db.Key):
+        return {
+            '__key__': [
+                obj.kind(),
+                obj.id_or_name(),
+                json_encoder(obj.parent())
+                ]
+            }
     return obj
 
 def json_decoder(dct):
@@ -31,6 +39,9 @@ def json_decoder(dct):
             return datetime.datetime.strptime(value, DATETIME_FORMAT)
         elif type_name == 'date':
             return datetime.datetime.strptime(value, DATE_FORMAT).date()
+        elif type_name == 'key':
+            kind, keydata, parent = value
+            return db.Key.from_path(kind, keydata, parent=parent)
     return dct
 
 
@@ -45,11 +56,7 @@ def load_fixtures(filename):
         model = get_model(data['model'])
         if model is None:
             return
-
-        parent = make_parent_key(data.get('parent'))
-        key = make_key(model, data.get('key'), parent=parent)
-        create_entity(model, key, data['fields'], filename)
-
+        create_entity(model, data.get('key'), data['fields'], filename)
     logging.info("Loaded %d fixtures..." % (count + 1))
 
 def get_model(modelspec):
@@ -69,33 +76,6 @@ def get_model(modelspec):
             logging.error('Could not find model for %s' % modelspec)
             return None
 
-def make_parent_key(parentspec):
-    """Creates a parent key from the given key spec, which should be a
-    two-item iterable of (modelspec, keydata) specifying the parent model and
-    key."""
-    if parentspec is None:
-        return None
-    try:
-        modelspec, keydata = parentspec
-    except ValueError:
-        logging.error('Invalid parent spec: %r' % parentspec)
-        return None
-    else:
-        model = get_model(modelspec)
-        if model:
-            return make_key(model, keydata)
-        else:
-            logging.error('Could not find parent model: %s' % modelspec)
-            return None
-
-def make_key(model, keydata, parent=None):
-    """Creates a datastore key for the given model with the given key data,
-    which can be an ID or a string."""
-    if keydata is None:
-        return None
-    else:
-        return db.Key.from_path(model.kind(), keydata, parent=parent)
-
 def create_entity(model, key, fields, fixture_path):
     """Creates an entity of the given type in the datastore, based on the
     given fields.  ReferenceProperties and ListProperties are containing Keys
@@ -113,15 +93,7 @@ def create_entity(model, key, fields, fixture_path):
         # If it's a ReferenceProperty, look it up in the datastore based on
         # the serialized filter values
         if isinstance(prop, db.ReferenceProperty):
-            logging.error('Reference properties not handled')
-            raise RuntimeError
-            value = lookup_entity(prop.reference_class, *value)
-
-        # If it's a ListProperty containing Keys, look up each element in the
-        # list based on the filter values specified
-        elif isinstance(prop, db.ListProperty) and prop.item_type == db.Key:
-            logging.error('Lists of keys not handled')
-            raise RuntimeError
+            value = db.get(value)
 
         # If it's a BlobProperty, treat the value as a path, relative to the
         # current fixture, that contains the data for the property
@@ -137,33 +109,6 @@ def create_entity(model, key, fields, fixture_path):
     # Create and store the entity
     model(**args).put()
 
-def lookup_entity(model, property_operator=None, value=None):
-    """Looks up an entity of the given type by filtering on the given property
-    and value (which latter two arguments are passed directly on to the
-    Query.filter() method."""
-
-    if None in (property_operator, value):
-        raise ValueError, """Entity references must be specified as a sequence
- of two items suitable for use as the args to Query.filter()"""
-
-    if property_operator == "key_name":
-        q = None
-        entity = model.get_by_key_name(value)
-    elif property_operator == 'id':
-        q = None
-        entity = model.get_by_id(value)
-    else:
-        q = model.all().filter(property_operator, value)
-        entity = q.get()
-
-    if entity is None:
-        raise ValueError, '%s not found for filter %s %s' % (
-            model, property_operator.strip(), value)
-    elif q and q.count() > 1:
-        raise ValueError, 'Multiple %s instances found for filter %s %s' % (
-            model, property_operator.strip(), value)
-    return entity
-
 def serialize_entities(modelspec):
     model = get_model(modelspec)
     fields = model.properties()
@@ -171,28 +116,16 @@ def serialize_entities(modelspec):
     for entity in model.all():
         d = {
             'model': modelspec,
-            'key': entity.key().id_or_name(),
+            'key': entity.key(),
             }
-
-        parent_key = entity.parent_key()
-        if parent_key:
-            d['parent'] = make_keyspec(entity.parent())
 
         d['fields'] = {}
         for name, kind in fields.items():
             value = getattr(entity, name)
             if isinstance(kind, db.ReferenceProperty):
-                value = make_keyspec(value)
-            elif isinstance(kind, db.ListProperty) \
-                    and kind.item_type == db.Key:
-                items = db.get(value)
-                value = map(make_keyspec, db.get(value))
+                value = value.key()
             d['fields'][name] = value
 
         entities.append(d)
 
     return json.dumps(entities, default=json_encoder, indent=4)
-
-def make_keyspec(entity):
-    return ['%s.%s' % (entity.__module__, entity.kind()),
-            entity.key().id_or_name()]
