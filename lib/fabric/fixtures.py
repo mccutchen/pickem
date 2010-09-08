@@ -168,7 +168,7 @@ def serialize_entities(modelspec):
     model = get_model(modelspec)
     fields = model.properties()
     entities = []
-    for entity in list(model.all())[:25]:
+    for entity in model.all():
         d = {
             'model': modelspec,
             'key': entity.key().id_or_name(),
