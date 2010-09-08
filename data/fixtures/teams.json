@@ -1,0 +1,258 @@
+[
+    {
+        "fields": {
+            "place": "Philadelphia", 
+            "name": "Eagles"
+        }, 
+        "model": "models.Team", 
+        "key": "phi"
+    }, 
+    {
+        "fields": {
+            "place": "Tennessee", 
+            "name": "Titans"
+        }, 
+        "model": "models.Team", 
+        "key": "ten"
+    }, 
+    {
+        "fields": {
+            "place": "Buffalo", 
+            "name": "Bills"
+        }, 
+        "model": "models.Team", 
+        "key": "buf"
+    }, 
+    {
+        "fields": {
+            "place": "Oakland", 
+            "name": "Raiders"
+        }, 
+        "model": "models.Team", 
+        "key": "oak"
+    }, 
+    {
+        "fields": {
+            "place": "Dallas", 
+            "name": "Cowboys"
+        }, 
+        "model": "models.Team", 
+        "key": "dal"
+    }, 
+    {
+        "fields": {
+            "place": "New England", 
+            "name": "Patriots"
+        }, 
+        "model": "models.Team", 
+        "key": "ne"
+    }, 
+    {
+        "fields": {
+            "place": "Green Bay", 
+            "name": "Packers"
+        }, 
+        "model": "models.Team", 
+        "key": "gb"
+    }, 
+    {
+        "fields": {
+            "place": "Seattle", 
+            "name": "Seahawks"
+        }, 
+        "model": "models.Team", 
+        "key": "sea"
+    }, 
+    {
+        "fields": {
+            "place": "Washington", 
+            "name": "Redskins"
+        }, 
+        "model": "models.Team", 
+        "key": "wsh"
+    }, 
+    {
+        "fields": {
+            "place": "Indianapolis", 
+            "name": "Colts"
+        }, 
+        "model": "models.Team", 
+        "key": "ind"
+    }, 
+    {
+        "fields": {
+            "place": "Arizona", 
+            "name": "Cardinals"
+        }, 
+        "model": "models.Team", 
+        "key": "ari"
+    }, 
+    {
+        "fields": {
+            "place": "Pittsburgh", 
+            "name": "Steelers"
+        }, 
+        "model": "models.Team", 
+        "key": "pit"
+    }, 
+    {
+        "fields": {
+            "place": "Carolina", 
+            "name": "Panthers"
+        }, 
+        "model": "models.Team", 
+        "key": "car"
+    }, 
+    {
+        "fields": {
+            "place": "Kansas City", 
+            "name": "Chiefs"
+        }, 
+        "model": "models.Team", 
+        "key": "kc"
+    }, 
+    {
+        "fields": {
+            "place": "Minnesota", 
+            "name": "Vikings"
+        }, 
+        "model": "models.Team", 
+        "key": "min"
+    }, 
+    {
+        "fields": {
+            "place": "Miami", 
+            "name": "Dolphins"
+        }, 
+        "model": "models.Team", 
+        "key": "mia"
+    }, 
+    {
+        "fields": {
+            "place": "Cleveland", 
+            "name": "Browns"
+        }, 
+        "model": "models.Team", 
+        "key": "cle"
+    }, 
+    {
+        "fields": {
+            "place": "Atlanta", 
+            "name": "Falcons"
+        }, 
+        "model": "models.Team", 
+        "key": "atl"
+    }, 
+    {
+        "fields": {
+            "place": "New Orleans", 
+            "name": "Saints"
+        }, 
+        "model": "models.Team", 
+        "key": "no"
+    }, 
+    {
+        "fields": {
+            "place": "Detroit", 
+            "name": "Lions"
+        }, 
+        "model": "models.Team", 
+        "key": "det"
+    }, 
+    {
+        "fields": {
+            "place": "Cincinnati", 
+            "name": "Bengals"
+        }, 
+        "model": "models.Team", 
+        "key": "cin"
+    }, 
+    {
+        "fields": {
+            "place": "New York", 
+            "name": "Giants"
+        }, 
+        "model": "models.Team", 
+        "key": "nyg"
+    }, 
+    {
+        "fields": {
+            "place": "New York", 
+            "name": "Jets"
+        }, 
+        "model": "models.Team", 
+        "key": "nyj"
+    }, 
+    {
+        "fields": {
+            "place": "St. Louis", 
+            "name": "Rams"
+        }, 
+        "model": "models.Team", 
+        "key": "stl"
+    }, 
+    {
+        "fields": {
+            "place": "Houston", 
+            "name": "Texans"
+        }, 
+        "model": "models.Team", 
+        "key": "hou"
+    }, 
+    {
+        "fields": {
+            "place": "Denver", 
+            "name": "Broncos"
+        }, 
+        "model": "models.Team", 
+        "key": "den"
+    }, 
+    {
+        "fields": {
+            "place": "Chicago", 
+            "name": "Bears"
+        }, 
+        "model": "models.Team", 
+        "key": "chi"
+    }, 
+    {
+        "fields": {
+            "place": "Baltimore", 
+            "name": "Ravens"
+        }, 
+        "model": "models.Team", 
+        "key": "bal"
+    }, 
+    {
+        "fields": {
+            "place": "San Francisco", 
+            "name": "49ers"
+        }, 
+        "model": "models.Team", 
+        "key": "sf"
+    }, 
+    {
+        "fields": {
+            "place": "Tampa Bay", 
+            "name": "Buccaneers"
+        }, 
+        "model": "models.Team", 
+        "key": "tb"
+    }, 
+    {
+        "fields": {
+            "place": "Jacksonville", 
+            "name": "Jaguars"
+        }, 
+        "model": "models.Team", 
+        "key": "jac"
+    }, 
+    {
+        "fields": {
+            "place": "San Diego", 
+            "name": "Chargers"
+        }, 
+        "model": "models.Team", 
+        "key": "sd"
+    }
+]

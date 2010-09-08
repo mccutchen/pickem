@@ -1,0 +1,14 @@
+[
+    {
+        "fields": {
+            "start_date": {
+                "__date__": "2010-09-10"
+            }, 
+            "end_date": {
+                "__date__": "2011-01-02"
+            }
+        }, 
+        "model": "models.Season", 
+        "key": "2010-2011"
+    }
+]
