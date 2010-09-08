@@ -226,7 +226,7 @@ Usage:
     # Load data onto staging
     fab staging loaddata:groups/fixtures/test_groups.json
 """
-    from ki.webapp.gaetest import fixtures
+    import fixtures
 
     # Are we loading the fixtures remotely or locally?
     if hasattr(env, 'gae'):
@@ -237,6 +237,22 @@ Usage:
     # Actually load the fixtures (tweak the logging so their info shows up)
     logging.getLogger().setLevel(logging.INFO)
     fixtures.load_fixtures(path)
+
+def dumpjson(kinds):
+    """Dumps data from the local or remote datastore in JSON format.
+
+Arguments:
+
+    :kinds -- A comma-separated list of kinds to dump, specified as
+              `path.to.module.ModelName `
+    """
+    import fixtures
+    if hasattr(env, 'gae'):
+        utils.prep_remote_shell()
+    else:
+        utils.prep_local_shell()
+    for kind in kinds.split(','):
+        print fixtures.serialize_entities(kind)
 
 def dumpdata(kind=None, batch=None, resume=None):
     """Dump data from a remote deployment using the bulkloader.py tool.
