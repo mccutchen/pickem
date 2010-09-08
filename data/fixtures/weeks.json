@@ -10,11 +10,19 @@
             "name": "Week 1"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 1
+        "key": {
+            "__key__": [
+                "Week", 
+                1, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -27,11 +35,19 @@
             "name": "Week 2"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 2
+        "key": {
+            "__key__": [
+                "Week", 
+                2, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -44,11 +60,19 @@
             "name": "Week 3"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 3
+        "key": {
+            "__key__": [
+                "Week", 
+                3, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -61,11 +85,19 @@
             "name": "Week 4"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 4
+        "key": {
+            "__key__": [
+                "Week", 
+                4, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -78,11 +110,19 @@
             "name": "Week 5"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 5
+        "key": {
+            "__key__": [
+                "Week", 
+                5, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -95,11 +135,19 @@
             "name": "Week 6"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 6
+        "key": {
+            "__key__": [
+                "Week", 
+                6, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -112,11 +160,19 @@
             "name": "Week 7"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 7
+        "key": {
+            "__key__": [
+                "Week", 
+                7, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -129,11 +185,19 @@
             "name": "Week 8"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 8
+        "key": {
+            "__key__": [
+                "Week", 
+                8, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -146,11 +210,19 @@
             "name": "Week 9"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 9
+        "key": {
+            "__key__": [
+                "Week", 
+                9, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -163,11 +235,19 @@
             "name": "Week 10"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 10
+        "key": {
+            "__key__": [
+                "Week", 
+                10, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -180,11 +260,19 @@
             "name": "Week 11"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 11
+        "key": {
+            "__key__": [
+                "Week", 
+                11, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -197,11 +285,19 @@
             "name": "Week 12"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 12
+        "key": {
+            "__key__": [
+                "Week", 
+                12, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -214,11 +310,19 @@
             "name": "Week 13"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 13
+        "key": {
+            "__key__": [
+                "Week", 
+                13, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -231,11 +335,19 @@
             "name": "Week 14"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 14
+        "key": {
+            "__key__": [
+                "Week", 
+                14, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -248,11 +360,19 @@
             "name": "Week 15"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 15
+        "key": {
+            "__key__": [
+                "Week", 
+                15, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -265,11 +385,19 @@
             "name": "Week 16"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 16
+        "key": {
+            "__key__": [
+                "Week", 
+                16, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }, 
     {
         "fields": {
@@ -282,10 +410,18 @@
             "name": "Week 17"
         }, 
         "model": "models.Week", 
-        "parent": [
-            "models.Season", 
-            "2010-2011"
-        ], 
-        "key": 17
+        "key": {
+            "__key__": [
+                "Week", 
+                17, 
+                {
+                    "__key__": [
+                        "Season", 
+                        "2010-2011", 
+                        null
+                    ]
+                }
+            ]
+        }
     }
 ]

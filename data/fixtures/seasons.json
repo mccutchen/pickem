@@ -9,6 +9,12 @@
             }
         }, 
         "model": "models.Season", 
-        "key": "2010-2011"
+        "key": {
+            "__key__": [
+                "Season", 
+                "2010-2011", 
+                null
+            ]
+        }
     }
 ]
