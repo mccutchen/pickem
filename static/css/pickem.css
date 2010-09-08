@@ -4,7 +4,7 @@ html {
 }
 
 body {
-    width: 1020px;
+    width: 920px;
     background-color: #fff;
     margin: 0 auto;
     padding: 0;
@@ -25,10 +25,9 @@ a {
 div#grid {
     height: 100%;
     width: 100%;
-    background: transparent url(/static/img/grid.png) repeat-y top center;
+    background: transparent url(/static/img/grid.png) repeat-y top left;
     position: absolute;
     z-index: 1000;
-    opacity: 10%;
 }
 
 body.columns div.column {
@@ -38,11 +37,12 @@ body.columns div.column {
     the spacing */
     margin-right: 16px;
 }
-body.columns div.column:last-child {
-    margin-right: 0;
+body.columns div.right.column {
+    margin-right: 0 !important;
 }
 body.two.columns div.column {
-    width: 480px;
+    width: 380px;
+    margin-right: 116px;
 }
 body.three.columns div.left.column {
     width: 180px;
@@ -51,7 +51,7 @@ body.three.columns div.middle.column {
     width: 480px;
 }
 body.three.columns div.right.column {
-    width: 260px;
+    width: 180px;
 }
 
 
@@ -394,7 +394,7 @@ section#your-entries {
 
 section#your-entries ul {
     list-style-type: none;
-    margin: 1em 20px 0 0;
+    margin: 1em 0;
     padding: 0;
 }
 section#your-entries ul li {
