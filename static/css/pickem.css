@@ -95,6 +95,7 @@ h4 { font-size: 1.25em; }
     background-color: #333;
     z-index: 500;
     border-bottom: 1px dotted #111;
+    /* http://www.flickr.com/photos/23178550@N08/4603091727/ */
     background: #333 url(/static/img/header-grass.jpg) top left no-repeat;
 }
 #header h1 {
