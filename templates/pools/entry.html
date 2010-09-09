@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block middle %}
-    <h2>{% if entry.account|id == request.account|id %}Your {% endif %}Picks</h2>
+    <h2>{% if entry.account|id == request.account|id %}Your{% else %}{{ entry.account }}&#8217;s{% endif %} Picks</h2>
     {% set current_week = week %}
     {% include 'pools/_weeks.html' %}
 {% endblock %}

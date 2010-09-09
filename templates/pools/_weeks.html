@@ -1,5 +1,6 @@
 <ol class="weeks">
     {% for week in weeks %}
+        {% set own_entry = request.account|id == entry.account|id %}
         {% set is_current = 'current' if week|id == current_week|id else '' %}
         {% set is_closed = 'closed' if week.closed else '' %}
         {% set week_pick = entry.find_pick_for(week) %}
@@ -12,9 +13,17 @@
             {% set pick_result = 'pending' %}
         {% endif %}
         <li class="week {{ indicator }} {{ is_closed }} {{ is_current }} {{ has_picked }} {{ pick_result }}">
-            <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
+            {% if own_entry %}
+                <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
+            {% else %}
+                {{ week }}
+            {% endif %}
             {% if has_picked %}
-                <span class="pick">&#8594; {{ week_pick.team.name }}</span>
+                {% if is_closed or own_entry %}
+                    <span class="pick">&#8594; {{ week_pick.team.name }}</span>
+                {% else %}
+                    <span class="pick">&#8594; Picked</span>
+                {% endif %}
             {% else %}
                 <span class="deadline {{ is_closed }}">
                     {% if week.closed %}

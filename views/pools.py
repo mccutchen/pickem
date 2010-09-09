@@ -86,7 +86,10 @@ class JoinHandler(SecureRequestHandler):
 
     @objects_required('Pool')
     def get(self, pool, code):
-        ctx = dict(pool=pool, code=code)
+        ctx = dict(pool=pool,
+                   code=code,
+                   week=models.Week.next(),
+                   entries=pool.entries.fetch(1000))
         return self.render('pools/pool_preview.html', ctx)
 
     @objects_required('Pool')
@@ -119,10 +122,7 @@ class EntryHandler(SecureRequestHandler):
                    entry=entry,
                    picks=entry.picks.fetch(1000))
 
-        if entry.account.key() == self.request.account.key():
-            template = 'pools/entry.html'
-        else:
-            template = 'pools/public_entry.html'
+        template = 'pools/entry.html'
         return self.render(template, ctx)
 
 
@@ -148,10 +148,7 @@ class PickHandler(SecureRequestHandler):
                    pick=pick,
                    picks=entry.picks.fetch(1000))
 
-        if entry.account.key() == self.request.account.key():
-            template = 'pools/pick.html'
-        else:
-            template = 'pools/public_entry.html'
+        template = 'pools/pick.html'
         return self.render(template, ctx)
 
     @objects_required('Pool', 'Entry')
