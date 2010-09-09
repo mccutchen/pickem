@@ -3,6 +3,7 @@
         {% set own_entry = request.account|id == entry.account|id %}
         {% set is_current = 'current' if week|id == current_week|id else '' %}
         {% set is_closed = 'closed' if week.closed else '' %}
+        {% set deadline_countdown = 'countdown' if week.start is close else '' %}
         {% set week_pick = entry.find_pick_for(week) %}
         {% set has_picked = 'picked' if week_pick else '' %}
         {% set indicator = 'indicator ' + ('positive' if has_picked else 'negative') %}
@@ -25,7 +26,7 @@
                     <span class="pick">&#8594; Picked</span>
                 {% endif %}
             {% else %}
-                <span class="deadline {{ is_closed }}">
+                <span class="deadline {{ is_closed }} {{ deadline_countdown }}">
                     {% if week.closed %}
                         closed
                     {% else %}

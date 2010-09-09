@@ -55,7 +55,7 @@
     <div id="current-week" class="week">
         <h2>{{ week }} <span>vs {{ pool.active_entries.count() - 1 }} other players</span></h2>
 
-        <p class="deadline{% if week.closed %} closed{% endif %}">
+        <p class="deadline {% if week.closed %}closed{% endif %} {% if week.start is close %}countdown{% endif %}">
             {% if week.closed %}
                 Closed.
             {% else %}
@@ -63,7 +63,7 @@
             {% endif %}
         </p>
 
-        <h3 id="your-pick">Your pick: <span class="{{ 'picked' if pick else 'not picked'}}">{{ pick|default('None', True) }}</span></h3>
+        <h3 id="your-pick">Your pick: <span class="{{ 'picked' if pick else ''}}">{{ pick|default('None', True) }}</span></h3>
         
         <form id="pick" action="{{ url('pick', pool|id, entry|id, week|id) }}" method="post">
             {{ games.showgames(week, pick) }}

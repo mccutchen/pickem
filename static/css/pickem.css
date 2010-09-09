@@ -200,10 +200,6 @@ div#current-week h3 span.picked {
     background-color: rgba(255, 200, 50, .5);
     padding: 4px 5px 0;
 }
-div#current-week h3 span.not.picked {
-    border: 1px solid rgba(153, 0, 0, 1);
-    background-color: rgba(153, 0, 0, .4);
-}
 
 div#current-week table.games th, div#current-week table.games td {
     text-align: left;
@@ -258,6 +254,10 @@ ol.weeks li span {
 }
 ol.weeks li span.pick {
     color: #333;
+}
+.countdown,
+ol.weeks li span.deadline.countdown {
+	color: #c1001d;
 }
 ol.weeks li.current {
     border: 1px dotted #ccc;

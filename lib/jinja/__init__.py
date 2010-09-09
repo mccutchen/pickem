@@ -4,8 +4,7 @@ import logging
 from ext import jinja2
 from django.template import defaultfilters
 
-import filters
-import helpers
+import filters, helpers, tests
 import settings
 
 
@@ -51,3 +50,9 @@ add_module_to_env(helpers, environment.globals)
 # Also make some settings available to all templates
 environment.globals['PRODUCTION'] = settings.PRODUCTION
 environment.globals['DEBUG'] = settings.DEBUG
+
+
+##############################################################################
+# Custom tests
+##############################################################################
+add_module_to_env(tests, environment.tests)
