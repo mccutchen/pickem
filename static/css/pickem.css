@@ -418,9 +418,9 @@ section#your-entries ul li h4 a:hover {
 section#your-entries ul li p.meta {
     display: block;
     font-size: 11px;
-    margin: 1px 0 0 0;
+    margin: 0;
     padding: 5px 16px 3px;
-    background-color: #ddd;
+    border-top: 1px dotted #ccc;
 }
 
 
