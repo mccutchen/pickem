@@ -2,6 +2,8 @@ import logging
 import datetime
 
 from google.appengine.ext import db
+from google.appengine.api import mail
+
 from webob.exc import HTTPNotFound, HTTPBadRequest, HTTPConflict
 
 from lib.webapp import RequestHandler, SecureRequestHandler
@@ -9,6 +11,8 @@ from lib.decorators import objects_required
 
 import models
 import forms
+
+import settings
 
 
 class IndexHandler(RequestHandler):
@@ -73,7 +77,8 @@ class PoolHandler(SecureRequestHandler):
                    season=week.parent(),
                    week=week,
                    picks=picks,
-                   code=pool.invite_code)
+                   code=pool.invite_code,
+                   invite_form=forms.InviteForm())
 
         tmpl = 'pools/pool.html' if entry else 'pools/pool_preview.html'
         return self.render(tmpl, ctx)
@@ -99,6 +104,40 @@ class JoinHandler(SecureRequestHandler):
             error = "Invalid invitation code: %s" % code
             ctx = dict(pool=pool, code=code, error=error)
             return self.render('pools/pool_preview.html', ctx, status=400)
+
+
+class InviteHandler(SecureRequestHandler):
+
+    @objects_required('Pool')
+    def get(self, pool, form=None, status=200):
+        pass
+
+    @objects_required('Pool')
+    def post(self, pool):
+        form = forms.InviteForm(self.request.POST)
+        if not form.is_valid():
+            return self.get(pool, form, 400)
+
+        from lib.jinja import render_to_string
+        from django.template.defaultfilters import wordwrap
+
+        email_context = dict(
+            pool=pool,
+            entries=pool.entries.count())
+
+        subject = u'Invitation to join NFL pool %s' % pool
+        body = self.render_to_string('pools/invite.txt', email_context)
+        body = wordwrap(body, 72)
+
+        emails = form.cleaned_data['emails']
+
+        for email in form.cleaned_data['emails']:
+            mail.send_mail(
+                sender=settings.EMAIL_FROM,
+                to=email,
+                subject=subject,
+                body=body)
+
 
 
 class EntriesHandler(SecureRequestHandler):

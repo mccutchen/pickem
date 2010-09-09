@@ -6,7 +6,6 @@ urls = [
 
     Route(r'/pools', views.pools.PoolsHandler, 'pools'),
     Route(r'/pools/<:\d+>', views.pools.PoolHandler, 'pool'),
-    Route(r'/pools/<:\d+>/join/<:\w+>', views.pools.JoinHandler, 'join-pool'),
     Route(r'/pools/<:\d+>/entries', views.pools.EntriesHandler, 'entries'),
     Route(r'/pools/<:\d+>/entries/<:\d+>', views.pools.EntryHandler, 'entry'),
     Route(r'/pools/<:\d+>/entries/<:\d+>/picks',
@@ -15,6 +14,9 @@ urls = [
     Route(r'/pools/<:\d+>/entries/<:\d+>/picks/<:\d+>',
           views.pools.PickHandler,
           'pick'),
+
+    Route(r'/pools/<:\d+>/invite', views.pools.InviteHandler, 'invite'),
+    Route(r'/pools/<:\d+>/join/<:\w+>', views.pools.JoinHandler, 'join-pool'),
 
     Route(r'/pools/<:\d+>/manage',
           views.pools.ManagePoolHandler,

@@ -10,6 +10,8 @@ DEBUG = not PRODUCTION
 
 TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
 
+EMAIL_FROM = '"Pickem Pickem Robot" <robot@pickempickem.com>'
+
 
 ##############################################################################
 # Secrets -- These settings MUST be set in secrets.py, which should not be

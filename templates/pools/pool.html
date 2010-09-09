@@ -34,7 +34,16 @@
     </section>
 
     <section>
-        <h3>Invitation Link</h3>
+        <h3>Invitations</h3>
+        <p>Enter the email addresses of people you'd like to invite to join
+        this pool, and we'll send them an invitation.</p>
+
+        <form action="{{ url('invite', pool|id) }}" method="post">
+            {{ invite_form.emails.label_tag()|safe }}
+            {{ invite_form.emails|safe }}
+            <input type="submit" value="Send invites!">
+        </form>
+
         {% set invite_url = url('join-pool', pool|id, pool.invite_code, _full=True) %}
         {% if pool.invite_only %}
             <p>You can share the following link with your friends to invite them to join this pool:<br>
