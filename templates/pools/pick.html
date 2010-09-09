@@ -3,42 +3,44 @@
 
 {% block head %}
     {{ super() }}
-    <script type="text/javascript" charset="utf-8">
-        if ((typeof console) == 'undefined')
-            var console = { log: function() {} };
+    {% if not week.closed %}
+        <script type="text/javascript" charset="utf-8">
+            if ((typeof console) == 'undefined')
+                var console = { log: function() {} };
 
-        $(document).ready(function() {
-            var form = $('#pick');
-            form.children('div.submit').hide();
-            form.find('input[type="radio"]').change(function() {
-                var self = $(this);
-                $.ajax({
-                    url: form.attr('action'),
-                    type: form.attr('method'),
-                    data: form.serialize(),
-                    success: function(data, textStatus, xhr) {
-                        // Update the form field
-                        $('td.picked').removeClass('picked');
-                        self.parents('td').addClass('picked');
-                        // Update the "your pick" header
-                        $('#your-pick span')
-                            .addClass('picked')
-                            .removeClass('not')
-                            .text(data['team']);
-                        // Update the current week in the sidebar
-                        $('li.week.current')
-                            .removeClass('negative')
-                            .addClass('picked positive')
-                            .find('span.deadline, span.pick').remove().end()
-                            .append('<span class="pick">&#8594; ' + data['name']);
-                    },
-                    error: function() {
-                        alert('Error submitting pick');
-                    }
+            $(document).ready(function() {
+                var form = $('#pick');
+                form.children('div.submit').hide();
+                form.find('input[type="radio"]').change(function() {
+                    var self = $(this);
+                    $.ajax({
+                        url: form.attr('action'),
+                        type: form.attr('method'),
+                        data: form.serialize(),
+                        success: function(data, textStatus, xhr) {
+                            // Update the form field
+                            $('td.picked').removeClass('picked');
+                            self.parents('td').addClass('picked');
+                            // Update the "your pick" header
+                            $('#your-pick span')
+                                .addClass('picked')
+                                .removeClass('not')
+                                .text(data['team']);
+                            // Update the current week in the sidebar
+                            $('li.week.current')
+                                .removeClass('negative')
+                                .addClass('picked positive')
+                                .find('span.deadline, span.pick').remove().end()
+                                .append('<span class="pick">&#8594; ' + data['name']);
+                        },
+                        error: function() {
+                            alert('Error submitting pick');
+                        }
+                    });
                 });
             });
-        });
-    </script>
+        </script>
+    {% endif %}
 {% endblock %}
 
 {% block page_header %}

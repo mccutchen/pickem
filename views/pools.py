@@ -2,7 +2,7 @@ import logging
 import datetime
 
 from google.appengine.ext import db
-from webob.exc import HTTPNotFound, HTTPBadRequest
+from webob.exc import HTTPNotFound, HTTPBadRequest, HTTPConflict
 
 from lib.webapp import RequestHandler, SecureRequestHandler
 from lib.decorators import objects_required
@@ -151,6 +151,8 @@ class PickHandler(SecureRequestHandler):
     @objects_required('Pool', 'Entry')
     def post(self, pool, entry, week_num):
         week = self.get_week(week_num)
+        if week.closed:
+            raise HTTPConflict('Week closed %s' % week.start)
         team_slug = self.request.POST.get('pick')
         if team_slug is None:
             raise HTTPBadRequest('Pick required')

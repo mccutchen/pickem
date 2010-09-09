@@ -3,33 +3,33 @@
         {% for date, group in week.grouped_games %}
             <th class="date" colspan="5">{{ date|date('%A, %B %d', fix=False) }}</th>
             {% for game in group %}
-                {{ showgame(game, pick) }}
+                {{ showgame(game, pick, week) }}
             {% endfor %}
         {% endfor %}
     </table>
 {% endmacro %}
 
-{% macro showgame(game, pick) %}
+{% macro showgame(game, pick, week) %}
     <tr>
         <td class="kickoff">
             {% if not last_kickoff or last_kickoff != game.start %}
                 {{ game.start|date('%I:%M') }}
             {% endif %}
         </td>
-        {{ showteam(game.away_team, game, pick, home=False) }}
+        {{ showteam(game.away_team, game, pick, home=False, week=week) }}
         <td class="at">at</td>
-        {{ showteam(game.home_team, game, pick, home=True) }}
+        {{ showteam(game.home_team, game, pick, home=True, week=week) }}
     </tr>
 {% endmacro %}
 
-{% macro showteam(team, game, pick, home) %}
+{% macro showteam(team, game, pick, home, week) %}
     {% set picked = team == pick.team %}
     {% set spread = (game.spread * (1 if home else -1)) %}
     {% set favorite = 'favorite' if spread < 0 else 'underdog' %}
     {% set tdclass = ('home' if home else 'away') + ' ' + favorite %}
     <td class="team {{ tdclass }} {% if picked %}picked{% endif %}">
         <label>
-            <input type="radio" name="pick" value="{{ team|id }}"{% if picked %} checked{% endif %}>
+            <input type="radio" name="pick" value="{{ team|id }}" {% if picked %}checked{% endif %} {% if week.closed %}disabled{% endif %}>
             {{ team }}
         </label>
     </td>
