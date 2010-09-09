@@ -59,12 +59,15 @@ class RequestHandler(webapp2.RequestHandler):
     def render(self, template, context=None, status=None, mimetype=None):
         """Renders the given template (or list of templates to choose) with
         the given context using Jinja2."""
-        final_context = self.default_context
-        final_context.update(context or {})
         self.response.set_status(status or DEFAULT_STATUS)
         self.response.headers['Content-type'] = mimetype or DEFAULT_MIMETYPE
-        resp = render_to_string(template, final_context)
+        resp = self.render_to_string(template, final_context)
         self.response.out.write(resp.encode('utf-8', 'xmlcharrefreplace'))
+
+    def render_to_string(self, template, context=None):
+        final_context = self.default_context
+        final_context.update(context or {})
+        return render_to_string(template, final_context)
 
     def send_json(self, data, serialize=True, status=None):
         """Sends the given data to the client as application/json. If
