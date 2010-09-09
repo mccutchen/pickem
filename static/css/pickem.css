@@ -463,3 +463,26 @@ section#screenshot div p {
 	padding: 3px 0 3px 20px;
 	background: url(/static/img/icons/tick-small.png) 0 2px no-repeat;
 }
+
+
+form#new-pool table {
+	background-color: #eee;
+	border: 1px solid #ccc;
+
+    -webkit-box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
+    -moz-box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
+    box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
+}
+form#new-pool th, form#new-pool td {
+	text-align: left;
+	vertical-align: top;
+	font-size: 11px;
+	padding: 5px 10px;
+	border-top: 1px dotted #ccc;
+}
+form#new-pool tr:first-child th, form#new-pool tr:first-child td {
+	border: none;
+}
+form#new-pool textarea {
+	max-width: 230px;
+}

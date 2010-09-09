@@ -54,12 +54,5 @@
 
 {% block right %}
     <h3>New Pool</h3>
-    <form action="{{ url('pools') }}" method="post">
-        <table>
-            {{ form.as_table()|safe }}
-            <tr>
-                <td colspan="2"><input type="submit" value="Create Pool"></td>
-            </tr>
-        </table>
-    </form>
+    {% include 'pools/_new_pool_form.html' %}
 {% endblock %}

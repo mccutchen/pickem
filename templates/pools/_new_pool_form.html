@@ -1,0 +1,8 @@
+<form id="new-pool" action="{{ url('pools') }}" method="post">
+    <table cellspacing="0">
+        {{ form.as_table()|safe }}
+        <tr>
+            <td colspan="2"><input type="submit" value="Create Pool"></td>
+        </tr>
+    </table>
+</form>
