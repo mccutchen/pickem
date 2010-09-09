@@ -22,15 +22,12 @@ class IndexHandler(RequestHandler):
             ctx = {
                 'form': forms.PoolForm(),
                 }
-            if not pools and not entries:
-                return self.render('pools/start.html', ctx)
-            else:
-                ctx.update({
-                        'pools': pools,
-                        'entries': entries,
-                        'week': models.Week.next(),
-                        })
-                return self.render('pools/dashboard.html', ctx)
+            ctx.update({
+                    'pools': pools,
+                    'entries': entries,
+                    'week': models.Week.next(),
+                    })
+            return self.render('pools/dashboard.html', ctx)
 
 
 class PoolsHandler(SecureRequestHandler):

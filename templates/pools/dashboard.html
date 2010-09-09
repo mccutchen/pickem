@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block left %}
-    <h2>Welcome back, {{ request.account.first_name }}.</h2>
+    <h2>Welcome{% if entries or pools %} back{% endif %}, {{ request.account.first_name }}.</h2>
 
     <section id="your-entries">
         <h3>Your Entries</h3>
@@ -31,7 +31,8 @@
                     </p>
                 </li>
             {% else %}
-                <p>You're not participating in any pools.</p>
+                <p>You're not participating in any pools. Why don't you start a new one
+                by filling out the form to the right?</p>
             {% endfor %}
         </ul>
     </section>
