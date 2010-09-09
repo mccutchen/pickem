@@ -220,7 +220,7 @@ class Pool(db.Model):
     manager = db.ReferenceProperty(
         Account, required=True, collection_name='pools')
     name = db.StringProperty(required=True)
-    description = db.StringProperty()
+    description = db.TextProperty()
 
     # When does this pool start?
     start_week = db.ReferenceProperty(Week, collection_name='starting_pools')
