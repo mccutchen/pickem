@@ -1,5 +1,56 @@
-{% extends "base.html" %}
+{% extends "2columns.html" %}
 
-{% block content %}
+{% block page_header %}
     <h2>Welcome!</h2>
+{% endblock %}
+
+{% block left %}
+    <section>
+        <h3>What is all this?</h3>
+        <p><span class="logo">Pickem Pickem</span> is just a small web site
+        designed to make it easy and enjoyable to participate in and manage
+        NFL "pickem" pools.</p>
+    </section>
+
+    <section>
+        <h3>And what&#8217;s a &#8220;pickem&#8221; pool?</h3>
+        <p>Get a bunch of friends, coworkers or strangers together in a pool,
+        throw in some money, and pick a single winning NFL game each
+        week. If you pick incorrectly, you're out. The last person standing takes
+        the pot.  That's a "pickem" pool.  Simple, right?</p>
+
+        <h3>Okay, I&#8217;m intrigued</h3>
+        <p>It's dirt simple to create a new pickem pool.  Just sign in with your
+        Facebook account below to get started.</p>
+    </section>
+
+    {% include "accounts/_facebook_login.html" %}
+
+    <section class="fine-print">
+        <h4>A note about money &amp; gambling</h4>
+        <p>You'll have to manage the money for each entry in the pool on your
+        own.  We have no idea what kinds of hoops we'd have to jump through in
+        order to let you manage that money through this site, and we don't much
+        want to find out at the moment.  Sorry about that.  We do try to make
+        all the other aspects easy, though!</p>
+    </section>
+{% endblock %}
+
+{% block right %}
+    <section id="screenshot">
+        <div>
+            <img src="/static/img/screenshot.png" alt="Screenshot of a pick page">
+            <p>A sample pickem page</p>
+        </div>
+    </section>
+
+    <section id="features">
+        <h3>Features</h3>
+        <ul>
+            <li>Easily manage and view your pick each week</li>
+            <li>Pick as far into the future as you'd like</li>
+            <li>Email reminders when pick deadlines approach</li>
+            <li>Whatever else we think to add</li>
+        </ul>
+    </section>
 {% endblock %}

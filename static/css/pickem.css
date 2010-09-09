@@ -22,6 +22,10 @@ a {
     border-bottom: 1px dotted #ccc;
 }
 
+section {
+	margin: 1em 0;
+}
+
 div#grid {
     height: 100%;
     width: 100%;
@@ -340,9 +344,9 @@ div#facebook-login {
     width: 300px;
     border: 1px dotted #ccc;
     padding: 10px;
-    -webkit-box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
-    -moz-box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
-    box-shadow: rgba(0, 0, 0, .15) 2px 2px 2px;
+    -webkit-box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
+    -moz-box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
+    box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
 }
 div#facebook-login p {
     margin-bottom: 0;
@@ -424,4 +428,45 @@ section#your-entries ul li p.meta {
     margin: 1px 0 0 0;
     padding: 5px 16px 3px;
     background-color: #ddd;
+}
+
+
+section#screenshot div {
+	border: 1px solid #ccc;
+	display: inline-block;
+	margin: 0 auto;
+	-webkit-box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
+    -moz-box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
+    box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
+}
+section#screenshot div img {
+	border: 1px solid #eee;
+	display: block;
+	margin: 10px;
+}
+section#screenshot div p {
+	text-align: center;
+	font-size: 11px;
+	margin: 10px;
+}
+
+.fine-print {
+	font-size: 11px;
+}
+
+#features {
+	margin-top: 2em;
+}
+
+#features ul {
+	list-style-type: none;
+	margin: 1em 0;
+	padding: 0;
+}
+#features ul li {
+	font-family: adelle-1, adelle-2, "Lucida Grande", Verdana, sans-serif;
+	font-size: 1.25em;
+	font-style: italic;
+	padding: 3px 0 3px 20px;
+	background: url(/static/img/icons/tick-small.png) 0 2px no-repeat;
 }
