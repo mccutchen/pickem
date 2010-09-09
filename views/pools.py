@@ -42,7 +42,7 @@ class PoolsHandler(SecureRequestHandler):
             pool = form.save()
             entry, added = pool.add_entry(self.account)
             return self.redirect(
-                self.url_for('entry', pool.key().id(), entry.key().id()))
+                self.url_for('pool', pool.key().id()))
         else:
             self.response.out.write(str(form.errors))
             self.set_status(400)
