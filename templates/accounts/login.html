@@ -17,14 +17,8 @@
 
     <p>Please log in to <span class="logo">Pickem Pickem</span> with your Facebook account.</p>
 
-    <div id="facebook-login">
-        <a href="{{ url('facebook-login') }}{% if next %}?next={{ next }}{% endif %}">
-            <img src="/static/img/fbconnect.png" alt="Login with Facebook">
-        </a>
-        <p class="footnote">We promise we won't spam your friends or write on
-        your wall or do any of that other annoying shit.</p>
-    </div>
-    
+    {% include "accounts/_facebook_login.html" %}
+
     <p><strong>Why Facebook?</strong> We figured you probably already had a
     Facebook account, and that you would appreciate not having to create
     another stupid account to remember on another web site.  Plus, this let
