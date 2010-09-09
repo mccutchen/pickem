@@ -433,9 +433,9 @@ section#screenshot div {
     box-shadow: rgba(0, 0, 0, .25) 0 0 3px;
 }
 section#screenshot div img {
-	border: 1px solid #eee;
+	border: 1px solid #ccc;
 	display: block;
-	margin: 10px;
+	margin: 5px;
 }
 section#screenshot div p {
 	text-align: center;
