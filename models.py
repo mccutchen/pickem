@@ -222,6 +222,9 @@ class Pool(db.Model):
     name = db.StringProperty(required=True)
     description = db.StringProperty()
 
+    # When does this pool start?
+    start_week = db.ReferenceProperty(Week, collection_name='starting_pools')
+
     # Is this pool invite only?
     invite_only = db.BooleanProperty(default=True)
 
@@ -267,6 +270,10 @@ class Pool(db.Model):
     @property
     def potential_pot(self):
         return self.entry_fee * self.entries.count()
+
+    @property
+    def open(self):
+        return not self.week.closed
 
     @property
     def invite_code(self):
