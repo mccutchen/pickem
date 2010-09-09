@@ -12,6 +12,10 @@ from models import Account
 import settings
 
 
+# Cookies last for 14 days
+COOKIE_AGE = 60 * 60 * 24 * 14
+
+
 class LoginHandler(RequestHandler):
 
     def get(self):
@@ -77,7 +81,8 @@ class FacebookLoginHandler(RequestHandler):
                 last_name=profile['last_name'],
                 oauth_token=access_token)
 
-            self.set_secure_cookie('account', str(acc.key()))
+            self.set_secure_cookie(
+                'account', str(acc.key()), max_age=COOKIE_AGE)
             next = self.get_secure_cookie('next')
             if next:
                 self.delete_cookie('next')
