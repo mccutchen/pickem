@@ -316,18 +316,11 @@ div.info ul {
     padding: 0;
 }
 
-span.invite-code {
-    display: inline-block;
-    font-size: 1.5em;
-    font-family: monospace;
-    padding: 5px 10px;
-    border: 1px dotted #ccc;
-    margin-top: 10px;
-    -webkit-box-shadow: rgba(0, 0, 0, .15) 0 0 4px;
-    -moz-box-shadow: rgba(0, 0, 0, .15) 0 0 4px;
-    box-shadow: rgba(0, 0, 0, .15) 0 0 4px;
+section#pool-status ul {
+	list-style-type: none;
+	margin: .5em 0 1em;
+	padding: 0;
 }
-
 a.footnote {
     border: none;
     color: #c1001d;

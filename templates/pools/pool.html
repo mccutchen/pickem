@@ -1,27 +1,28 @@
-{% extends "base.html" %}
+{% extends "2columns.html" %}
 
 {% block page_header %}
     <h1><label>Pool:</label> {{ pool }}</h1>
 {% endblock %}
 
-{% block content %}
+{% block left %}
     {% if pool.decription %}
         <p>{{ pool.description }}</p>
     {% endif %}
 
     {% include "pools/_pool_overview.html" %}
 
-    <section>
+    <section id="pool-status">
         <h3>Your Status</h3>
         <ul>
-            <li>
+            <li><a href="{{ url('entry', pool|id, entry|id) }}">{{ entry }}</a></li>
+            <li class="indicator {{ 'positive' if entry.active else 'negative' }}">
                 {% if entry.active %}
                     Still alive
                 {% else %}
                     Out of the running
                 {% endif %}
             </li>
-            <li>
+            <li class="indicator {{ 'positive' if entry.paid else 'negative' }}">
                 {% if entry.paid %}
                     Paid up
                 {% else %}
@@ -29,15 +30,13 @@
                 {% endif %}
             </li>
         </ul>
+
     </section>
 
     <section>
-        <h3>Invitation Code</h3>
+        <h3>Invitation Link</h3>
         {% set invite_url = url('join-pool', pool|id, pool.invite_code, _full=True) %}
         {% if pool.invite_only %}
-            <p>The invitation code for joining this pool is:<br>
-            <span class="invite-code">{{ pool.invite_code }}</span></p>
-
             <p>You can share the following link with your friends to invite them to join this pool:<br>
             <a href="{{ invite_url }}">{{ invite_url }}</a></p>
         {% else %}
@@ -45,26 +44,27 @@
             <a href="{{ invite_url }}">{{ invite_url }}</a></p>
         {% endif %}
     </section>
-    
-    <section>
-        <h3>Currently Picking <strong>{{ week }}</strong></h3>
-        <p>Deadline: {{ week.start }}.</p>
-    </section>
+{% endblock %}
 
+{% block right %}
     <section>
-        <h3>Winning Entries</h3>
-        <p>There are {{ active_entries|length }} players still alive.</p>
-        <ol>
+        <h3>Still Playing</h3>
+        <ul>
             {% for entry in active_entries %}
                 <li><a href="{{ url('entry', pool.key().id(), entry.key().id()) }}">{{ entry.account }}</a></li>
             {% else %}
                 <li>None</li>
             {% endfor %}
-        </ol>
+        </ul>
     </section>
 
     <section>
-        <h3>Losing Entries</h3>
-        <p>{{ inactive_entries|length }} players have already lost.</p>
+        <h3>Losers</h3>
+        <ul>
+            {% for entry in inactive_entries %}
+                <li><a href="{{ url('entry', pool.key().id(), entry.key().id()) }}">{{ entry.account }}</a></li>
+            {% else %}
+                <li>No losers, yet.</li>
+            {% endfor %}
     </section>
 {% endblock %}
