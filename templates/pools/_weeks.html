@@ -29,7 +29,7 @@
                     {% if week.closed %}
                         closed
                     {% else %}
-                        due {{ week.start|date('%m/%d') }}
+                        due {{ week.start|est|date('%m/%d') }}
                     {% endif %}
                 </span>
             {% endif %}
