@@ -61,7 +61,7 @@ class RequestHandler(webapp2.RequestHandler):
         the given context using Jinja2."""
         self.response.set_status(status or DEFAULT_STATUS)
         self.response.headers['Content-type'] = mimetype or DEFAULT_MIMETYPE
-        resp = self.render_to_string(template, final_context)
+        resp = self.render_to_string(template, context)
         self.response.out.write(resp.encode('utf-8', 'xmlcharrefreplace'))
 
     def render_to_string(self, template, context=None):
