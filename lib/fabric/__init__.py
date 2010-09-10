@@ -107,10 +107,12 @@ Usage:
             local('git submodule init && git submodule update', capture=False)
             local('find . -name ".git*" | xargs rm -rf')
 
-    # Otherwise, we're just deploying from the current directory, as is, but
-    # with the app ID and version controlled by the remote target.
+    # Otherwise, we're just deploying from the current directory, so we need
+    # to move the local secrets file out of the way so we don't overwrite
+    # it. The app ID and version will be controlled by the remote target.
     else:
         deploy_src = '.'
+        local('mv settings/secrets.py settings/secrets.py.orig')
 
     # Copy in deployed secrets file
     with cd(deploy_src):
@@ -125,6 +127,11 @@ Usage:
     if inplace is None:
         assert deploy_src not in ('.', env.cwd)
         local('rm -r %s' % deploy_src)
+
+    # Or move the original settings back in place if we overwrote them
+    else:
+        local('mv settings/secrets.py.orig settings/secrets.py')
+
 
 def shell(cmd=None, path='/remote_api'):
     """Launches an interactive shell for this app. If preceded by a deployment
