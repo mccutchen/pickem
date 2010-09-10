@@ -2,3 +2,8 @@ cron:
 - description: Update odds
   url: /data/odds
   schedule: every 12 hours
+
+- description: Update scores
+  url: /data/scores
+  schedule: every 1 hours
+
