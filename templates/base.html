@@ -7,7 +7,7 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
         <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         {% block head %}{% endblock %}
-        <title>{% block title %}{% endblock %} Pickem Pickem</title>
+        <title>{% block title %}{% endblock %} {{ LOGO }}</title>
     </head>
     <body id="{% block bodyid %}{% endblock %}" class="{% block bodyclass %}{% endblock %}">
         {% if DEBUG %}
@@ -16,7 +16,7 @@
         {% endif %}
 
         <div id="header" class="header">
-            <h1><a href="/">Pickem Pickem</a></h1>
+            <h1><a href="/">{{ LOGO }}</a></h1>
             {% include "_account.html" %}
         </div>
 
@@ -28,7 +28,7 @@
         </div>
 
         <div id="footer" class="footer">
-            <a href="/" class="logo">Pickem Pickem</a> &#8594; made by <a href="http://mccutchen.me/">Will McCutchen</a>
+            <a href="/" class="logo">{{ LOGO }}</a> &#8594; made by <a href="http://mccutchen.me/">Will McCutchen</a>
         </div>
 
         {% if PRODUCTION %}

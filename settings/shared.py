@@ -10,7 +10,7 @@ DEBUG = not PRODUCTION
 
 TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
 
-EMAIL_FROM = '"Pickem Pickem Robot" <robot@pickempickem.com>'
+EMAIL_FROM = '"Pick\'em Pick\'em Robot" <robot@pickempickem.com>'
 
 
 ##############################################################################

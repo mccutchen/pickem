@@ -50,7 +50,7 @@ add_module_to_env(helpers, environment.globals)
 # Also make some settings available to all templates
 environment.globals['PRODUCTION'] = settings.PRODUCTION
 environment.globals['DEBUG'] = settings.DEBUG
-
+environment.globals['LOGO'] = jinja2.Markup('Pick&#8217;em Pick&#8217;em')
 
 ##############################################################################
 # Custom tests
