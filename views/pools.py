@@ -91,7 +91,8 @@ class JoinHandler(SecureRequestHandler):
         ctx = dict(pool=pool,
                    code=code,
                    week=models.Week.next(),
-                   entries=pool.entries.fetch(1000))
+                   entries=pool.entries.fetch(1000),
+                   unpaid_entries=[])
         return self.render('pools/pool_preview.html', ctx)
 
     @objects_required('Pool')

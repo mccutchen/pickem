@@ -22,7 +22,9 @@
         {% if pool.entry_fee %}
             <li>${{ pool.entry_fee|floatformat('-2') }} entry fee</li>
             <li>${{ pool.potential_pot|floatformat('-2') }} pot</a>
-            <li>{{ unpaid_entries|length }} unpaid entr{{ unpaid_entries|pluralize('y,ies') }}</li>
+            {% if unpaid_entries %}
+                <li>{{ unpaid_entries|length }} unpaid entr{{ unpaid_entries|pluralize('y,ies') }}</li>
+            {% endif %}
         {% else %}
             <li>No entry fee</li>
         {% endif %}
