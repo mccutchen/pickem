@@ -1,0 +1,738 @@
+{
+   "2010091907":    {
+      "home":       {
+         "score":          {
+            "1": 7,
+            "2": 17,
+            "3": 10,
+            "4": 7,
+            "5": 0,
+            "T": 41
+         },
+         "abbr": "ATL",
+         "to": 2
+      },
+      "away":       {
+         "score":          {
+            "1": 0,
+            "2": 7,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "T": 7
+         },
+         "abbr": "ARZ",
+         "to": 2
+      },
+      "weather": null,
+      "media":       {
+         "tv": "FOX",
+         "sat": 709,
+         "sathd": "709",
+         "radio":          {
+            "home": 153,
+            "away": 90
+         }
+      },
+      "bp": 13,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:26",
+      "posteam": "ARZ",
+      "note": null,
+      "redzone": null,
+      "stadium": "Georgia Dome"
+   },
+   "2010091906":    {
+      "home":       {
+         "score":          {
+            "1": 7,
+            "2": 10,
+            "3": 0,
+            "4": 15,
+            "5": 0,
+            "T": 32
+         },
+         "abbr": "DET",
+         "to": 0
+      },
+      "away":       {
+         "score":          {
+            "1": 7,
+            "2": 14,
+            "3": 7,
+            "4": 7,
+            "5": 0,
+            "T": 35
+         },
+         "abbr": "PHI",
+         "to": 1
+      },
+      "weather": null,
+      "media":       {
+         "tv": "FOX",
+         "sat": 712,
+         "sathd": "712",
+         "radio":          {
+            "home": 155,
+            "away": 127
+         }
+      },
+      "bp": 23,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:42",
+      "posteam": "PHI",
+      "note": null,
+      "redzone": null,
+      "stadium": "Ford Field"
+   },
+   "2010091911":    {
+      "home":       {
+         "score":          {
+            "1": 0,
+            "2": 10,
+            "3": 11,
+            "4": 7,
+            "5": 0,
+            "T": 28
+         },
+         "abbr": "NYJ",
+         "to": 3
+      },
+      "away":       {
+         "score":          {
+            "1": 0,
+            "2": 14,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "T": 14
+         },
+         "abbr": "NE",
+         "to": 2
+      },
+      "weather": null,
+      "media":       {
+         "tv": "CBS",
+         "sat": 715,
+         "sathd": "715",
+         "radio":          {
+            "home": 127,
+            "away": 123
+         }
+      },
+      "bp": 15,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:19",
+      "posteam": "NYJ",
+      "note": null,
+      "redzone": null,
+      "stadium": "New Meadowlands Stadium"
+   },
+   "2010091913":    {
+      "home":       {
+         "score":          {
+            "1": 7,
+            "2": 14,
+            "3": 3,
+            "4": 14,
+            "5": 0,
+            "T": 38
+         },
+         "abbr": "SD",
+         "to": 3
+      },
+      "away":       {
+         "score":          {
+            "1": 3,
+            "2": 3,
+            "3": 0,
+            "4": 7,
+            "5": 0,
+            "T": 13
+         },
+         "abbr": "JAX",
+         "to": 2
+      },
+      "weather": null,
+      "media":       {
+         "tv": "CBS",
+         "sat": 716,
+         "sathd": "716",
+         "radio":          {
+            "home": 125,
+            "away": 91
+         }
+      },
+      "bp": 20,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:33",
+      "posteam": "SD",
+      "note": null,
+      "redzone": null,
+      "stadium": "Qualcomm Stadium"
+   },
+   "2010091910":    {
+      "home":       {
+         "score":          {
+            "1": 0,
+            "2": 3,
+            "3": 10,
+            "4": 3,
+            "5": 0,
+            "T": 16
+         },
+         "abbr": "OAK",
+         "to": 2
+      },
+      "away":       {
+         "score":          {
+            "1": 0,
+            "2": 7,
+            "3": 0,
+            "4": 7,
+            "5": 0,
+            "T": 14
+         },
+         "abbr": "SL",
+         "to": 0
+      },
+      "weather": null,
+      "media":       {
+         "tv": "FOX",
+         "sat": 714,
+         "sathd": "714",
+         "radio":          {
+            "home": 121,
+            "away": 91
+         }
+      },
+      "bp": 12,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:39",
+      "posteam": "OAK",
+      "note": null,
+      "redzone": null,
+      "stadium": "Oakland Coliseum"
+   },
+   "2010091912":    {
+      "home":       {
+         "score":          {
+            "1": 0,
+            "2": 6,
+            "3": 3,
+            "4": 6,
+            "5": 0,
+            "T": 15
+         },
+         "abbr": "CIN",
+         "to": 2
+      },
+      "away":       {
+         "score":          {
+            "1": 0,
+            "2": 0,
+            "3": 7,
+            "4": 3,
+            "5": 0,
+            "T": 10
+         },
+         "abbr": "BLT",
+         "to": 0
+      },
+      "weather": null,
+      "media":       {
+         "tv": "CBS",
+         "sat": 704,
+         "sathd": "704",
+         "radio":          {
+            "home": 130,
+            "away": 121
+         }
+      },
+      "bp": 8,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:18",
+      "posteam": "CIN",
+      "note": null,
+      "redzone": null,
+      "stadium": "Paul Brown Stadium"
+   },
+   "2010091909":    {
+      "home":       {
+         "score":          {
+            "1": 7,
+            "2": 10,
+            "3": 7,
+            "4": 7,
+            "5": 0,
+            "T": 31
+         },
+         "abbr": "DEN",
+         "to": 1
+      },
+      "away":       {
+         "score":          {
+            "1": 0,
+            "2": 0,
+            "3": 7,
+            "4": 7,
+            "5": 0,
+            "T": 14
+         },
+         "abbr": "SEA",
+         "to": 0
+      },
+      "weather": null,
+      "media":       {
+         "tv": "FOX",
+         "sat": 713,
+         "sathd": "713",
+         "radio":          {
+            "home": 125,
+            "away": 90
+         }
+      },
+      "bp": 14,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:20",
+      "posteam": "DEN",
+      "note": null,
+      "redzone": null,
+      "stadium": "Invesco Field at Mile High"
+   },
+   "2010091904":    {
+      "home":       {
+         "score":          {
+            "1": 3,
+            "2": 0,
+            "3": 0,
+            "4": 8,
+            "5": 0,
+            "T": 11
+         },
+         "abbr": "TEN",
+         "to": 0
+      },
+      "away":       {
+         "score":          {
+            "1": 7,
+            "2": 6,
+            "3": 0,
+            "4": 6,
+            "5": 0,
+            "T": 19
+         },
+         "abbr": "PIT",
+         "to": 1
+      },
+      "weather": null,
+      "media":       {
+         "tv": "CBS",
+         "sat": 708,
+         "sathd": "708",
+         "radio":          {
+            "home": null,
+            "away": 122
+         }
+      },
+      "bp": 13,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:13",
+      "posteam": "TEN",
+      "note": null,
+      "redzone": null,
+      "stadium": "LP Field"
+   },
+   "2010091901":    {
+      "home":       {
+         "score":          {
+            "1": 13,
+            "2": 0,
+            "3": 14,
+            "4": 7,
+            "5": 0,
+            "T": 34
+         },
+         "abbr": "GB",
+         "to": 3
+      },
+      "away":       {
+         "score":          {
+            "1": 0,
+            "2": 7,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "T": 7
+         },
+         "abbr": "BUF",
+         "to": 2
+      },
+      "weather": null,
+      "media":       {
+         "tv": "CBS",
+         "sat": 706,
+         "sathd": "706",
+         "radio":          {
+            "home": 125,
+            "away": 108
+         }
+      },
+      "bp": 12,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:32",
+      "posteam": "GB",
+      "note": null,
+      "redzone": null,
+      "stadium": "Lambeau Field"
+   },
+   "2010091900":    {
+      "home":       {
+         "score":          {
+            "1": 6,
+            "2": 14,
+            "3": 7,
+            "4": 0,
+            "5": 0,
+            "T": 27
+         },
+         "abbr": "WAS",
+         "to": 2
+      },
+      "away":       {
+         "score":          {
+            "1": 0,
+            "2": 7,
+            "3": 10,
+            "4": 10,
+            "5": 3,
+            "T": 30
+         },
+         "abbr": "HST",
+         "to": 1
+      },
+      "weather": null,
+      "media":       {
+         "tv": "CBS",
+         "sat": 717,
+         "sathd": "717",
+         "radio":          {
+            "home": 126,
+            "away": 122
+         }
+      },
+      "bp": 19,
+      "yl": "HST 30",
+      "qtr": "final overtime",
+      "down": 1,
+      "togo": 10,
+      "clock": "03:24",
+      "posteam": "HST",
+      "note": null,
+      "redzone": null,
+      "stadium": "FedEx Field"
+   },
+   "2010091902":    {
+      "home":       {
+         "score":          {
+            "1": 0,
+            "2": 0,
+            "3": 7,
+            "4": 3,
+            "5": 0,
+            "T": 10
+         },
+         "abbr": "MIN",
+         "to": 1
+      },
+      "away":       {
+         "score":          {
+            "1": 7,
+            "2": 0,
+            "3": 7,
+            "4": 0,
+            "5": 0,
+            "T": 14
+         },
+         "abbr": "MIA",
+         "to": 1
+      },
+      "weather": null,
+      "media":       {
+         "tv": "CBS",
+         "sat": 707,
+         "sathd": "707",
+         "radio":          {
+            "home": 126,
+            "away": 147
+         }
+      },
+      "bp": 15,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:33",
+      "posteam": "MIA",
+      "note": null,
+      "redzone": null,
+      "stadium": "Mall of America Field"
+   },
+   "2010091914":    {
+      "home":       {
+         "score":          {
+            "1": 7,
+            "2": 17,
+            "3": 7,
+            "4": 7,
+            "5": 0,
+            "T": 38
+         },
+         "abbr": "IND",
+         "to": 2
+      },
+      "away":       {
+         "score":          {
+            "1": 0,
+            "2": 0,
+            "3": 7,
+            "4": 7,
+            "5": 0,
+            "T": 14
+         },
+         "abbr": "NYG",
+         "to": 1
+      },
+      "weather": null,
+      "media":       {
+         "tv": "NBC",
+         "sat": null,
+         "sathd": null,
+         "radio":          {
+            "home": 126,
+            "away": 125
+         }
+      },
+      "bp": 9,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:37",
+      "posteam": "IND",
+      "note": null,
+      "redzone": null,
+      "stadium": "Lucas Oil Stadium"
+   },
+   "2010092000":    {
+      "home":       {
+         "score":          {
+            "1": 0,
+            "2": 7,
+            "3": 7,
+            "4": 8,
+            "5": 0,
+            "T": 22
+         },
+         "abbr": "SF",
+         "to": 0
+      },
+      "away":       {
+         "score":          {
+            "1": 9,
+            "2": 0,
+            "3": 7,
+            "4": 9,
+            "5": 0,
+            "T": 25
+         },
+         "abbr": "NO",
+         "to": 0
+      },
+      "weather": null,
+      "media":       {
+         "tv": "ESPN",
+         "sat": null,
+         "sathd": null,
+         "radio":          {
+            "home": 126,
+            "away": 125
+         }
+      },
+      "bp": 14,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:00",
+      "posteam": "NO",
+      "note": null,
+      "redzone": null,
+      "stadium": "Candlestick Park"
+   },
+   "2010091908":    {
+      "home":       {
+         "score":          {
+            "1": 0,
+            "2": 7,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "T": 7
+         },
+         "abbr": "CAR",
+         "to": 0
+      },
+      "away":       {
+         "score":          {
+            "1": 7,
+            "2": 7,
+            "3": 3,
+            "4": 3,
+            "5": 0,
+            "T": 20
+         },
+         "abbr": "TB",
+         "to": 1
+      },
+      "weather": null,
+      "media":       {
+         "tv": "FOX",
+         "sat": 710,
+         "sathd": "710",
+         "radio":          {
+            "home": 113,
+            "away": 158
+         }
+      },
+      "bp": 8,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:22",
+      "posteam": "CAR",
+      "note": null,
+      "redzone": null,
+      "stadium": "Bank of America Stadium"
+   },
+   "2010091905":    {
+      "home":       {
+         "score":          {
+            "1": 7,
+            "2": 7,
+            "3": 3,
+            "4": 3,
+            "5": 0,
+            "T": 20
+         },
+         "abbr": "DAL",
+         "to": 0
+      },
+      "away":       {
+         "score":          {
+            "1": 10,
+            "2": 10,
+            "3": 0,
+            "4": 7,
+            "5": 0,
+            "T": 27
+         },
+         "abbr": "CHI",
+         "to": 1
+      },
+      "weather": null,
+      "media":       {
+         "tv": "FOX",
+         "sat": 711,
+         "sathd": "711",
+         "radio":          {
+            "home": 123,
+            "away": 151
+         }
+      },
+      "bp": 12,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:34",
+      "posteam": "CHI",
+      "note": null,
+      "redzone": null,
+      "stadium": "Cowboys Stadium"
+   },
+   "2010091903":    {
+      "home":       {
+         "score":          {
+            "1": 0,
+            "2": 14,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "T": 14
+         },
+         "abbr": "CLV",
+         "to": 1
+      },
+      "away":       {
+         "score":          {
+            "1": 3,
+            "2": 7,
+            "3": 3,
+            "4": 3,
+            "5": 0,
+            "T": 16
+         },
+         "abbr": "KC",
+         "to": 0
+      },
+      "weather": null,
+      "media":       {
+         "tv": "CBS",
+         "sat": 705,
+         "sathd": "705",
+         "radio":          {
+            "home": 91,
+            "away": 129
+         }
+      },
+      "bp": 8,
+      "yl": null,
+      "qtr": "Final",
+      "down": 0,
+      "togo": 0,
+      "clock": "00:38",
+      "posteam": "KC",
+      "note": null,
+      "redzone": null,
+      "stadium": "Cleveland Browns Stadium"
+   }
+}
