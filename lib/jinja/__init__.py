@@ -11,6 +11,7 @@ import settings
 # The environment used to render every template
 environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(settings.TEMPLATE_DIR),
+    undefined=jinja2.Undefined,
     autoescape=True)
 
 # A shortcut for rendering a template with the default environment
