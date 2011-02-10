@@ -1,28 +1,37 @@
 from __future__ import with_statement
 
-import logging
+import base64
 import datetime
+import logging
 import os
 import sys
 import time
 
-from django.utils import simplejson as json
 from google.appengine.ext import db
+from django.utils import simplejson as json
 
 
 DATE_FORMAT = '%Y-%m-%d'
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
+
 def json_encoder(obj):
     """Objects are encoded as one-item dictionaries mapping '__TYPENAME__' to
     a serializable representation of the type."""
+
+    # Dates and datetimes are encoded in a known format
     if isinstance(obj, datetime.datetime):
         return { '__datetime__': obj.strftime(DATETIME_FORMAT) }
     elif isinstance(obj, datetime.date):
         return { '__date__': obj.strftime(DATE_FORMAT) }
+
+    # Blobs are base64-encoded
+    elif isinstance(obj, db.Blob):
+        return { '__blob__': base64.b64encode(obj) }
+
+    # Keys are encoded as a 3-element list of [kind, id_or_name, parent]
+    # where the parent can be null or another key.
     elif isinstance(obj, db.Key):
-        # Keys are encoded as a 3-element list of [kind, id_or_name, parent]
-        # where the parent can be null or another key.
         return {
             '__key__': [
                 obj.kind(),
@@ -30,9 +39,10 @@ def json_encoder(obj):
                 json_encoder(obj.parent())
                 ]
             }
+
+    # Models are encoded as just their key
     elif isinstance(obj, db.Model):
-        # Models are encoded as just their key
-        return { '__model__': json_encoder(obj.key()) }
+        return json_encoder(obj.key())
 
     # There was no special encoding to be done
     return obj
@@ -49,12 +59,11 @@ def json_decoder(dct):
             return datetime.datetime.strptime(value, DATETIME_FORMAT)
         elif type_name == 'date':
             return datetime.datetime.strptime(value, DATE_FORMAT).date()
+        elif type_name == 'blob':
+            return db.Blob(base64.b64decode(value))
         elif type_name == 'key':
             kind, keydata, parent = value
             return db.Key.from_path(kind, keydata, parent=parent)
-        elif type_name == 'model':
-            # For models, we just return their key
-            return value
     return dct
 
 
@@ -108,9 +117,19 @@ def serialize_entities(modelspec):
     modelspec as JSON."""
     model = get_model(modelspec)
     fields = model.properties()
+
+    def prep_fields(entity):
+        # We have to go head and run the json_encoder over the entity's fields
+        # here to properly handle db.Blob properties, which are string
+        # subclasses and therefore do not get sent through the json_encoder as
+        # you might hope they would be.
+        return dict((name, json_encoder(getattr(entity, name)))
+                    for name in fields)
+
     entities = [
         { 'model': modelspec,
           'key': entity.key(),
-          'fields': dict((name, getattr(entity, name)) for name in fields) }
+          'fields': prep_fields(entity) }
         for entity in model.all()]
+
     return json.dumps(entities, default=json_encoder, indent=4)
