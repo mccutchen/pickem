@@ -1,12 +1,31 @@
-import code
 import functools
 import getpass
 import os
 import sys
 
-from google.appengine.api import appinfo
-from google.appengine.ext.remote_api import remote_api_stub
-from google.appengine.tools import dev_appserver, dev_appserver_main
+try:
+    from google.appengine.api import appinfo
+except ImportError:
+    import google
+    SDK_PATH = os.path.abspath(
+        os.path.dirname(
+            os.path.dirname(
+                os.path.realpath(google.__file__))))
+    EXTRA_PATHS = [
+        SDK_PATH,
+        os.path.join(SDK_PATH, 'lib', 'antlr3'),
+        os.path.join(SDK_PATH, 'lib', 'django'),
+        os.path.join(SDK_PATH, 'lib', 'webob'),
+        os.path.join(SDK_PATH, 'lib', 'ipaddr'),
+        os.path.join(SDK_PATH, 'lib', 'protorpc'),
+        os.path.join(SDK_PATH, 'lib', 'yaml', 'lib'),
+        os.path.join(SDK_PATH, 'lib', 'fancy_urllib'),
+        ]
+    sys.path = EXTRA_PATHS + sys.path
+    from google.appengine.api import appinfo
+finally:
+    from google.appengine.ext.remote_api import remote_api_stub
+    from google.appengine.tools import dev_appserver, dev_appserver_main
 
 from fabric.api import env
 
