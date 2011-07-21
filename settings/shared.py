@@ -12,13 +12,3 @@ TEMPLATE_DIR = os.path.join(PROJECT_ROOT, 'templates')
 
 EMAIL_FROM = '"Pick\'em Pick\'em Robot" <robot@pickempickem.com>'
 
-
-##############################################################################
-# Secrets -- These settings MUST be set in secrets.py, which should not be
-# kept in version control.  They should be kept, uh, secret.
-##############################################################################
-FB_APP_ID = ''
-FB_APP_SECRET = ''
-
-# Used to sign cookies. Generate with something like `os.urandom(30)`
-SECRET = None
