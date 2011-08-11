@@ -59,7 +59,6 @@ class Season(db.Model):
     """A single season.  The key name should be a string containing the start
     year and end year separated by a dash (e.g. '2010-2011')."""
     start_date = db.DateProperty(required=True)
-    end_date = db.DateProperty(required=True)
 
     @property
     def weeks(self):
@@ -71,16 +70,14 @@ class Season(db.Model):
 
     @property
     def name(self):
-        return u'%d-%d Season' % (self.start_date.year,
-                                  self.end_date.year % 1000)
+        return u'%s Season' % self.key().name()
 
     @classmethod
     def current(cls):
         if not hasattr(cls, '_current'):
             today = datetime.date.today()
             season = cls.all()\
-                .filter('end_date >=', today)\
-                .order('end_date')\
+                .order('-start_date')\
                 .get()
             cls._current = season
         return cls._current
