@@ -10,14 +10,19 @@ import time
 
 from ext import webapp2
 from django.utils import simplejson as json
+from ext.webapp2_extras import securecookie
+
 from lib.jinja import render_to_string
 
 from models import Account
-from settings import SECRET
+import settings
 
 
 DEFAULT_STATUS = 200
 DEFAULT_MIMETYPE = 'text/html; charset=utf-8'
+
+SECURE_COOKIE_SERIALIZER = \
+    securecookie.SecureCookieSerializer(settings.SECRET)
 
 
 class RequestHandler(webapp2.RequestHandler):
@@ -82,8 +87,7 @@ class RequestHandler(webapp2.RequestHandler):
         return { 'request': self.request }
 
     ##########################################################################
-    # Cookie API and implementation ported from Tornado:
-    # http://github.com/facebook/tornado/blob/master/tornado/web.py
+    # Add a cookie API (esp. for secure cookies) to the request handler
     ##########################################################################
     def get_cookie(self, name, default=None):
         return self.request.cookies.get(name, default)
@@ -100,13 +104,10 @@ class RequestHandler(webapp2.RequestHandler):
 
         To read a cookie set with this method, use get_secure_cookie().
         """
-        timestamp = str(int(time.time()))
-        value = base64.b64encode(value)
-        signature = cookie_signature(name, value, timestamp)
-        value = "|".join([value, timestamp, signature])
+        value = SECURE_COOKIE_SERIALIZER.serialize(name, value)
         return self.set_cookie(name, value, **kwargs)
 
-    def get_secure_cookie(self, name, value=None):
+    def get_secure_cookie(self, name, max_age=None):
         """Returns the given signed cookie if it validates, or None.
 
         In older versions of Tornado (0.1 and 0.2), we did not include the
@@ -116,22 +117,8 @@ class RequestHandler(webapp2.RequestHandler):
         your users out whose cookies were written with a previous Tornado
         version).
         """
-        if value is None: value = self.get_cookie(name)
-        if not value: return None
-        parts = value.split("|")
-        if len(parts) != 3: return None
-        signature = cookie_signature(name, parts[0], parts[1])
-        if not time_independent_equals(parts[2], signature):
-            logging.warning("Invalid cookie signature %r", value)
-            return None
-        timestamp = int(parts[1])
-        if timestamp < time.time() - 31 * 86400:
-            logging.warning("Expired cookie %r", value)
-            return None
-        try:
-            return base64.b64decode(parts[0])
-        except:
-            return None
+        value = self.get_cookie(name)
+        return SECURE_COOKIE_SERIALIZER.deserialize(name, value, max_age)
 
     def delete_cookie(self, *args, **kwargs):
         return self.response.delete_cookie(*args, **kwargs)
@@ -140,28 +127,3 @@ class RequestHandler(webapp2.RequestHandler):
 class SecureRequestHandler(RequestHandler):
     """A RequestHandler whose methods all require login."""
     login_required = True
-
-
-##############################################################################
-# Cookie utils, ported from Tornado:
-# http://github.com/facebook/tornado/blob/master/tornado/web.py
-##############################################################################
-
-def cookie_signature(*parts):
-    h = hmac.new(SECRET, digestmod=hashlib.sha1)
-    for part in parts:
-        h.update(part)
-    return h.hexdigest()
-
-def time_independent_equals(a, b):
-    if len(a) != len(b):
-        return False
-    result = 0
-    for x, y in zip(a, b):
-        result |= ord(x) ^ ord(y)
-    return result == 0
-
-def utf8(s):
-    if isinstance(s, unicode):
-        return s.encode("utf-8")
-    return str(s)
