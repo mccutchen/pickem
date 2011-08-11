@@ -2,21 +2,6 @@
     {
         "fields": {
             "start_date": {
-                "__date__": "2010-09-10"
-            }
-        }, 
-        "model": "models.Season", 
-        "key": {
-            "__key__": [
-                "Season", 
-                "2010-2011", 
-                null
-            ]
-        }
-    },
-    {
-        "fields": {
-            "start_date": {
                 "__date__": "2011-09-08"
             }
         }, 

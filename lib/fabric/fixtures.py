@@ -5,7 +5,6 @@ import datetime
 import logging
 import os
 import sys
-import time
 
 from google.appengine.ext import db
 from django.utils import simplejson as json
@@ -106,7 +105,6 @@ def create_entity(model, key, fields):
     # be cast to strings to be usable as keyword arguments.
     for field, value in fields.iteritems():
         # Any special casing based on property type should happen here
-        prop = getattr(model, field)
         args[str(field)] = value
 
     # Create and store the entity
