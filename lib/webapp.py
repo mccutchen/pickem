@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import base64
 import calendar
 import datetime
@@ -50,6 +52,16 @@ class RequestHandler(webapp2.RequestHandler):
         return super(RequestHandler, self).__call__(*args, **kwargs)
 
     @property
+    def default_context(self):
+        return {
+            'request': self.request,
+            'account': self.account,
+            'PRODUCTION': settings.PRODUCTION,
+            'DEBUG': settings.DEBUG,
+            'LOGO': u'Pick’em Pick’em',
+            }
+
+    @property
     def account(self):
         """A account is considered to be logged in via Twitter if they have
         their account_id stored in a secure cookie."""
@@ -81,10 +93,6 @@ class RequestHandler(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         self.response.set_status(status or 200)
         return self.response.out.write(data)
-
-    @property
-    def default_context(self):
-        return { 'request': self.request }
 
     ##########################################################################
     # Add a cookie API (esp. for secure cookies) to the request handler
