@@ -130,8 +130,8 @@ class Facebook(object):
 
     def get_profile(self, access_token):
         logging.info('Getting FB account for access token %s' % access_token)
-        resp = self.make_request(self.PROFILE_URL,
-                                 access_token=access_token)
+        resp = self.make_request(
+            self.PROFILE_URL, access_token=access_token)
         if resp.status_code == 200:
             return json.loads(resp.content)
         else:
@@ -143,7 +143,7 @@ class Facebook(object):
         kwargs.update(self.base_args)
         url = '%s?%s' % (url, urlencode(kwargs))
         logging.info('FB Request: %s' % url)
-        return urlfetch.fetch(url)
+        return urlfetch.fetch(url, deadline=20)
 
     @property
     def base_args(self):
