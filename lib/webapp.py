@@ -54,7 +54,6 @@ class RequestHandler(webapp2.RequestHandler):
     def default_context(self):
         return {
             'request': self.request,
-            'account': self.account,
             'PRODUCTION': settings.PRODUCTION,
             'DEBUG': settings.DEBUG,
             'LOGO': u'Pick’em Pick’em',
