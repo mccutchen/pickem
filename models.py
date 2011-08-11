@@ -22,9 +22,6 @@ class Account(db.Model):
     def __unicode__(self):
        return self.name
 
-    def __str__(self):
-        return unicode(self).encode('utf8', 'ignore')
-
 
 class Team(db.Model):
     """A real life sports team, with a place and a name. The key name for a
@@ -47,9 +44,6 @@ class Team(db.Model):
 
     def __unicode__(self):
         return u'%s %s' % (self.place, self.name)
-
-    def __str__(self):
-        return unicode(self).encode('utf8', 'ignore')
 
     def __eq__(self, other):
         return isinstance(other, Team) and other.key() == self.key()
@@ -84,9 +78,6 @@ class Season(db.Model):
 
     def __unicode__(self):
         return self.name
-
-    def __str__(self):
-        return unicode(self).encode('utf8', 'ignore')
 
 
 class Week(db.Model):
@@ -162,9 +153,6 @@ class Week(db.Model):
     def __unicode__(self):
         return self.name
 
-    def __str__(self):
-        return unicode(self).encode('utf8', 'ignore')
-
 
 class Game(db.Model):
     """A single game in a week in a season, between a home Team and an away
@@ -210,9 +198,6 @@ class Game(db.Model):
 
     def __unicode__(self):
         return '%s at %s' % (self.away_team, self.home_team)
-
-    def __str__(self):
-        return unicode(self).encode('utf8', 'ignore')
 
 
 class Pool(db.Model):
@@ -313,9 +298,6 @@ class Pool(db.Model):
     def __unicode__(self):
         return self.name
 
-    def __str__(self):
-        return unicode(self).encode('utf8', 'ignore')
-
 
 class Entry(db.Model):
     """A single user's entry into a given Pool."""
@@ -342,9 +324,6 @@ class Entry(db.Model):
     def __unicode__(self):
         return unicode(self.account)
 
-    def __str__(self):
-        return unicode(self).encode('utf8', 'ignore')
-
 
 class Pick(db.Model):
     """A single user's pick for a specific game. Should have an entry as its
@@ -367,6 +346,3 @@ class Pick(db.Model):
 
     def __unicode__(self):
         return unicode(self.team)
-
-    def __str__(self):
-        return unicode(self).encode('utf8', 'ignore')
