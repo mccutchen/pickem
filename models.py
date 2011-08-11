@@ -56,7 +56,7 @@ class Season(db.Model):
 
     @property
     def weeks(self):
-        return db.Query(Week).ancestor(self).order('end')
+        return db.Query(Week).ancestor(self).order('start')
 
     @property
     def pools(self):
@@ -69,7 +69,10 @@ class Season(db.Model):
     @classmethod
     def current(cls):
         if not hasattr(cls, '_current'):
-            season = cls.all().order('-start_date').get()
+            today = datetime.date.today()
+            season = cls.all()\
+                .order('-start_date')\
+                .get()
             cls._current = season
         return cls._current
 
@@ -79,9 +82,9 @@ class Season(db.Model):
 
 class Week(db.Model):
     """A week of games during a given season. Parent should be a Season. Key
-    should be the week's ordinal number in that season.
-    """
+    should be the week's ordinal number in that season."""
     name = db.StringProperty() # E.g. Week 5
+    start = db.DateTimeProperty()
     end = db.DateTimeProperty()
 
     @property
@@ -103,30 +106,49 @@ class Week(db.Model):
     def find_game_for(self, team):
         return self.games.filter('teams =', team.key()).get()
 
+    def add_game(self, home_team, away_team, **kwargs):
+        commit = kwargs.pop('commit', True)
+        game_key = '%s@%s' % (away_team.slug, home_team.slug)
+        def txn():
+            key = db.Key.from_path('Game', game_key, parent=self.key())
+            game = db.get(key)
+            if not game:
+                game = Game(parent=self,
+                            home_team=home_team,
+                            away_team=away_team,
+                            teams=[home_team.key(), away_team.key()],
+                            **kwargs)
+                if commit:
+                    game.put()
+                created = True
+            else:
+                created = False
+            return game, created
+        return db.run_in_transaction(txn)
+
     @classmethod
-    def next_week(cls):
-        if not hasattr(cls, '_next_week'):
+    def next(cls):
+        if not hasattr(cls, '_next'):
             season = Season.current()
             if season:
                 now = datetime.datetime.now()
-                weeks = season.weeks\
-                    .filter('end >=', now)\
-                    .order('end')\
-                    .fetch(1, offset=1)
-                week = weeks[0] if weeks else None
-                cls._next_week = week
+                week = season.weeks.filter('start >', now).get()
+                cls._next = week
             else:
-                cls._next_week = None
-        return cls._next_week
+                cls._next = None
+        return cls._next
 
     @classmethod
-    def current_week(cls):
-        if not hasattr(cls, '_current_week'):
+    def current(cls):
+        if not hasattr(cls, '_current'):
             season = Season.current()
             now = datetime.datetime.now()
-            week = season.weeks.filter('end >=', now).order('end').get()
-            cls._current_week = week
-        return cls._current_week
+            week = season.weeks\
+                .filter('start <=', now)\
+                .order('-start')\
+                .get()
+            cls._current = week
+        return cls._current
 
     def __unicode__(self):
         return self.name
@@ -134,13 +156,7 @@ class Week(db.Model):
 
 class Game(db.Model):
     """A single game in a week in a season, between a home Team and an away
-    Team, with a point spread.
-
-    Constraints:
-
-     - Parent: Week
-     - Key:    '{away_team.slug}@{home_team.slug}'
-    """
+    Team, with a point spread."""
     home_team = db.ReferenceProperty(Team, collection_name='home_games')
     away_team = db.ReferenceProperty(Team, collection_name='away_games')
 

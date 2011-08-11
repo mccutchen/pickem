@@ -29,7 +29,7 @@ class IndexHandler(RequestHandler):
             ctx.update({
                     'pools': pools,
                     'entries': entries,
-                    'week': models.Week.next_week(),
+                    'week': models.Week.next(),
                     })
             return self.render('pools/dashboard.html', ctx)
 
@@ -65,7 +65,7 @@ class PoolHandler(SecureRequestHandler):
         inactive_entries = filter(lambda e: not e.active, entries)
         unpaid_entries = filter(lambda e: not e.paid, entries)
 
-        week = models.Week.current_week() or models.Week.next_week()
+        week = models.Week.current() or models.Week.next()
         picks = week.picks.fetch(1000) if week.closed else []
 
         ctx = dict(pool=pool,
@@ -90,7 +90,7 @@ class JoinHandler(SecureRequestHandler):
     def get(self, pool, code):
         ctx = dict(pool=pool,
                    code=code,
-                   week=models.Week.next_week(),
+                   week=models.Week.next(),
                    entries=pool.entries.fetch(1000),
                    unpaid_entries=[])
         return self.render('pools/pool_preview.html', ctx)
@@ -151,7 +151,7 @@ class EntryHandler(SecureRequestHandler):
     def get(self, pool, entry):
         season = models.Season.current()
         weeks = season.weeks.fetch(25)
-        week =  models.Week.next_week()
+        week =  models.Week.next()
         ctx = dict(season=season,
                    weeks=weeks,
                    week=week,
