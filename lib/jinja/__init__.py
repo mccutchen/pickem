@@ -38,3 +38,14 @@ def add_module_to_env(module, env_place, exceptions=None):
 add_module_to_env(filters, environment.filters)
 add_module_to_env(helpers, environment.globals)
 add_module_to_env(tests, environment.tests)
+
+
+# Enabling this monkeypatch can help track down hard to find errors that crop
+# up during template rendering (since Jinja's own error reporting is so
+# unhelpful on AppEngine).
+real_handle_exception = environment.handle_exception
+def handle_exception(self, *args, **kwargs):
+	import logging, traceback
+	logging.error('Template exception:\n%s', traceback.format_exc())
+	real_handle_exception(self, *args, **kwargs)
+environment.handle_exception = handle_exception
