@@ -2,7 +2,6 @@ import inspect
 import logging
 
 from ext import jinja2
-from django.template import defaultfilters
 
 import filters, helpers, tests
 import settings
@@ -35,20 +34,7 @@ def add_module_to_env(module, env_place, exceptions=None):
             env_place[name] = value
 
 
-##############################################################################
-# Filters, available to all templates
-##############################################################################
-add_module_to_env(defaultfilters, environment.filters,
-                  exceptions=set(('safe', 'default')))
+# Add our custom filters, helpers and tests
 add_module_to_env(filters, environment.filters)
-
-
-##############################################################################
-# Helper functions, available to all templates
-##############################################################################
 add_module_to_env(helpers, environment.globals)
-
-##############################################################################
-# Custom tests
-##############################################################################
 add_module_to_env(tests, environment.tests)
