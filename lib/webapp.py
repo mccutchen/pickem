@@ -11,8 +11,7 @@ import re
 import time
 
 from ext import webapp2
-from django.utils import simplejson as json
-from ext.webapp2_extras import securecookie
+from ext.webapp2_extras import securecookie, json
 
 from lib.jinja import render_to_string
 
@@ -89,7 +88,7 @@ class RequestHandler(webapp2.RequestHandler):
     def send_json(self, data, serialize=True, status=None):
         """Sends the given data to the client as application/json. If
         `serialize` is True, first serializes the data to JSON."""
-        data = json.dumps(data) if serialize else data
+        data = json.encode(data) if serialize else data
         self.response.headers['Content-Type'] = 'application/json'
         self.response.set_status(status or 200)
         return self.response.out.write(data)
