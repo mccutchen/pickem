@@ -69,7 +69,10 @@ def import_schedule(season=None):
 
     # Figure out each week's end date based on the latest kickoff of its games
     for week, week_games in groupby(games, itemgetter('parent')):
+        week_games = list(week_games)
+        start = min(game['start'] for game in week_games)
         end = max(game['start'] for game in week_games)
+        week.start = start
         week.end = end + datetime.timedelta(hours=5)
 
     # Store the weeks, so they have "complete" keys, and can therefore be used
