@@ -44,7 +44,7 @@
 {% endblock %}
 
 {% block page_header %}
-    <h1><label>Pool:</label> <a href="{{ url('pool', pool|id) }}">{{ pool }}</a></h1>
+    <h1><label>Pool:</label> <a href="{{ uri_for('pool', pool|id) }}">{{ pool }}</a></h1>
 {% endblock %}
 
 {% block left %}
@@ -65,7 +65,7 @@
 
         <h3 id="your-pick">Your pick: <span class="{{ 'picked' if pick else ''}}">{{ pick|default('None', True) }}</span></h3>
         
-        <form id="pick" action="{{ url('pick', pool|id, entry|id, week|id) }}" method="post">
+        <form id="pick" action="{{ uri_for('pick', pool|id, entry|id, week|id) }}" method="post">
             {{ games.showgames(week, pick) }}
             <div class="submit">
                 <input type="submit" value="Make Pick!">

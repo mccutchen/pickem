@@ -14,7 +14,7 @@
     <section id="pool-status">
         <h3>Your Status</h3>
         <ul>
-            <li><a href="{{ url('entry', pool|id, entry|id) }}">{{ entry }}</a></li>
+            <li><a href="{{ uri_for('entry', pool|id, entry|id) }}">{{ entry }}</a></li>
             <li class="indicator {{ 'positive' if entry.active else 'negative' }}">
                 {% if entry.active %}
                     Still alive
@@ -38,13 +38,13 @@
         <p>Enter the email addresses of people you'd like to invite to join
         this pool, and we'll send them an invitation.</p>
 
-        <form action="{{ url('invite', pool|id) }}" method="post">
+        <form action="{{ uri_for('invite', pool|id) }}" method="post">
             {{ invite_form.emails.label_tag()|safe }}
             {{ invite_form.emails|safe }}
             <input type="submit" value="Send invites!">
         </form>
 
-        {% set invite_url = url('join-pool', pool|id, pool.invite_code, _full=True) %}
+        {% set invite_url = uri_for('join-pool', pool|id, pool.invite_code, _full=True) %}
         {% if pool.invite_only %}
             <p>You can share the following link with your friends to invite them to join this pool:<br>
             <a href="{{ invite_url }}">{{ invite_url }}</a></p>
@@ -60,7 +60,7 @@
         <h3>Still Playing</h3>
         <ul>
             {% for entry in active_entries %}
-                <li><a href="{{ url('entry', pool.key().id(), entry.key().id()) }}">{{ entry.account }}</a></li>
+                <li><a href="{{ uri_for('entry', pool.key().id(), entry.key().id()) }}">{{ entry.account }}</a></li>
             {% else %}
                 <li>None</li>
             {% endfor %}
@@ -71,7 +71,7 @@
         <h3>Losers</h3>
         <ul>
             {% for entry in inactive_entries %}
-                <li><a href="{{ url('entry', pool.key().id(), entry.key().id()) }}">{{ entry.account }}</a></li>
+                <li><a href="{{ uri_for('entry', pool.key().id(), entry.key().id()) }}">{{ entry.account }}</a></li>
             {% else %}
                 <li>No losers, yet.</li>
             {% endfor %}

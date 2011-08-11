@@ -13,7 +13,7 @@
     <ol>
         {% for week in weeks %}
             <li>
-                <a href="{{ url('week', season.key().name(), week.key().id()) }}">{{ week }}</a>
+                <a href="{{ uri_for('week', season.key().name(), week.key().id()) }}">{{ week }}</a>
                 Starts {{ week.start }}
             </li>
         {% endfor %}

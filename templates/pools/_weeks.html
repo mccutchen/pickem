@@ -15,7 +15,7 @@
         {% endif %}
         <li class="week {{ indicator }} {{ is_closed }} {{ is_current }} {{ has_picked }} {{ pick_result }}">
             {% if own_entry %}
-                <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
+                <a href="{{ uri_for('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
             {% else %}
                 {{ week }}
             {% endif %}

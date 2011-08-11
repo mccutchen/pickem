@@ -32,8 +32,8 @@
     </section>
 
     <section>
-        {% set invite_url = url('join-pool', pool|id, pool.invite_code, _full=True) %}
-        <form action="{{ url('join-pool', pool|id, code) }}" method="post">
+        {% set invite_url = uri_for('join-pool', pool|id, pool.invite_code, _full=True) %}
+        <form action="{{ uri_for('join-pool', pool|id, code) }}" method="post">
             <input class="button" type="submit" value="Join {{ pool }}">
         </form>
         {% if pool.entry_fee %}

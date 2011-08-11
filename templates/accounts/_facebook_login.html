@@ -1,5 +1,5 @@
 <div id="facebook-login">
-    <a href="{{ url('facebook-login') }}{% if next %}?next={{ next }}{% endif %}">
+    <a href="{{ uri_for('facebook-login') }}{% if next %}?next={{ next }}{% endif %}">
         <img src="/static/img/fbconnect.png" alt="Login with Facebook">
     </a>
     <p class="footnote">We promise we won't spam your friends or write on

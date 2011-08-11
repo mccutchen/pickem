@@ -15,11 +15,11 @@
                 {% set pick = entry.find_pick_for(week) %}
                 {% set active_entries = pool.active_entries.count() %}
                 <li>
-                    <h4><a href="{{ url('entry', pool|id, entry|id) }}">{{ pool }}</a></h4>
+                    <h4><a href="{{ uri_for('entry', pool|id, entry|id) }}">{{ pool }}</a></h4>
                     <p class="meta">{{ active_entries }} active entr{{ active_entries|pluralize('y,ies') }}</p>
                     {% if pick %}
                         <p class="indicator positive pending meta">
-                            {{ pick }} picked for <a href="{{ url('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
+                            {{ pick }} picked for <a href="{{ uri_for('pick', pool|id, entry|id, week|id) }}">{{ week }}</a>
                         </p>
                     {% else %}
                         <p class="indicator negative pending meta">Pick due in {{ week.start|timeuntil }} for {{ week }}</p>
@@ -44,8 +44,8 @@
         <ul>
             {% for pool in pools %}
                 <li>
-                    <a href="{{ url('pool', pool|id) }}">{{ pool }}</a>
-                    (<a href="{{ url('manage-pool', pool|id) }}">Manage</a>)
+                    <a href="{{ uri_for('pool', pool|id) }}">{{ pool }}</a>
+                    (<a href="{{ uri_for('manage-pool', pool|id) }}">Manage</a>)
                 </li>
             {% endfor %}
         </ul>
