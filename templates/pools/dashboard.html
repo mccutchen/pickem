@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block left %}
-    <h2>Welcome{% if entries or pools %} back{% endif %}, {{ request.account.first_name }}.</h2>
+    <h2>Welcome{% if entries or pools %} back{% endif %}, {{ account.first_name }}.</h2>
 
     <section id="your-entries">
         <h3>Your Entries</h3>
