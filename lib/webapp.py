@@ -33,7 +33,8 @@ class RequestHandler(webapp2.RequestHandler):
     # Is login required for all of this handler's methods?
     login_required = False
 
-    def __call__(self, *args, **kwargs):
+    def dispatch(self, *args, **kwargs):
+
         # If this handler requires login and there is no account, render the
         # login page in place, with an appropriate status code.
         if self.login_required and self.account is None:
@@ -48,7 +49,7 @@ class RequestHandler(webapp2.RequestHandler):
 			self.request.environ.get('HTTP_X_REQUESTED_WITH', '').lower()\
             == 'xmlhttprequest'
 
-        return super(RequestHandler, self).__call__(*args, **kwargs)
+        return super(RequestHandler, self).dispatch(*args, **kwargs)
 
     @property
     def default_context(self):
