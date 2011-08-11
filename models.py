@@ -142,9 +142,12 @@ class Week(db.Model):
     def next(cls):
         if not hasattr(cls, '_next'):
             season = Season.current()
-            now = datetime.datetime.now()
-            week = season.weeks.filter('start >', now).get()
-            cls._next = week
+            if season:
+                now = datetime.datetime.now()
+                week = season.weeks.filter('start >', now).get()
+                cls._next = week
+            else:
+                cls._next = None
         return cls._next
 
     @classmethod
