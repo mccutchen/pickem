@@ -20,7 +20,7 @@ class LoginHandler(RequestHandler):
 
     def get(self):
         next = self.request.get('next')
-        login_url = self.url_for('facebook-login')
+        login_url = self.uri_for('facebook-login')
         if next:
             login_url += '?next=%s' % next
         ctx = { 'next': next,

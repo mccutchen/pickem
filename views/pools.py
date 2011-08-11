@@ -43,7 +43,7 @@ class PoolsHandler(SecureRequestHandler):
             pool = form.save()
             entry, added = pool.add_entry(self.account)
             return self.redirect(
-                self.url_for('pool', pool.key().id()))
+                self.uri_for('pool', pool.key().id()))
         else:
             self.response.out.write(str(form.errors))
             self.set_status(400)
@@ -99,7 +99,7 @@ class JoinHandler(SecureRequestHandler):
     def post(self, pool, code):
         if pool.check_invite_code(code):
             entry, joined = pool.add_entry(self.account)
-            url = self.url_for('entry', pool.key().id(), entry.key().id())
+            url = self.uri_for('entry', pool.key().id(), entry.key().id())
             return self.redirect(url)
         else:
             error = "Invalid invitation code: %s" % code
@@ -221,7 +221,7 @@ class PickHandler(SecureRequestHandler):
             return self.send_json(resp, status=201)
 
         else:
-            url = self.url_for(
+            url = self.uri_for(
                 'pick', pool.key().id(), entry.key().id(), week_num)
             return self.redirect(url)
 
