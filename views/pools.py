@@ -190,15 +190,23 @@ class PickHandler(SecureRequestHandler):
         week = self.get_week(week_num)
         if week.closed:
             raise HTTPConflict('Week closed %s' % week.start)
+
         team_slug = self.request.POST.get('pick')
         if team_slug is None:
             raise HTTPBadRequest('Pick required')
+
         team = models.Team.get_by_key_name(team_slug)
         if team is None:
             raise HTTPBadRequest('Unknown team: %s' % team_slug)
+
         game = week.find_game_for(team)
         if game is None:
             raise HTTPBadRequest('No game for %s in week %s' % (team, week))
+
+        if pool.is_suicide:
+            previous_pick = entry.has_picked_team(team)
+            if previous_pick and previous_pick.game != game:
+                raise HTTPConflict(u'Already picked %s' % team)
 
         # We should have enough data to create the pick (in a transaction)
         pick_key = db.Key.from_path(
