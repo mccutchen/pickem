@@ -225,6 +225,7 @@ div#current-week table.games td.spread.underdog {
 }
 div#current-week table.games td.kickoff {
     font-size: 11px;
+    color: #666;
 }
 div#current-week table.games td.picked {
     border: 1px solid rgba(255, 200, 50, 1);

@@ -93,11 +93,18 @@ class Week(db.Model):
 
     @property
     def grouped_games(self):
+        """Yields this week's games in a nested sequence of groupings, by date
+        and by time.
+        """
         # Game times are stored as UTC, need to be offset back to EST or the
         # night games overflow into the next day.
         offset = datetime.timedelta(hours=-5)
-        grouper = lambda g: (g.start + offset).date()
-        return groupby(self.games.fetch(25), grouper)
+        date_grouper = lambda g: (g.start + offset).date()
+        time_grouper = lambda g: g.start.time()
+        for date, games1 in groupby(self.games.fetch(100), date_grouper):
+            group = [(time, list(games2)) for time, games2
+                     in groupby(games1, time_grouper)]
+            yield date, group
 
     @property
     def closed(self):
