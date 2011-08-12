@@ -24,17 +24,17 @@
     <h3><a href="{{ uri_for('pool', pool|id) }}">This Pool</a></h3>
     {% set entries = pool.entries.count() %}
     {% set active_entries = pool.active_entries.count() %}
-    {% set paid_entries = pool.paid_entries.count() %}
     <ul>
         <li>Manager: {{ pool.manager }}</li>
-        <li>Picking <strong>{% if pool.against_spread %}against the spread{% else %}straight up{% endif %}</strong></li>
+        {% if pool.is_suicide %}
+            <li>Suicide Pool</li>
+        {% endif %}
         <li>{{ entries }} entr{{ entries|pluralize('y,ies') }}</li>
         <li>{{ active_entries }} active entr{{ active_entries|pluralize('y,ies') }}</li>
         {% if pool.entry_fee %}
-            <li>{{ paid_entries }} paid entr{{ paid_entries|pluralize('y,ies') }}</li>
-            <li>Pot: ${{ pool.pot|floatformat('-2') }} of ${{ pool.potential_pot|floatformat('-2') }}</li>
+            <li>Pot: ${{ pool.pot|floatformat('-2') }}</li>
         {% else %}
-            <li>No money</li>
+            <li>No money on the line</li>
         {% endif %}
     </ul>
 </div>

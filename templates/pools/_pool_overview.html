@@ -11,22 +11,17 @@
                 Open to anyone
             {% endif %}
         </li>
-        <li>
-            Picking
-            {% if pool.against_spread %}
-                against the spread
-            {% else %}
-                straight up (no spread)
-            {% endif %}
+
         <li>{{ entries|length }} player{{ entries|pluralize }}</li>
         {% if pool.entry_fee %}
             <li>${{ pool.entry_fee|floatformat('-2') }} entry fee</li>
-            <li>${{ pool.potential_pot|floatformat('-2') }} pot</a>
-            {% if unpaid_entries %}
-                <li>{{ unpaid_entries|length }} unpaid entr{{ unpaid_entries|pluralize('y,ies') }}</li>
-            {% endif %}
+            <li>${{ pool.pot|floatformat('-2') }} pot</a>
         {% else %}
             <li>No entry fee</li>
+        {% endif %}
+
+        {% if pool.is_suicide %}
+            <li>Suicide Pool</li>
         {% endif %}
     </ul>
 </section>

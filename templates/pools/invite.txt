@@ -1,6 +1,6 @@
 Hi,
 
-{{ request.account }} has invited you to join an NFL pickem pool called {{ pool }} at PickemPickem.com.  You'll be competing against {{ entries }} other player{{ entries|pluralize }}{% if pool.entry_fee %} for a total of ${{ pool.potential_pot|floatformat('-00') }}{% endif %}. All you'll have to do is correctly pick one NFL game per week.
+{{ request.account }} has invited you to join an NFL pickem pool called {{ pool }} at PickemPickem.com.  You'll be competing against {{ entries }} other player{{ entries|pluralize }}{% if pool.entry_fee %} for a total of ${{ pool.pot|floatformat('-00') }}{% endif %} (so far). All you'll have to do is correctly pick one NFL game per week.
 
 To join, just follow the link below:
 {{ uri_for('join-pool', pool|id, pool.invite_code, _full=True) }}

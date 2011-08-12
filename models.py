@@ -143,7 +143,8 @@ class Week(db.Model):
 
 class Game(db.Model):
     """A single game in a week in a season, between a home Team and an away
-    Team, with a point spread."""
+    Team, with a point spread.
+    """
     home_team = db.ReferenceProperty(Team, collection_name='home_games')
     away_team = db.ReferenceProperty(Team, collection_name='away_games')
 
@@ -154,28 +155,22 @@ class Game(db.Model):
     home_score = db.IntegerProperty(default=0)
     away_score = db.IntegerProperty(default=0)
 
-    # Spread will always be according to the home team
-    spread = db.FloatProperty(default=0.0)
-
     start = db.DateTimeProperty()
     final = db.BooleanProperty(default=False)
 
     updated_at = db.DateTimeProperty(auto_now=True)
 
-    def is_winner(self, team, against_spread):
-        """Returns True if the given team won or tied the game. Takes the
-        point spread into account if against_spread is True. NOTE: Assumes
-        that the game is over."""
-        winner = self.get_winner(against_spread)
-        return winner in (team, None)
+    def is_winner(self, team):
+        """Returns True if the given team won or tied the game. NOTE: Assumes
+        that the game is over.
+        """
+        return self.get_winner() in (team, None)
 
-    def get_winner(self, against_spread):
-        """Determines the winner of the game, taking the point spread into
-        account if against_spread is True. Returns the winning team, or None
-        in the case of a tie. NOTE: Assumes that the game is over."""
+    def get_winner(self):
+        """Determines the winner of the game. Returns the winning team, or
+        None in the case of a tie. NOTE: Assumes that the game is over.
+        """
         diff = self.home_score - self.away_score
-        if against_spread:
-            diff += self.spread
         if diff > 0:
             return self.home_team
         elif diff < 0:
@@ -184,7 +179,7 @@ class Game(db.Model):
             return None
 
     def __unicode__(self):
-        return '%s at %s' % (self.away_team, self.home_team)
+        return u'%s at %s' % (self.away_team, self.home_team)
 
 
 class Pool(db.Model):
@@ -194,6 +189,9 @@ class Pool(db.Model):
     name = db.StringProperty(required=True)
     description = db.TextProperty()
 
+    # Is this a suicide pool?
+    is_suicide = db.BooleanProperty(default=False)
+
     # When does this pool start?
     start_week = db.ReferenceProperty(Week, collection_name='starting_pools')
 
@@ -202,9 +200,6 @@ class Pool(db.Model):
 
     # How much does an entry cost?
     entry_fee = db.FloatProperty(default=0.0)
-
-    # Are games picked against the spread
-    against_spread = db.BooleanProperty(default=False)
 
     # Which team are late picks stuck with?
     default_team = db.ReferenceProperty(Team, collection_name='default_pools')
@@ -220,6 +215,10 @@ class Pool(db.Model):
         return db.Query(Entry).ancestor(self)
 
     @property
+    def entry_keys(self):
+        return db.Query(Entry, keys_only=True).ancestor(self)
+
+    @property
     def active_entries(self):
         return self.entries.filter('active =', True)
 
@@ -228,19 +227,7 @@ class Pool(db.Model):
         return self.entries.filter('active =', False)
 
     @property
-    def paid_entries(self):
-        return self.entries.filter('paid =', True)
-
-    @property
-    def unpaid_entries(self):
-        return self.entries.filter('paid =', False)
-
-    @property
     def pot(self):
-        return self.entry_fee * self.paid_entries.count()
-
-    @property
-    def potential_pot(self):
         return self.entry_fee * self.entries.count()
 
     @property
@@ -259,14 +246,16 @@ class Pool(db.Model):
         from lib.webapp import time_independent_equals
         return time_independent_equals(self.invite_code, code)
 
-    def find_entry_for(self, account):
-        """Find an entry in this pool for the given account, if there is
-        one."""
-        return self.entries.filter('account =', account).get()
+    def find_entry_for(self, account, key_only=False):
+        """Find an entry in this pool for the given account, if there is one.
+        """
+        q = self.entry_keys if key_only else self.entries
+        return q.filter('account =', account).get()
 
     def is_member(self, account):
-        """Does the given account have an entry in this pool?"""
-        return self.find_entry_for(account) is not None
+        """Does the given account have an entry in this pool?
+        """
+        return self.find_entry_for(account, key_only=True) is not None
 
     def add_entry(self, account):
         """Adds an entry for the given account, if one does not already exist.

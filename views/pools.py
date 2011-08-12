@@ -63,7 +63,6 @@ class PoolHandler(SecureRequestHandler):
         entries = pool.entries.fetch(1000)
         active_entries = filter(lambda e: e.active, entries)
         inactive_entries = filter(lambda e: not e.active, entries)
-        unpaid_entries = filter(lambda e: not e.paid, entries)
 
         week = models.Week.current() or models.Week.next()
         picks = week.picks.fetch(1000) if week.closed else []
@@ -73,7 +72,6 @@ class PoolHandler(SecureRequestHandler):
                    entries=entries,
                    active_entries=active_entries,
                    inactive_entries=inactive_entries,
-                   unpaid_entries=unpaid_entries,
                    season=week.parent(),
                    week=week,
                    picks=picks,
@@ -91,8 +89,7 @@ class JoinHandler(SecureRequestHandler):
         ctx = dict(pool=pool,
                    code=code,
                    week=models.Week.next(),
-                   entries=pool.entries.fetch(1000),
-                   unpaid_entries=[])
+                   entries=pool.entries.fetch(1000))
         return self.render('pools/pool_preview.html', ctx)
 
     @objects_required('Pool')
