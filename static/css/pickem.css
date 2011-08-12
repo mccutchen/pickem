@@ -212,18 +212,8 @@ div#current-week table.games td.team {
     /* avoid slight movement when the "picked" highlight changes */
     border: 1px solid white;
 }
-div#current-week table.games td.spread {
-    font-size: 11px;
-    color: #999;
-    text-align: right;
-}
-div#current-week table.games td.spread.favorite {
-    color: rgba(0,153,0,.75);
-}
-div#current-week table.games td.spread.underdog {
-    color: rgba(153,0,0,.75);
-}
-div#current-week table.games td.kickoff {
+div#current-week table.games td.kickoff,
+div#current-week table.games td.at {
     font-size: 11px;
     color: #666;
 }

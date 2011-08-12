@@ -4,7 +4,7 @@
         {% set is_current = 'current' if week|id == current_week|id else '' %}
         {% set is_closed = 'closed' if week.closed else '' %}
         {% set deadline_countdown = 'countdown' if week.start is close else '' %}
-        {% set week_pick = entry.find_pick_for(week) %}
+        {% set week_pick = entry.find_pick_for_week(week) %}
         {% set has_picked = 'picked' if week_pick else '' %}
         {% set indicator = 'indicator ' + ('positive' if has_picked else 'negative') %}
         {% if pick %}
