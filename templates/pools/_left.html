@@ -30,7 +30,7 @@
             <li>Suicide Pool</li>
         {% endif %}
         <li>{{ entries }} entr{{ entries|pluralize('y,ies') }}</li>
-        <li>{{ active_entries }} active entr{{ active_entries|pluralize('y,ies') }}</li>
+        <li>{{ active_entries }} player{{ active_entries|pluralize }}</li>
         {% if pool.entry_fee %}
             <li>Pot: ${{ pool.pot|floatformat('-2') }}</li>
         {% else %}
